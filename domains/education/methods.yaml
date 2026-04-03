@@ -1,0 +1,20 @@
+- name: "Design-Based Research (DBR)"
+  description: "Iterative research methodology that develops and refines educational interventions in authentic settings; simultaneously pursues practical improvement and theoretical understanding."
+
+- name: "Mixed Methods (Sequential/Concurrent)"
+  description: "Combines quantitative and qualitative approaches in a single study; sequential designs use one phase to inform the next, concurrent designs collect both simultaneously."
+
+- name: "Learning Analytics and Educational Data Mining"
+  description: "Computational analysis of educational data (log files, clickstreams, assessment records) to understand and optimize learning processes and environments."
+
+- name: "Multimodal Analysis"
+  description: "Integrates multiple data streams — discourse, gesture, gaze, system interaction logs — to build a holistic picture of learning processes and interactions."
+
+- name: "Longitudinal Studies"
+  description: "Tracks the same participants over extended time periods to examine developmental trajectories, sustained effects of interventions, and long-term learning outcomes."
+
+- name: "Comparative Studies"
+  description: "Cross-cultural or cross-institutional comparisons that examine how context shapes educational phenomena; includes international large-scale assessments and policy comparisons."
+
+- name: "Systematic Literature Review and Meta-analysis"
+  description: "Rigorous synthesis of existing research using predefined protocols (e.g., PRISMA); meta-analysis statistically aggregates effect sizes across studies to estimate overall effects."

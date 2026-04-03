@@ -1,0 +1,26 @@
+- name: "K-12 Education"
+  description: "Primary and secondary schooling contexts, including curriculum integration, student engagement, and age-appropriate technology use."
+
+- name: "Higher Education (Undergraduate/Graduate)"
+  description: "University-level teaching and learning, including lecture-based and seminar settings, research supervision, and graduate training."
+
+- name: "Vocational Education and Training"
+  description: "Skills-based and career-oriented education programs, including apprenticeships, technical colleges, and workforce development."
+
+- name: "Teacher Education and Professional Development"
+  description: "Pre-service teacher preparation and in-service professional learning, including pedagogical knowledge, technology integration skills, and reflective practice."
+
+- name: "Special Education and Inclusive Education"
+  description: "Education for learners with disabilities or special needs, universal design for learning (UDL), and strategies for equitable participation."
+
+- name: "Language Learning (L2/EFL)"
+  description: "Second language acquisition and English as a foreign language contexts, including computer-assisted language learning (CALL) and AI-powered language tools."
+
+- name: "STEM Education"
+  description: "Science, technology, engineering, and mathematics education, including computational thinking, maker education, and interdisciplinary STEM integration."
+
+- name: "Humanities and Social Sciences Education"
+  description: "Teaching and learning in history, literature, philosophy, arts, and social sciences, including digital humanities and critical thinking development."
+
+- name: "Lifelong Learning and Informal Learning"
+  description: "Learning beyond formal institutions, including MOOCs, workplace learning, community education, self-directed learning, and open educational resources."

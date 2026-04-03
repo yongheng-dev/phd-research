@@ -1,0 +1,20 @@
+- name: "Educational Equity and Digital Divide"
+  description: "Disparities in access to technology, connectivity, and quality instruction; socioeconomic, geographic, and demographic gaps in educational opportunity and outcomes."
+
+- name: "AI Ethics and Academic Integrity"
+  description: "Ethical implications of AI in education, including AI-generated content, plagiarism detection, algorithmic bias, transparency, and responsible use policies."
+
+- name: "Privacy and Data Security"
+  description: "Protection of student data in learning platforms, FERPA/GDPR compliance, informed consent, data minimization, and risks of surveillance in educational technology."
+
+- name: "Teacher Professional Identity and Role Transformation"
+  description: "How emerging technologies reshape the teacher's role from knowledge transmitter to facilitator, mentor, and learning designer; impacts on professional identity and agency."
+
+- name: "Student Mental Health and Wellbeing"
+  description: "Effects of technology use, academic pressure, and online learning environments on student psychological wellbeing, motivation, and sense of belonging."
+
+- name: "Educational Technology in the Global South"
+  description: "Challenges and opportunities for technology-enhanced learning in developing regions, including infrastructure constraints, cultural adaptation, and sustainable implementation."
+
+- name: "Policy and Governance"
+  description: "Education policy frameworks for technology integration, AI regulation in schools, national digital education strategies, and institutional governance of learning technologies."
