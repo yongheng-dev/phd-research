@@ -1,0 +1,26 @@
+- name: "Higher Education"
+  description: "University teaching and learning settings where generative AI, analytics, and tutoring systems are increasingly integrated."
+
+- name: "K-12 Education"
+  description: "Primary and secondary education contexts with distinct curriculum, policy, and developmental considerations for AI use."
+
+- name: "Teacher Education"
+  description: "Pre-service and in-service teacher preparation focused on AI literacy, pedagogical integration, and professional development."
+
+- name: "Language Learning"
+  description: "AI-supported language tutoring, feedback, assessment, and conversational practice in L2/EFL settings."
+
+- name: "Writing Support"
+  description: "Use of AI for drafting, feedback, revision, and academic writing development."
+
+- name: "Assessment and Feedback"
+  description: "AI-assisted formative assessment, automated feedback, and evaluation practices across disciplines."
+
+- name: "STEM Learning"
+  description: "AI-supported problem solving, tutoring, simulations, and adaptive pathways in STEM education."
+
+- name: "Personalized Learning"
+  description: "Adaptive recommendations, learning pathways, and individualized support informed by learner data and AI models."
+
+- name: "Online and Blended Learning"
+  description: "Digital learning environments where AI tools support facilitation, engagement, and analytics at scale."

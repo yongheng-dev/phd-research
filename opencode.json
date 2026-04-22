@@ -1,0 +1,63 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "github-copilot/claude-opus-4.7",
+  "mcp": {
+    "semantic-scholar": {
+      "type": "local",
+      "command": ["uvx", "semantic-scholar-fastmcp"],
+      "enabled": true
+    },
+    "arxiv": {
+      "type": "local",
+      "command": ["uvx", "arxiv-mcp-server"],
+      "enabled": true
+    },
+    "paper-search": {
+      "type": "local",
+      "command": ["uvx", "paper-search-mcp"],
+      "enabled": true
+    },
+    "zotero": {
+      "type": "local",
+      "command": ["uvx", "zotero-mcp"],
+      "environment": {
+        "ZOTERO_LOCAL": "true"
+      },
+      "enabled": true
+    },
+    "obsidian-fs": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/xuyongheng/Obsidian-Vault"
+      ],
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "enabled": true
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "webfetch": "allow",
+    "bash": {
+      "ls *": "allow",
+      "cat *": "allow",
+      "rg *": "allow",
+      "grep *": "allow",
+      "find *": "allow",
+      "git status": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "*": "ask"
+    }
+  }
+}
