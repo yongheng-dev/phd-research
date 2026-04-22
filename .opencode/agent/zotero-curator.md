@@ -5,7 +5,7 @@ description: >-
   Use when the user says "clean up Zotero", "tag these papers", "sync library",
   or to prepare a subset for a literature review.
 mode: subagent
-model: github-copilot/claude-opus-4.7
+model: github-copilot/claude-haiku-4.5
 tools:
   write: true
   edit: true

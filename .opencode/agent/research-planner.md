@@ -5,7 +5,7 @@ description: >-
   detect ambiguity, check for existing related work in the vault, and produce
   a structured search brief that downstream agents execute against.
 mode: subagent
-model: github-copilot/claude-opus-4.7
+model: github-copilot/claude-sonnet-4.6
 tools:
   write: false
   edit: false

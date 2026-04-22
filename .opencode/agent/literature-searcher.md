@@ -6,7 +6,7 @@ description: >-
   in AI in Education. Trigger phrases: search literature, find papers, literature
   search, related research, latest papers, review a topic.
 mode: subagent
-model: github-copilot/claude-opus-4.7
+model: github-copilot/claude-sonnet-4.6
 tools:
   write: true
   edit: true

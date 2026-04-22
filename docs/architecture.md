@@ -13,8 +13,10 @@ PhD-Research is an OpenCode workspace organised as **three operational layers** 
                          │ task tool routing
 ┌────────────────────────┴─────────────────────────────────┐
 │  Agents (18 subagents)                                   │
-│   ┌─ Execution (claude-opus-4.7) ─────────────────┐      │
-│   │ literature-searcher · paper-summarizer · ...   │      │
+│   ┌─ Execution (3-tier model split) ───────────────┐      │
+│   │  Heavy  (claude-opus-4.7)   × 6 agents          │      │
+│   │  Medium (claude-sonnet-4.6) × 4 agents          │      │
+│   │  Light  (claude-haiku-4.5)  × 2 agents          │      │
 │   ├─ Audit (gpt-5.4, read-only, adversarial) ─────┤      │
 │   │ coverage-critic · citation-verifier · ...      │      │
 │   └─ Orchestration ────────────────────────────────┘     │
@@ -47,8 +49,11 @@ PhD-Research is an OpenCode workspace organised as **three operational layers** 
 
 Three sub-layers:
 
-- **Execution** (11 agents, `claude-opus-4.7`) — the workers. Read-write, full tool access.
-- **Audit** (6 agents, `gpt-5.4`) — adversarial second opinion. Read-only (`tools.write:false`, `permission.edit:deny`). Each declares a `fallback_model` and emits `degraded_audit:true` when the primary model is unavailable.
+- **Execution** (11 agents) — the workers. Read-write, full tool access. Split into three cost tiers:
+  - **Heavy** (`claude-opus-4.7`, 6 agents): `deep-dive`, `lit-review-builder`, `research-ideator`, `writing-drafter`, `theory-mapper`, `paper-summarizer`. Long reasoning, synthesis, structured generation.
+  - **Medium** (`claude-sonnet-4.6`, 4 agents): `literature-searcher`, `research-planner`, `concept-explainer`, `data-extractor`. Querying APIs, structured extraction, brief writing.
+  - **Light** (`claude-haiku-4.5`, 2 agents): `paper-fetcher`, `zotero-curator`. Mechanical PDF/citation handling, no reasoning load.
+- **Audit** (6 agents, `gpt-5.4`) — adversarial second opinion. Read-only (`tools.write:false`, `permission.edit:deny`). Each declares a `fallback_model` and emits `degraded_audit:true` when the primary model is unavailable. Untouched by the execution-tier split — independence preserved.
 - **Orchestration** (2 agents) — `deep-dive` runs the full 9-stage verified pipeline; `/plan` runs the 5-stage S1→S5 doctoral route.
 
 ### Layer 3: Memory (`.opencode/memory/`)
@@ -84,7 +89,7 @@ User: /find AI literacy assessment
 .opencode/command/find.md (router)
         │
         ▼ task(literature-searcher, ...)
-literature-searcher (claude-opus-4.7)
+literature-searcher (claude-sonnet-4.6, Medium tier)
         │
         ├─► reads domains/ai-in-education/keyword-mapping.md
         ├─► reads domains/ai-in-education/journals.md

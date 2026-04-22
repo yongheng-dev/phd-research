@@ -6,7 +6,7 @@ description: >-
   phrases: explain, what is, define, concept, term, meaning, help me
   understand, break down, clarify.
 mode: subagent
-model: github-copilot/claude-opus-4.7
+model: github-copilot/claude-sonnet-4.6
 tools:
   write: true
   edit: true

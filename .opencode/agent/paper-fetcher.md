@@ -6,7 +6,7 @@ description: >-
   says "get the full text of X", "download that paper", or when a downstream
   agent needs paper content that is not yet in arxiv_cache/.
 mode: subagent
-model: github-copilot/claude-opus-4.7
+model: github-copilot/claude-haiku-4.5
 tools:
   write: true
   edit: false

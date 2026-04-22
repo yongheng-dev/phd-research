@@ -6,7 +6,7 @@ description: >-
   paper-fetcher has the full text, when the user says "extract data from X",
   "build a comparison table", or during /lit-review aggregation.
 mode: subagent
-model: github-copilot/claude-opus-4.7
+model: github-copilot/claude-sonnet-4.6
 tools:
   write: true
   edit: true
