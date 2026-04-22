@@ -6,6 +6,7 @@ description: >-
   dimensions. Outputs a gap report with supplementary queries.
 mode: subagent
 model: github-copilot/gpt-5.4
+fallback_model: anthropic/claude-opus-4.7
 tools:
   write: false
   edit: false
@@ -166,3 +167,20 @@ After producing your gap report, append a JSON trace line to `.opencode/traces/$
 ```
 
 Use the `bash` tool with `mkdir -p` then `cat >>` (append, never overwrite). One line per audit. This trace feeds the meta-optimizer in P5.
+
+## Fallback Protocol
+
+If the primary model (`github-copilot/gpt-5.4`) is unreachable or returns an error within 2 retry attempts, the runtime falls back to `anthropic/claude-opus-4.7` declared in this agent's `fallback_model` frontmatter.
+
+When operating under fallback you MUST:
+
+1. Set `degraded_audit: true` in any structured JSON/YAML output you produce.
+2. Add a one-line notice to the human-readable section: `> ⚠️  Audit ran on fallback model (anthropic/claude-opus-4.7); cross-model triangulation lost for this run.`
+3. Emit a trace record (the runtime injects this automatically via `tool.execute.after`, but you may also append a explicit note for the orchestrator):
+   ```json
+   {"event":"audit.degraded","agent":"<this-agent>","reason":"primary_unavailable","fallback":"anthropic/claude-opus-4.7"}
+   ```
+
+The orchestrator (`/admin health` and the Assurance Dashboard in `/review --cadence=week`) surfaces `degraded_audit` runs separately from clean runs so users can decide whether to re-run when the primary is back.
+
+Never silently fall back. The whole point of cross-model audit is independence; a degraded run is **better than no run** but must be **clearly labeled**.

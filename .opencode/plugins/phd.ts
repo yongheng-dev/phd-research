@@ -6,11 +6,14 @@
  *
  * Events handled:
  *   - session.created           → inject PhD Doctrine summary into session context (log only)
+ *                                 + emit `rotation.due` notice if Tier-2 memory is >90 days old
  *   - session.idle              → write a session trace summary
  *   - session.compacted         → snapshot session state into checkpoints/
  *   - experimental.session.compacting → inject persistent research state into compaction prompt
  *   - command.executed          → if /deep-dive stage marker detected, write per-stage checkpoint
  *   - tool.execute.after        → light-weight tool-call trace (audit-class agents only)
+ *                                 + emit `audit.degraded` if result carries `degraded_audit: true`
+ *   - file.edited               → emit `dashboard.update` when evals/reports/* files change
  *
  * Design constraints (locked decisions):
  *   - Single file, zero npm dependencies. Uses only Node/Bun built-ins.
@@ -105,7 +108,54 @@ const AUDIT_AGENTS = new Set([
   "coverage-critic",
   "summary-auditor",
   "novelty-checker",
+  "concept-auditor",
+  "meta-optimizer",
 ]);
+
+// ---------- rotation reminder (Option C — see .opencode/memory/ROTATION.md) ----------
+
+const ROTATION_FILES = ["failed-ideas.md", "patterns.md"];
+const ROTATION_AGE_DAYS = 90;
+const DATE_HEADING_RE = /^##\s+(\d{4}-\d{2}-\d{2})\b/m;
+
+/** Find the OLDEST date heading still present in an active Tier-2 memory file.
+ *  Returns ISO date string or null if none. */
+function oldestDateHeading(file: string): string | null {
+  if (!existsSync(file)) return null;
+  try {
+    const txt = readFileSync(file, "utf8");
+    const dates: string[] = [];
+    for (const line of txt.split("\n")) {
+      const m = line.match(/^##\s+(\d{4}-\d{2}-\d{2})\b/);
+      if (m) dates.push(m[1]);
+    }
+    if (dates.length === 0) return null;
+    dates.sort();
+    return dates[0];
+  } catch {
+    return null;
+  }
+}
+
+function daysBetween(isoOld: string, now: Date): number {
+  const old = new Date(isoOld + "T00:00:00Z").getTime();
+  return Math.floor((now.getTime() - old) / 86_400_000);
+}
+
+function checkRotationDue(root: string): { due: string[]; oldest: string | null } {
+  const due: string[] = [];
+  let oldestOverall: string | null = null;
+  const now = new Date();
+  for (const name of ROTATION_FILES) {
+    const p = join(root, ".opencode", "memory", name);
+    const oldest = oldestDateHeading(p);
+    if (oldest && daysBetween(oldest, now) > ROTATION_AGE_DAYS) {
+      due.push(name);
+      if (!oldestOverall || oldest < oldestOverall) oldestOverall = oldest;
+    }
+  }
+  return { due, oldest: oldestOverall };
+}
 
 // ---------- plugin entry ----------
 
@@ -144,6 +194,21 @@ export const PhdPlugin = async (ctx: any) => {
         session_id: sid,
         doctrine_loaded: doctrine.length > 0,
       });
+
+      // Rotation reminder (Option C). Never auto-rotate; just emit a notice.
+      const rot = checkRotationDue(root);
+      if (rot.due.length > 0) {
+        safeAppendJsonl(sessionTrace(sid), {
+          ts: nowIso(),
+          event: "rotation.due",
+          files: rot.due,
+          oldest: rot.oldest,
+          policy: ".opencode/memory/ROTATION.md",
+          action: "Run `/admin meta-optimize --rotate` when convenient.",
+        });
+        log("info", "memory rotation due", { files: rot.due, oldest: rot.oldest });
+      }
+
       log("info", "session.created", { session_id: sid, doctrine_chars: doctrine.length });
     },
 
@@ -265,12 +330,57 @@ export const PhdPlugin = async (ctx: any) => {
     "tool.execute.after": async ({ session, agent, tool, result }: any) => {
       const agentName: string = agent?.name ?? agent ?? "";
       if (!AUDIT_AGENTS.has(agentName)) return;
-      safeAppendJsonl(sessionTrace(session?.id ?? "unknown"), {
+
+      // Detect degraded_audit signal in the result body (best-effort string scan;
+      // result shape is runtime-dependent so we stringify defensively).
+      let degraded = false;
+      try {
+        const blob =
+          typeof result === "string"
+            ? result
+            : JSON.stringify(result ?? "", null, 0);
+        if (/"degraded_audit"\s*:\s*true|degraded_audit:\s*true/.test(blob)) {
+          degraded = true;
+        }
+      } catch {
+        /* ignore */
+      }
+
+      const sid = session?.id ?? "unknown";
+      safeAppendJsonl(sessionTrace(sid), {
         ts: nowIso(),
         event: "tool.execute.after",
         agent: agentName,
         tool: tool?.name ?? tool ?? "unknown",
         ok: result?.error == null,
+        degraded_audit: degraded,
+      });
+
+      if (degraded) {
+        safeAppendJsonl(sessionTrace(sid), {
+          ts: nowIso(),
+          event: "audit.degraded",
+          agent: agentName,
+          reason: "primary_unavailable_or_marked_by_agent",
+          fallback: "anthropic/claude-opus-4.7",
+        });
+        log("warn", "audit ran on fallback model", { agent: agentName });
+      }
+    },
+
+    // -------- file watcher: surface dashboard refresh need --------
+
+    "file.edited": async ({ session, file }: any) => {
+      const path: string = file?.path ?? file ?? "";
+      if (!path) return;
+      // Only care about evals dashboard outputs
+      if (!/evals\/reports\/.+\.(md|json)$/.test(path)) return;
+      const sid = session?.id ?? "unknown";
+      safeAppendJsonl(sessionTrace(sid), {
+        ts: nowIso(),
+        event: "dashboard.update",
+        path,
+        hint: "Run `/review --cadence=week` to refresh the Assurance Dashboard view.",
       });
     },
   };
