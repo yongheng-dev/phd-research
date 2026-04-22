@@ -11,10 +11,10 @@ Find something in the research ecosystem: $ARGUMENTS
 Inspect `$ARGUMENTS` to classify the query:
 
 1. **Looks like a paper search** (contains topic words, methods, or is a question like "what has been done on X"):
-   → Delegate to `literature-searcher` (multi-source: Semantic Scholar + arXiv). Save to `/Users/xuyongheng/Obsidian-Vault/Inbox/` (post-R4) or `Search Results/` (pre-R4) as `YYYY-MM-DD-{keywords}.md`.
+   → Delegate to `literature-searcher` (multi-source: Semantic Scholar + arXiv). Save to `/Users/xuyongheng/Obsidian-Vault/Inbox/` as `YYYY-MM-DD-{keywords}.md`.
 
 2. **Looks like a concept lookup** ("what is X", "define Y", "difference between A and B"):
-   → Delegate to `concept-explainer`. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` (post-R4) or `Concept Cards/` (pre-R4) as `{ConceptName}.md`.
+   → Delegate to `concept-explainer`. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` as `{ConceptName}.md`.
 
 3. **Looks like a vault lookup** ("do I have notes on X", "find my note about Y"):
    → Grep Obsidian vault directly (no subagent), return a ranked list.

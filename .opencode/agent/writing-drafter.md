@@ -57,7 +57,7 @@ tone: academic-neutral | critical-review | methodological
 3. Draft the section. Every empirical claim must end with `[Key]`. Every theoretical claim must anchor to a framework named in the brief.
 4. Add an inline `<!-- REVISE: ... -->` comment wherever you made an interpretive leap the user should verify.
 5. End with a **Revision Checklist** (3-7 items) flagging the weakest paragraphs.
-6. Save to `/Users/xuyongheng/Obsidian-Vault/Writing Drafts/<SectionTitle>.md` with standard frontmatter (`type: writing-draft`).
+6. Save to `/Users/xuyongheng/Obsidian-Vault/Writing/<SectionTitle>.md` with standard frontmatter (`type: writing-draft`).
 
 ## Hard rules
 

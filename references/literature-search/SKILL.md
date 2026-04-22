@@ -229,7 +229,7 @@ After all papers, provide a **recommended reading order**: ranked by relevance f
 
 After search completion, automatically save results to notes, following the persistence rules in CLAUDE.md:
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Search Results/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Inbox/`
 2. **Filename**: `{YYYY-MM-DD}-{search-topic-keywords}.md`
 3. Include complete YAML frontmatter (title, date, type: search-results, tags, source)
 4. Each paper title uses `[[Paper Title]]` format for easy linking when creating reading notes later

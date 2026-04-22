@@ -89,7 +89,7 @@ opencode
 **预期**:
 - 主代理通过 `task` 工具调用 `concept-explainer` 子代理
 - 输出概念卡片
-- 自动写入 `/Users/xuyongheng/Obsidian-Vault/Concept Cards/Self-Regulated-Learning.md`(或类似文件名)
+- 自动写入 `/Users/xuyongheng/Obsidian-Vault/Notes/Self-Regulated-Learning.md`(或类似文件名)
 - 包含 YAML frontmatter(`type: concept-card`)
 
 **失败**: 若主代理直接回答而不调用子代理 → 检查 `.opencode/agent/concept-explainer.md` 的 `description` 字段是否清晰;若文件没保存 → 检查 obsidian-fs MCP 是否正常。
@@ -105,7 +105,7 @@ opencode
 **预期**:
 - 调用 `literature-searcher` 子代理
 - 多源(Semantic Scholar + arXiv 至少)返回结果
-- 保存到 `/Users/xuyongheng/Obsidian-Vault/Search Results/YYYY-MM-DD-AI-literacy-assessment.md`
+- 保存到 `/Users/xuyongheng/Obsidian-Vault/Inbox/YYYY-MM-DD-AI-literacy-assessment.md`
 
 ---
 
@@ -120,7 +120,7 @@ opencode
 **预期**:
 - 调用 `paper-summarizer` 子代理
 - 生成结构化笔记
-- 保存到 `/Users/xuyongheng/Obsidian-Vault/Paper Notes/{FirstAuthor}-{Year}-{ShortTitle}.md`
+- 保存到 `/Users/xuyongheng/Obsidian-Vault/Notes/{FirstAuthor}-{Year}-{ShortTitle}.md`
 - frontmatter 含 `type: paper-note`,正文末尾含 `[[bidirectional links]]`
 
 ---
@@ -134,7 +134,7 @@ opencode
 **预期**:
 - 调用 `research-ideator` 子代理
 - 输出 collision matrix 风格的多个研究方向
-- 保存到 `/Users/xuyongheng/Obsidian-Vault/Ideation Sessions/YYYY-MM-DD-{topic}.md`
+- 保存到 `/Users/xuyongheng/Obsidian-Vault/Notes/YYYY-MM-DD-{topic}.md`
 
 ---
 

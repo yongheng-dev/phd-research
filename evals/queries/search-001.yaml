@@ -6,7 +6,7 @@ command: /search-papers
 args: "self-regulated learning large language models --effort=quick"
 expected_properties:
   - kind: file_exists
-    path_glob: "/Users/xuyongheng/Obsidian-Vault/Search Results/*-self-regulated*.md"
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/Inbox/*-self-regulated*.md"
   - kind: frontmatter_has
     field: type
     equals: search-results

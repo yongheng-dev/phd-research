@@ -184,7 +184,7 @@ The value of bidirectional links is connecting isolated notes into a knowledge n
 
 This step does not require asking the user "should I save?" — save directly. Persistence is the core value of this workflow.
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Paper Notes/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Notes/`
 2. **Filename**: `{FirstAuthorSurname}-{Year}-{3-5 English keywords}.md`
    - Example: `Chen-2024-GenAI-Writing-Assessment.md`
 3. Use the note-saving mechanism (e.g., obsidian-fs MCP `write_file`) to write

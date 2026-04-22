@@ -22,7 +22,7 @@ Parse `--cadence=day|week|month` from `$ARGUMENTS` (default: `day`).
 2. **Review reminders** — list paper notes from last 7 days; suggest any for re-read.
 3. **Inspiration spark** — 1 brief thought with a `mainstream_anchor` and `so_what` (no theory-free suggestions).
 4. **Mandatory mini-audit**: `citation-verifier` (GPT-5.4) on the picks list — flag hallucinations.
-5. Save to `/Users/xuyongheng/Obsidian-Vault/Inbox/` (post-R4) or `Daily Picks/` (pre-R4) as `YYYY-MM-DD.md` with `type: "daily-picks"`.
+5. Save to `/Users/xuyongheng/Obsidian-Vault/Inbox/` as `YYYY-MM-DD.md` with `type: "daily-picks"`.
 
 ### `--cadence=week`
 
@@ -40,7 +40,7 @@ Parse `--cadence=day|week|month` from `$ARGUMENTS` (default: `day`).
    > ⚠ Eval harness not wired. See `.opencode/proposals/` for proposals.
 9. **Meta-optimization proposals** — list new files in `.opencode/proposals/` this week (NOT applied automatically).
 10. **Narrative summary** — quality trend, focus suggestion.
-11. Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` (post-R4) or `Daily Notes/` (pre-R4) as `weekly-YYYY-MM-DD.md` with `type: "weekly-report"`.
+11. Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `weekly-YYYY-MM-DD.md` with `type: "weekly-report"`.
 
 This step constitutes the **mandatory post-audit** for weekly reviews: the quality-stats section IS the audit. If stats cannot be produced (missing traces), the command WARNS rather than failing silently.
 
@@ -49,7 +49,7 @@ This step constitutes the **mandatory post-audit** for weekly reviews: the quali
 1. Delegate to `zotero-curator` for library curation pass.
 2. Produce a summary of additions, deletions, retagging.
 3. Review `.opencode/memory/failed-ideas.md` — archive entries > 90 days per R3/Option C rotation policy.
-4. Save curation log to `/Users/xuyongheng/Obsidian-Vault/Writing/` (post-R4) or `Curation Logs/` (pre-R4) as `curation-YYYY-MM-DD.md` with `type: "curation-log"`.
+4. Save curation log to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `curation-YYYY-MM-DD.md` with `type: "curation-log"`.
 
 This step constitutes the **mandatory mini-audit** for monthly reviews: the curation diff + archival count IS the audit trail.
 

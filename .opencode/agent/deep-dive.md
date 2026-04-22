@@ -73,7 +73,7 @@ After the search produces results, spawn the `coverage-critic` subagent via the 
 - If coverage-critic returns SUPPLEMENT NEEDED: run the supplementary queries (max 1 round) and re-audit
 - If coverage-critic returns SIGNIFICANT GAPS: notify the user and ask whether to proceed or revise the search strategy
 
-**Phase 1 Output**: Verified, balanced paper list saved to `/Users/xuyongheng/Obsidian-Vault/Search Results/YYYY-MM-DD-{topic}.md`
+**Phase 1 Output**: Verified, balanced paper list saved to `/Users/xuyongheng/Obsidian-Vault/Inbox/YYYY-MM-DD-{topic}.md`
 
 ---
 
@@ -107,7 +107,7 @@ After each summary is generated, spawn the `summary-auditor` subagent via the `t
 - MINOR REVISION → apply corrections and save
 - MAJOR REVISION → revise summary and re-audit once before saving
 
-**Phase 3 Output**: 3 verified paper notes saved to `/Users/xuyongheng/Obsidian-Vault/Paper Notes/`
+**Phase 3 Output**: 3 verified paper notes saved to `/Users/xuyongheng/Obsidian-Vault/Notes/`
 
 ---
 
@@ -166,7 +166,7 @@ Date: {YYYY-MM-DD}
 {Single most actionable recommendation}
 ```
 
-Save synthesis to `/Users/xuyongheng/Obsidian-Vault/Ideation Sessions/YYYY-MM-DD-deep-dive-{topic}.md`
+Save synthesis to `/Users/xuyongheng/Obsidian-Vault/Notes/YYYY-MM-DD-deep-dive-{topic}.md`
 
 ---
 

@@ -206,7 +206,7 @@ If any included paper cannot be verified: remove it, adjust the PRISMA count, an
 
 Save the review to notes automatically (do not ask the user):
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Literature Reviews/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Writing/`
 2. **Filename**: `{TopicName}.md`
 3. Include YAML frontmatter:
    ```yaml

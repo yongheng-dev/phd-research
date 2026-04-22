@@ -50,7 +50,7 @@ Parameters accepted: `--years=N` (default 2), `--anchors=<comma-list>` (from S1 
 3. **Extract per review**: anchor, year, venue, scope covered, named theoretical frameworks, declared open problems.
 4. **Aggregate into a SOTA panorama table** with columns: `anchor | dominant_theories | converging_findings | open_problems | key_reviews`.
 5. **Citation verification is still mandatory** (reuse Step 6b logic), but PRISMA flow is skipped.
-6. **Save** to `/Users/xuyongheng/Obsidian-Vault/Literature Reviews/quick-survey-<topic>-<YYYY-MM-DD>.md` with frontmatter `type: "quick-survey"` and `source: "phd-route-s2"`.
+6. **Save** to `/Users/xuyongheng/Obsidian-Vault/Writing/quick-survey-<topic>-<YYYY-MM-DD>.md` with frontmatter `type: "quick-survey"` and `source: "phd-route-s2"`.
 7. **Return to caller** a compact JSON block summarising the panorama for downstream S3 theory-mapper consumption:
    ```json
    {"mode":"quick-survey","anchors":[{"anchor":"…","theories":["…"],"open_problems":["…"],"reviews":["ssid1","ssid2"]}]}
@@ -255,7 +255,7 @@ If any included paper cannot be verified: remove it, adjust the PRISMA count, an
 
 Save the review to notes automatically (do not ask the user):
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Literature Reviews/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Writing/`
 2. **Filename**: `{TopicName}.md`
 3. Include YAML frontmatter:
    ```yaml

@@ -26,7 +26,7 @@ If input is already a local path or Zotero key with attachment → skip fetch st
 ## Workflow
 
 1. **Resolve source** (auto-fetch if needed).
-2. **Delegate to `paper-summarizer`** with the resolved source and mode. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` (post-R4) or `Paper Notes/` (pre-R4) as `{FirstAuthor}-{Year}-{ShortTitle}.md`.
+2. **Delegate to `paper-summarizer`** with the resolved source and mode. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` as `{FirstAuthor}-{Year}-{ShortTitle}.md`.
 3. **If `--mode=structured`**, additionally delegate to `data-extractor` and append the YAML block to the same note under `## Structured Extraction`.
 4. **Mandatory post-audit** (per `audit: auto`, always fires for saved notes):
    - `summary-auditor` (GPT-5.4) against the actual paper content. `NEEDS_REVISION` → regenerate once.

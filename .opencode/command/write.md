@@ -31,7 +31,7 @@ Every `/write` invocation runs:
 
 ## Save location
 
-`/Users/xuyongheng/Obsidian-Vault/Writing/` (post-R4) or the legacy folder (`Writing Drafts/`, `Literature Reviews/`) pre-R4, as `{DocumentTitle}.md` with YAML frontmatter including `type: "writing-draft"` or `type: "lit-review"`.
+`/Users/xuyongheng/Obsidian-Vault/Writing/`, as `{DocumentTitle}.md` with YAML frontmatter including `type: "writing-draft"` or `type: "lit-review"`.
 
 ## Trace
 

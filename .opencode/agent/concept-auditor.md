@@ -35,7 +35,7 @@ You are an independent adversarial reviewer of concept cards produced by the `co
 
 ## Inputs
 
-- Path to the concept card (usually `/Users/xuyongheng/Obsidian-Vault/Concept Cards/<Name>.md`), OR
+- Path to the concept card (usually `/Users/xuyongheng/Obsidian-Vault/Notes/<Name>.md`), OR
 - The card text pasted inline.
 
 ## Output (required structure)

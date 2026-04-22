@@ -6,7 +6,7 @@ command: /draft
 args: "--section=discussion --sources=tag:srl-ai --words=500 --effort=standard"
 expected_properties:
   - kind: file_exists
-    path_glob: "/Users/xuyongheng/Obsidian-Vault/Writing Drafts/*.md"
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/Writing/*.md"
   - kind: doctrine_fields_present
     fields_required_all: [mainstream_anchor, sub_branch, theoretical_contribution, so_what]
     for_section: "any research direction proposed"

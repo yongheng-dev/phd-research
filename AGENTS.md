@@ -51,13 +51,13 @@ Whenever a task produces content worth keeping, **automatically save** to Obsidi
 
 | Output Type | Save Path | Filename Format |
 |------------|-----------|-----------------|
-| Daily paper picks | `/Users/xuyongheng/Obsidian-Vault/Daily Picks/` | `YYYY-MM-DD.md` |
-| Search results | `/Users/xuyongheng/Obsidian-Vault/Search Results/` | `YYYY-MM-DD-{keywords}.md` |
-| Paper reading notes | `/Users/xuyongheng/Obsidian-Vault/Paper Notes/` | `{FirstAuthor}-{Year}-{ShortTitle}.md` |
-| Ideation sessions | `/Users/xuyongheng/Obsidian-Vault/Ideation Sessions/` | `YYYY-MM-DD-{topic}.md` |
-| Literature reviews | `/Users/xuyongheng/Obsidian-Vault/Literature Reviews/` | `{TopicName}.md` |
-| Concept cards | `/Users/xuyongheng/Obsidian-Vault/Concept Cards/` | `{ConceptName}.md` |
-| Writing drafts | `/Users/xuyongheng/Obsidian-Vault/Writing Drafts/` | `{DocumentTitle}.md` |
+| Daily paper picks | `/Users/xuyongheng/Obsidian-Vault/Inbox/` | `YYYY-MM-DD.md` |
+| Search results | `/Users/xuyongheng/Obsidian-Vault/Inbox/` | `YYYY-MM-DD-{keywords}.md` |
+| Paper reading notes | `/Users/xuyongheng/Obsidian-Vault/Notes/` | `{FirstAuthor}-{Year}-{ShortTitle}.md` |
+| Ideation sessions | `/Users/xuyongheng/Obsidian-Vault/Notes/` | `YYYY-MM-DD-{topic}.md` |
+| Literature reviews | `/Users/xuyongheng/Obsidian-Vault/Writing/` | `{TopicName}.md` |
+| Concept cards | `/Users/xuyongheng/Obsidian-Vault/Notes/` | `{ConceptName}.md` |
+| Writing drafts | `/Users/xuyongheng/Obsidian-Vault/Writing/` | `{DocumentTitle}.md` |
 
 ### Note Format
 

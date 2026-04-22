@@ -164,7 +164,7 @@ This step often produces the best ideas — because the first-layer directions a
 
 After the ideation session, automatically save results to notes (do not ask the user — save directly):
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Ideation Sessions/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Notes/`
 2. **Filename**: `{YYYY-MM-DD}-{collision-topic}.md`
 3. Include complete YAML frontmatter:
    ```yaml

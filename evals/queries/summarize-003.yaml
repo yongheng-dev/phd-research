@@ -6,7 +6,7 @@ command: /summarize
 args: "9999.99999 --effort=quick"
 expected_properties:
   - kind: no_file_saved_to
-    path_glob: "/Users/xuyongheng/Obsidian-Vault/Paper Notes/*9999*.md"
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/Notes/*9999*.md"
   - kind: warning_printed
     contains_any: [not found, could not locate, does not exist]
 tags: [summarize, robustness]

@@ -128,7 +128,7 @@ Saved: {timestamp}
 
 Save the concept card to notes automatically (do not ask the user):
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Concept Cards/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Notes/`
 2. **Filename**: `{ConceptName}.md`
    - Use the most common English name for the concept
    - For multi-word concepts, use hyphens: `Self-Regulated-Learning.md`

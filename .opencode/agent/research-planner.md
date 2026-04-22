@@ -45,9 +45,9 @@ Analyze the user's request to determine:
 Before issuing a search brief, avoid duplicating work already done:
 
 1. Use `obsidian-fs_search_files` to check for existing notes on this topic:
-   - Search in `/Users/xuyongheng/Obsidian-Vault/Search Results/`
-   - Search in `/Users/xuyongheng/Obsidian-Vault/Paper Notes/`
-   - Search in `/Users/xuyongheng/Obsidian-Vault/Ideation Sessions/`
+   - Search in `/Users/xuyongheng/Obsidian-Vault/Inbox/`
+   - Search in `/Users/xuyongheng/Obsidian-Vault/Notes/`
+   - Search in `/Users/xuyongheng/Obsidian-Vault/Notes/`
 
 2. If relevant existing notes found:
    - Report what was found and when it was created

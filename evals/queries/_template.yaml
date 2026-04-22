@@ -14,7 +14,7 @@ preconditions: []
 # Properties that MUST hold after the command completes
 expected_properties:
   - kind: file_exists
-    path_glob: "/Users/xuyongheng/Obsidian-Vault/Search Results/*self-regulated*.md"
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/Inbox/*self-regulated*.md"
   - kind: frontmatter_has
     field: type
     equals: search-results

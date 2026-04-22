@@ -65,7 +65,7 @@ You read a paper (full text already fetched) and populate a strict schema. You d
 3. Mark uncertain fields and lower `extractor_confidence` proportionally.
 4. Save:
    - JSON to `outputs/extractions/<paper_id>.json`
-   - Markdown digest to `/Users/xuyongheng/Obsidian-Vault/Paper Notes/<FirstAuthor>-<Year>-<ShortTitle>.md` (ONLY if no existing note — do NOT overwrite paper-summarizer output)
+   - Markdown digest to `/Users/xuyongheng/Obsidian-Vault/Notes/<FirstAuthor>-<Year>-<ShortTitle>.md` (ONLY if no existing note — do NOT overwrite paper-summarizer output)
 5. Return the JSON path.
 
 ## Rules

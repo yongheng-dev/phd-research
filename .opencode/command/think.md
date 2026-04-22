@@ -11,13 +11,13 @@ Think through a topic: $ARGUMENTS
 Classify `$ARGUMENTS`:
 
 1. **Ideation / brainstorm** ("give me ideas on X", "research directions for Y", "what can I study"):
-   → Delegate to `research-ideator` with the 4 mandatory doctrine fields (`mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`). Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` (post-R4) or `Ideation Sessions/` (pre-R4) as `YYYY-MM-DD-{topic}.md`.
+   → Delegate to `research-ideator` with the 4 mandatory doctrine fields (`mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`). Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `YYYY-MM-DD-{topic}.md`.
 
 2. **Concept explain** ("explain X", "what is Y", "how does Z work"):
-   → Delegate to `concept-explainer`. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` (post-R4) or `Concept Cards/` (pre-R4) as `{ConceptName}.md`.
+   → Delegate to `concept-explainer`. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` as `{ConceptName}.md`.
 
 3. **Theory map** ("map theories of X", "theoretical landscape of Y", "theory inventory"):
-   → Delegate to `theory-mapper`. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` (post-R4) or `Theory Maps/` (pre-R4) as `{TopicName}-theory-map.md`.
+   → Delegate to `theory-mapper`. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` as `{TopicName}-theory-map.md`.
 
 If unclear, ask one short question.
 

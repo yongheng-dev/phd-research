@@ -6,7 +6,7 @@ command: /summarize
 args: "2305.15334 --effort=standard"
 expected_properties:
   - kind: file_exists
-    path_glob: "/Users/xuyongheng/Obsidian-Vault/Paper Notes/*-2023-*.md"
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/Notes/*-2023-*.md"
   - kind: frontmatter_has
     field: type
     equals: paper-note

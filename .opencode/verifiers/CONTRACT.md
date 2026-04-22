@@ -2,7 +2,8 @@
 
 **Status:** Authoritative. All agents and commands MUST satisfy these six contracts.
 **Owner:** Meta-optimizer (P5) audits compliance weekly.
-**Verification:** Automated checks live in `.opencode/verifiers/`. Run `bash .opencode/verifiers/run-all.sh` to validate.
+**Verification:** Automated checks live in this directory. Run `bash .opencode/verifiers/run-all.sh` to validate.
+**Location:** This file lives alongside the verifier scripts that enforce it (`.opencode/verifiers/CONTRACT.md`).
 
 ---
 

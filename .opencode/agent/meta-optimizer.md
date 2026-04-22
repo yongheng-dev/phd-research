@@ -33,7 +33,7 @@ You are the system's self-review agent. You run on **github-copilot/gpt-5.4** to
 
 ## Inputs (you MUST read, in order)
 
-1. `.opencode/INTEGRATION-CONTRACT.md`
+1. `.opencode/verifiers/CONTRACT.md`
 2. `.opencode/memory/phd-doctrine.md`
 3. `.opencode/memory/decisions.md` (last 30 entries)
 4. `.opencode/memory/failed-ideas.md` (full)

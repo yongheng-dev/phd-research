@@ -53,7 +53,7 @@ Delegate to `novelty-checker` (So-What Gate) with `--gate=<flag>` on every S4 pr
 
 ## Final output
 
-Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` (post-R4) or `Deep Dives/` (pre-R4) as `YYYY-MM-DD-plan-<topic-slug>.md`:
+Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `YYYY-MM-DD-plan-<topic-slug>.md`:
 
 ```yaml
 ---
