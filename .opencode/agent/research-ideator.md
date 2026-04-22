@@ -170,6 +170,30 @@ For each seed paper cited in a direction:
 **Novelty assessment**: 🟢 HIGH / 🟡 MEDIUM / 🟠 LOW — {brief evidence: "X papers found on this exact RQ"}
 ```
 
+### Step 4c: Doctrine Field Injection (Mandatory)
+
+For EVERY direction presented, before it reaches the user, append the 4 mandatory doctrine fields (these feed directly into `novelty-checker`'s So-What Gate downstream):
+
+```
+**Doctrine fields**:
+- mainstream_anchor: <the recognized active research line this sits on, verified in Step 2 search>
+- sub_branch: <the specific small cut>
+- theoretical_contribution: <what theory is extended/integrated/challenged — must name a framework>
+- so_what: <if this direction is proven, which downstream actor changes which behavior>
+```
+
+If you cannot fill any field with a non-trivial answer, **do not present the direction** — go back to the collision matrix.
+
+### Mode support
+
+If the caller passes `--mode=sub-branch` (from `/phd-route` S4), alter behavior:
+
+- Skip Step 3's broad 5-dimension sweep.
+- Use the provided **blank spots from theory-mapper** as direct sub_branch seeds.
+- Produce 3-5 sub_branch propositions only, each with `mainstream_anchor` (from S1), draft `theoretical_contribution`, and draft `so_what`.
+- Still run Step 4b (novelty verification) and Step 4c (doctrine injection).
+- Skip Steps 5 (cross-collision) and 7 (follow-up guidance) — `/phd-route` orchestrates those.
+
 ### Step 5: Cross-Collision
 
 Select the 2-3 most promising directions from above and cross-combine them pairwise to see if even more creative "second-layer directions" emerge.
