@@ -1,6 +1,6 @@
 # Eval Harness
 
-Purpose: nightly/weekly regression harness that probes the OpenCode research system and produces an **Assurance Dashboard** consumed by `/weekly-report`.
+Purpose: nightly/weekly regression harness that probes the OpenCode research system and produces an **Assurance Dashboard** consumed by `/review --cadence=week`.
 
 ## Structure
 
@@ -14,9 +14,10 @@ evals/
 │   ├── audit-*.yaml
 │   └── integration-*.yaml
 ├── bin/
-│   └── run.sh          # runner script (invoked by /eval command)
+│   └── run.sh          # runner script (invoked by /admin eval)
+├── results/            # raw JSON results, one per run
 └── reports/
-    └── YYYY-MM-DD.md   # assurance dashboard output
+    └── YYYY-MM-DD.md   # assurance dashboard output (P5.A–D delivered)
 ```
 
 ## Query Schema
@@ -31,7 +32,9 @@ See `queries/_template.yaml`. Each query declares:
 
 ## Invocation
 
-Normally via `/eval` command. Direct invocation: `bash evals/bin/run.sh [--suite=<name>] [--effort=quick|standard|deep]`.
+Normally via `/admin eval`. Direct invocation: `bash evals/bin/run.sh [--suite=<name>] [--effort=quick|standard|deep]`.
+
+After a run completes, the runner emits a `dashboard.update` plugin event so the assurance dashboard view is refreshed without a manual command.
 
 ## Pass/Warn/Fail
 
@@ -39,6 +42,8 @@ Normally via `/eval` command. Direct invocation: `bash evals/bin/run.sh [--suite
 - WARN — soft-fail (e.g., citation count below target but >0)
 - FAIL — a P0 or P1 property is violated
 
-## Not yet implemented
+A run that includes any audit subagent in fallback mode (`degraded_audit:true`) is annotated in the dashboard so the user knows the verdict came from the smaller model.
 
-The runner `bin/run.sh` is a stub until the user runs `/eval` for the first time and confirms which queries to activate. A first pass creates skeleton queries only — no live OpenCode invocation inside `run.sh` until the user approves the execution strategy (subprocess? internal SDK? manual?).
+## Status
+
+The runner skeleton and the five suite categories shipped in P5.A–D. The runner does not yet drive live OpenCode invocations end-to-end — extending it is a future task. Until then, treat `bash evals/bin/run.sh` as a dry-run harness; the user has explicitly asked not to invoke it during routine work.

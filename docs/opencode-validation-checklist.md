@@ -1,6 +1,6 @@
 # OpenCode 验证清单
 
-首次启用 OpenCode 后,按以下顺序手动验证。每一步标注**预期输出**与**失败排查**,出问题时把现象贴回给 AI 助手即可。
+首次启用 OpenCode 或做完结构改动后,按以下顺序手动验证。每一步标注**预期输出**与**失败排查**。
 
 ---
 
@@ -9,16 +9,27 @@
 ```bash
 cd /Users/xuyongheng/PhD-Research
 which opencode && opencode --version
-which uvx && which npx
+which uvx && which npx && which bun
 ls /Users/xuyongheng/Obsidian-Vault | head
 ```
 
-**预期**: 三条命令都能正常输出版本/路径,Obsidian Vault 列出已有目录。
-**失败**: 缺 `uvx` 装 `uv`;缺 `npx` 装 Node.js;Vault 路径不存在则修改 `opencode.json` 中 obsidian-fs 的 args。
+**预期**: 命令都能输出版本/路径,Vault 列出 `Inbox/`、`Notes/`、`Writing/`、`Templates/`、`Attachments/`(R4 之后的 3 文件夹布局)。
+**失败**: 缺 `uvx` 装 `uv`;缺 `npx` 装 Node.js;缺 `bun` 装 Bun;Vault 路径不存在则修改 `opencode.json` 中 obsidian-fs 的 args。
 
 ---
 
-## 1. 启动 OpenCode 并确认配置加载
+## 1. 集成契约验证(必须 7/7 GREEN)
+
+```bash
+bash .opencode/verifiers/run-all.sh
+```
+
+**预期**: 7 个检查全部 GREEN(C1 frontmatter / C2 persistence / C3 audit / C4 trace / C5 memory / C6 doctrine / C7 plugin)。
+**失败**: 任意 RED 必须先修复才能继续。错误信息会指向具体文件和缺失字段。
+
+---
+
+## 2. 启动 OpenCode 并确认配置加载
 
 ```bash
 opencode
@@ -38,28 +49,28 @@ opencode
 
 ---
 
-## 2. MCP 烟测 — Semantic Scholar
+## 3. MCP 烟测 — Semantic Scholar
 
 ```
 用 semantic-scholar MCP 搜索 "AI literacy in higher education",返回 3 篇,只显示标题、年份、作者。
 ```
 
-**预期**: 调用 `semantic-scholar_search_paper`(或类似工具名),返回结构化 3 条结果。
+**预期**: 调用 `semantic-scholar_paper_relevance_search`(或类似工具名),返回结构化 3 条结果。
 **失败**: 若提示工具不存在,说明 server 没启动成功 → 退出 OpenCode,在终端跑 `uvx semantic-scholar-fastmcp` 看报错。
 
 ---
 
-## 3. MCP 烟测 — arXiv
+## 4. MCP 烟测 — arXiv
 
 ```
 用 arxiv MCP 查找过去 30 天内 cs.CY 分类下与 "self-regulated learning" 相关的预印本,返回 3 条。
 ```
 
-**预期**: 调用 `arxiv_*` 工具返回结果。
+**预期**: 调用 `arxiv_search_papers` 返回结果。
 
 ---
 
-## 4. MCP 烟测 — Zotero(若使用)
+## 5. MCP 烟测 — Zotero(若使用)
 
 ```
 用 zotero MCP 列出我的 Zotero 库中最近添加的 5 条目,只要标题和作者。
@@ -70,78 +81,84 @@ opencode
 
 ---
 
-## 5. MCP 烟测 — Obsidian-FS
+## 6. MCP 烟测 — Obsidian-FS
 
 ```
 用 obsidian-fs MCP 列出 Obsidian Vault 根目录下的子目录。
 ```
 
-**预期**: 返回 `Daily Picks/`、`Paper Notes/`、`Search Results/` 等(若已存在)。
+**预期**: 返回 `Inbox/`、`Notes/`、`Writing/`、`Templates/`、`Attachments/`(R4 之后的 3 文件夹布局)。
+**失败**: 若仍显示旧的 8 文件夹结构,说明迁移未跑 → `bash scripts/migrate-vault.sh`。
 
 ---
 
-## 6. 命令路由 — `/concept`
+## 7. 命令路由 — `/think`(概念卡片分支)
 
 ```
-/concept self-regulated learning
+/think 解释 self-regulated learning
 ```
 
 **预期**:
-- 主代理通过 `task` 工具调用 `concept-explainer` 子代理
-- 输出概念卡片
-- 自动写入 `/Users/xuyongheng/Obsidian-Vault/Notes/Self-Regulated-Learning.md`(或类似文件名)
-- 包含 YAML frontmatter(`type: concept-card`)
+- 主代理通过 `task` 调用 `concept-explainer` 子代理
+- 输出概念卡片,后接 `concept-auditor` 审计意见
+- 自动写入 `/Users/xuyongheng/Obsidian-Vault/Notes/Self-Regulated-Learning.md`
+- 含 frontmatter `type: concept-card`,末尾含 `[[bidirectional links]]`
 
-**失败**: 若主代理直接回答而不调用子代理 → 检查 `.opencode/agent/concept-explainer.md` 的 `description` 字段是否清晰;若文件没保存 → 检查 obsidian-fs MCP 是否正常。
+**失败**: 若主代理直接回答而不调用子代理 → 检查 `.opencode/agent/concept-explainer.md` 的 `description` 字段;若文件没保存 → 检查 obsidian-fs MCP。
 
 ---
 
-## 7. 命令路由 — `/search-papers`
+## 8. 命令路由 — `/find`
 
 ```
-/search-papers AI literacy assessment
+/find AI literacy assessment
 ```
 
 **预期**:
 - 调用 `literature-searcher` 子代理
 - 多源(Semantic Scholar + arXiv 至少)返回结果
+- **强制后审**: `coverage-critic` + `citation-verifier` 自动跑(C3)
 - 保存到 `/Users/xuyongheng/Obsidian-Vault/Inbox/YYYY-MM-DD-AI-literacy-assessment.md`
+- Trace 写入 `.opencode/traces/YYYY-MM-DD/find.jsonl`(C4)
 
 ---
 
-## 8. 命令路由 — `/summarize`
+## 9. 命令路由 — `/read`
 
 挑一篇 arXiv 论文(例如 `arXiv:2310.02207`)或 Zotero 中已有的 PDF:
 
 ```
-/summarize arXiv:2310.02207
+/read arXiv:2310.02207
 ```
 
 **预期**:
-- 调用 `paper-summarizer` 子代理
-- 生成结构化笔记
+- 若 PDF 不在 Zotero,先调用 `paper-fetcher`
+- 然后调用 `paper-summarizer`
+- 强制后审 `summary-auditor` + `citation-verifier`
 - 保存到 `/Users/xuyongheng/Obsidian-Vault/Notes/{FirstAuthor}-{Year}-{ShortTitle}.md`
-- frontmatter 含 `type: paper-note`,正文末尾含 `[[bidirectional links]]`
+- frontmatter 含 `type: paper-note`
 
 ---
 
-## 9. 命令路由 — `/brainstorm`
+## 10. 命令路由 — `/think`(构思分支)
 
 ```
-/brainstorm AI tutor 与学生 self-regulation 的交互
+/think AI tutor 与学生 self-regulation 的交互
 ```
 
 **预期**:
 - 调用 `research-ideator` 子代理
-- 输出 collision matrix 风格的多个研究方向
+- 输出 collision matrix 风格的多个研究方向,每个含 `mainstream_anchor` / `sub_branch` / `theoretical_contribution` / `so_what`(C6 doctrine)
+- 强制后审 `novelty-checker`(So-What 门禁)+ `citation-verifier`
+- 被拒方向自动写入 `.opencode/memory/failed-ideas.md`(Tier-2,append-only)
 - 保存到 `/Users/xuyongheng/Obsidian-Vault/Notes/YYYY-MM-DD-{topic}.md`
 
 ---
 
-## 10. 子代理协作 — `/deep-dive`(高强度,可选)
+## 11. 全流水线 — `/plan --mode=deep-dive`(高强度,可选)
 
 ```
-/deep-dive AI literacy assessment in K-12
+/plan AI literacy assessment in K-12 --mode=deep-dive
 ```
 
 **预期**: orchestrator (`deep-dive` 子代理) 依次 spawn:
@@ -155,19 +172,34 @@ opencode
 8. `research-ideator` → 衍生方向
 9. `novelty-checker` → 新颖度评分
 
-最终产出保存到 `Literature Reviews/` 与 `Ideation Sessions/`,并更新 `.scholar-flow/wisdom/` 下的累积学习文件。
+最终产出保存到 `Writing/`(综述)与 `Notes/`(构思),并 append 到 `.opencode/memory/patterns.md`。每阶段在 `.opencode/checkpoints/` 留 checkpoint(可断点续跑)。
 
 **失败**: 任意一步停在主代理而非 subagent → 把 OpenCode 显示的 task 调用日志贴回来。
 
 ---
 
-## 11. 权限边界检查
+## 12. 系统健康 — `/admin health`
+
+```
+/admin health
+```
+
+**预期**: 输出包含
+- 7/7 verifier 状态
+- 最近 7 天 trace 行数
+- Tier-2 内存是否到达 90 天轮换阈值(若是,显示 `rotation.due`)
+- 最近 `audit.degraded` 事件计数
+- `evals/reports/` 最近一次 dashboard 快照
+
+---
+
+## 13. 权限边界检查
 
 ```
 帮我跑一下 npm install xxxxx
 ```
 
-**预期**: OpenCode 提示需要确认(因为 `opencode.json` 中除白名单外的 bash 命令默认 `ask`)。
+**预期**: OpenCode 提示需要确认(`opencode.json` 中除白名单外的 bash 命令默认 `ask`)。
 
 ---
 
@@ -179,8 +211,9 @@ opencode
 通过的步骤: 1, 2, 3, 5, 6, 7
 失败的步骤:
   - 步骤 4 (zotero): <错误信息或现象>
-  - 步骤 10 (deep-dive): <在第几个 subagent 卡住>
+  - 步骤 11 (deep-dive): <在第几个 subagent 卡住>
+  - 验证器 RED: <C? + 输出>
 其他观察: <任何异常>
 ```
 
-我会据此修复 `opencode.json` 或对应的子代理 prompt。
+会据此修复 `opencode.json` / 子代理 prompt / 验证器期望值。

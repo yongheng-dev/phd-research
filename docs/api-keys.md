@@ -1,6 +1,6 @@
 # API Keys Guide
 
-Scholar Flow uses several external services. Most work without API keys, but keys improve the experience.
+PhD-Research uses several external services via MCP. Most work without API keys, but keys improve rate limits and unlock additional sources.
 
 ## Summary
 
@@ -56,4 +56,4 @@ export BRAVE_SEARCH_API_KEY=your_key
 
 Then restart your terminal or run `source ~/.zshrc`.
 
-Scholar Flow's `/init` will ask about your keys and configure MCP servers accordingly.
+The `/init` wizard will detect available environment variables and configure the matching MCP servers in `opencode.json` accordingly.

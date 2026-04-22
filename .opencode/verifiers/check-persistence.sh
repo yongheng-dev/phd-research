@@ -11,7 +11,7 @@ if [[ ! -d "$VAULT" ]]; then
   exit 0
 fi
 
-ALLOWED_TYPES="paper-note ideation lit-review search-results concept-card daily-picks weekly-report deep-dive"
+ALLOWED_TYPES="paper-note ideation lit-review search-results concept-card daily-picks weekly-report deep-dive documentation"
 
 while IFS= read -r f; do
   CHECKED=$((CHECKED+1))

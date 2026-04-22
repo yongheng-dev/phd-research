@@ -1,6 +1,6 @@
 # Creating Domain Packs
 
-A domain pack provides field-specific knowledge that Scholar Flow uses to customize skills for your research area.
+A domain pack provides field-specific knowledge (theories, methods, journals, keywords) that PhD-Research subagents and commands consume to tailor search queries, doctrine prompts, and dashboard tagging to your research area.
 
 ## When You Need One
 
@@ -92,7 +92,7 @@ For multilingual packs, add columns for other languages.
 
 1. Copy `domains/_template/` to `domains/{your-field}/`
 2. Fill in all files following the formats above
-3. Test: run `/init`, select your field, verify skills work
+3. Test: run `/init`, select your field, then issue a `/find` query and confirm the keyword mapping and journal tier list are picked up
 4. Submit a pull request
 
 ## Quality Guidelines
