@@ -15,7 +15,7 @@ It runs on [OpenCode](https://opencode.ai) and is wired to Obsidian + Zotero.
 |------|------|------|
 | Runtime | OpenCode (`opencode.json`) | Agent + command engine |
 | Primary model | `github-copilot/claude-opus-4.7` | Execution layer |
-| Adversarial model | `gpt-5` | Audit / second-opinion layer |
+| Adversarial model | `gpt-5.4` | Audit / second-opinion layer |
 | Knowledge base | Obsidian (`/Users/xuyongheng/Obsidian-Vault`) | Notes, links, daily logs |
 | Reference manager | Zotero | PDF + citation storage |
 | Project memory | `.opencode/memory/` | Persistent decisions, failed ideas, patterns, doctrine |
@@ -68,7 +68,7 @@ Located in `.opencode/agent/`. All have access to `references/` (legacy skill da
 - `paper-fetcher` · `theory-mapper` · `data-extractor`
 - `writing-drafter` · `zotero-curator`
 
-### Audit layer (model: `gpt-5`, adversarial)
+### Audit layer (model: `gpt-5.4`, adversarial)
 - `coverage-critic` · `citation-verifier` · `summary-auditor`
 - `novelty-checker` (So-What Gate) · `concept-auditor` · `meta-optimizer`
 
