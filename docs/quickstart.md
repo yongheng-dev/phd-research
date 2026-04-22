@@ -52,12 +52,12 @@ After `/init`, these files are created for you:
 - `.mcp.json` — MCP server configuration
 - `.scholar-flow.yaml` — Your settings (re-run `/init` to update)
 - `.claude/commands/*.md` — Slash commands
-- `.agents/skills/*/` — Research skills with your domain data
+- `references/*/` — Research skills with your domain data
 - `domains/{your-field}/` — Domain knowledge pack (if auto-generated)
 
 ## Tips
 
 - **Re-run `/init`** anytime to update your setup (existing notes are preserved)
-- **Create custom skills** by adding `SKILL.md` files to `.agents/skills/{name}/`
+- **Create custom skills** by adding `SKILL.md` files to `references/{name}/`
 - **Domain packs** can be edited in `domains/{your-field}/` to refine theories, journals, etc.
 - Notes are auto-saved — you never need to ask "save this"

@@ -13,7 +13,7 @@
 | 权限配置 | `.claude/settings.json` | `opencode.json` 的 `permission` 字段 |
 | 斜杠命令 | `.claude/commands/*.md` | `.opencode/command/*.md` |
 | 子代理 | `.claude/agents/*.md` | `.opencode/agent/*.md` |
-| 技能 | `.agents/skills/*/SKILL.md` | `.opencode/agent/*.md`(转换为 subagent) |
+| 技能 | `references/*/SKILL.md` | `.opencode/agent/*.md`(转换为 subagent) |
 
 ## 前置条件
 

@@ -207,8 +207,8 @@ IMPORTANT: Do NOT overwrite `.claude/commands/init.md` (this file).
 For each template in `templates/skills/*/`:
 1. Read the `SKILL.md.tmpl` file
 2. Substitute all `{{PLACEHOLDERS}}`
-3. Create `.agents/skills/{name}/SKILL.md`
-4. Copy relevant domain pack files to `.agents/skills/{name}/references/`:
+3. Create `references/{name}/SKILL.md`
+4. Copy relevant domain pack files to `references/{name}/references/`:
    - `literature-search` gets: `keyword-mapping.md`, `journals.md` from the domain pack
    - `research-ideation` gets: `theories.yaml`, `methods.yaml`, `topics.yaml`, `social-issues.yaml` from the domain pack
    - All other skills get: `domain.yaml` from the domain pack
@@ -270,7 +270,7 @@ Generated:
   - CLAUDE.md
   - .mcp.json + .claude/settings.json
   - 7 slash commands in .claude/commands/
-  - 5 research skills in .agents/skills/
+  - 5 research skills in references/
   - 1 deep-dive agent in .claude/agents/
   - Domain pack: domains/{field}/
 

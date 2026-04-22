@@ -50,7 +50,7 @@ User runs /search-papers "AI literacy"
 .claude/commands/search-papers.md  (generated command)
          │
          ▼
-.agents/skills/literature-search/SKILL.md  (generated skill)
+references/literature-search/SKILL.md  (generated skill)
          │
          ├─► reads references/keyword-mapping.md  (from domain pack)
          ├─► reads references/journals.md  (from domain pack)
@@ -87,6 +87,6 @@ Scholar Flow uses Model Context Protocol (MCP) servers for external tool access:
 | `.claude/commands/init.md` | Developer | Developer | Yes |
 | `CLAUDE.md` | /init | /init (re-run) | No |
 | `.mcp.json` | /init | /init (re-run) | No |
-| `.agents/skills/*` | /init | /init (re-run) | No |
+| `references/*` | /init | /init (re-run) | No |
 | `.scholar-flow.yaml` | /init | /init (re-run) | No |
 | User-created skills | User | User | User's choice |

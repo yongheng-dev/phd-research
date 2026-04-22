@@ -1,149 +1,152 @@
-# Scholar Flow
+# PhD-Research
 
-**An AI-powered research toolkit built on [Claude Code](https://claude.ai/code).** Search papers, summarize findings, spark ideas, build knowledge — all from your terminal.
+> An OpenCode-powered research assistant workspace for AI-in-Education PhD work.
+> Multi-agent literature search, paper summarization, ideation, and PhD-level research routing —
+> with cross-model adversarial review and persistent project memory.
 
-Scholar Flow transforms Claude Code into a personalized research assistant. Run `/init` to set up your environment with domain-specific skills, knowledge management integration, and automated workflows tailored to your field.
+This is a **personal, customized** workspace, not a redistributable framework.
+It runs on [OpenCode](https://opencode.ai) and is wired to Obsidian + Zotero.
 
-## Features
+---
 
-- **Literature Search** — Multi-source academic paper discovery with query matrices, citation chaining, and coverage analysis
-- **Paper Summarizer** — Deep structured reading notes with automatic knowledge base saving
-- **Research Ideation** — N-dimensional collision matrix that systematically generates creative research directions
-- **Literature Review Builder** — Guided systematic review construction with PRISMA compliance
-- **Concept Explainer** — Create rich concept cards for unfamiliar terms
-- **Daily Research Routine** — Automated paper recommendations and progress tracking
-- **Deep Dive Agent** — Autonomous search → summarize → ideate pipeline
+## Stack
 
-## Quick Start
+| Layer | Tool | Role |
+|------|------|------|
+| Runtime | OpenCode (`opencode.json`) | Agent + command engine |
+| Primary model | `github-copilot/claude-opus-4.7` | Execution layer |
+| Adversarial model | `gpt-5` | Audit / second-opinion layer |
+| Knowledge base | Obsidian (`/Users/xuyongheng/Obsidian-Vault`) | Notes, links, daily logs |
+| Reference manager | Zotero | PDF + citation storage |
+| Project memory | `.opencode/memory/` | Persistent decisions, failed ideas, patterns, doctrine |
 
-### Prerequisites
+### MCP Servers (configured in `opencode.json`)
 
-- [Claude Code](https://claude.ai/code) installed and authenticated
-- Node.js 18+ (for MCP servers)
-- Python 3.10+ with [uv](https://github.com/astral-sh/uv) (for MCP servers)
+| Server | Purpose |
+|--------|---------|
+| `semantic-scholar` | Primary academic paper search |
+| `arxiv` | Preprint search |
+| `paper-search` | Multi-source aggregator |
+| `zotero` | Reference management |
+| `obsidian-fs` | Knowledge base read/write |
+| `sequential-thinking` | Multi-step reasoning |
 
-### Setup
+> Brave Search MCP is **optional** (gray literature). Not configured by default.
+
+---
+
+## Available Slash Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/daily` | Daily research routine |
+| `/search-papers {topic}` | Multi-source literature search (default `--years=5`) |
+| `/summarize {paper}` | Deep paper summary + auto-save to Obsidian |
+| `/brainstorm {topic}` | Research ideation (sub-branch mode + So-What gating) |
+| `/lit-review {topic}` | Systematic review (`--mode=quick-survey` for ≤2y reviews) |
+| `/concept {term}` | Concept card with audit |
+| `/weekly-report` | Weekly research summary |
+| `/deep-dive {topic}` | Verified multi-stage research pipeline |
+| `/phd-route {topic}` | **PhD-level research positioning** (S1→S5 doctrine flow) |
+| `/fetch {ref}` | DOI/arXiv/URL → Zotero |
+| `/extract {paper}` | Tables/figures → structured markdown |
+| `/draft {section}` | Reading notes → writing draft |
+| `/curate` | Zotero library cleanup |
+| `/theory-map {topic}` | Theoretical framework genealogy |
+| `/meta-optimize` | Self-improvement proposals (human-approved) |
+| `/eval {agent}` | Regression on fixed benchmark |
+
+---
+
+## Subagents
+
+Located in `.opencode/agent/`. All have access to `references/` (legacy skill data).
+
+### Execution layer (model: `claude-opus-4.7`)
+- `research-planner` · `literature-searcher` · `paper-summarizer`
+- `research-ideator` (sub-branch mode) · `lit-review-builder` · `concept-explainer`
+- `paper-fetcher` · `theory-mapper` · `data-extractor`
+- `writing-drafter` · `zotero-curator`
+
+### Audit layer (model: `gpt-5`, adversarial)
+- `coverage-critic` · `citation-verifier` · `summary-auditor`
+- `novelty-checker` (So-What Gate) · `concept-auditor` · `meta-optimizer`
+
+### Orchestration layer
+- `deep-dive` · `/phd-route` (5-stage S1→S5)
+
+---
+
+## PhD Research Doctrine
+
+The system enforces a methodological constraint at the agent level:
+
+> **A PhD = small sub-branch within a mainstream topic + theoretical contribution + answer "so what".**
+
+Operationalized as a 5-step path (`.opencode/memory/phd-doctrine.md`):
+
+1. **S1 Deep Search** — last 5 years, hotspots + gaps
+2. **S2 Quick Survey** — last 2 years review papers
+3. **S3 Theory Inventory** — genealogy via `theory-mapper`
+4. **S4 Sub-Branch Positioning** — small cut within mainstream
+5. **S5 So-What Validation** — theoretical contribution + downstream change
+
+Every brainstorm output must carry `mainstream_anchor`, `sub_branch`,
+`theoretical_contribution`, `so_what` — otherwise rejected by `novelty-checker`.
+
+---
+
+## Project Layout
+
+```
+PhD-Research/
+├── .opencode/
+│   ├── agent/         # 18 subagents
+│   ├── command/       # Slash commands
+│   ├── memory/        # phd-doctrine + decisions + failed-ideas + patterns
+│   ├── checkpoints/   # Resumable workflow state
+│   ├── traces/        # Audit prompt/response logs
+│   ├── verifiers/     # Machine-checkable contracts
+│   ├── proposals/     # meta-optimizer suggestions (human-approved)
+│   └── hooks/         # Session lifecycle hooks
+├── references/        # Legacy skill data (domain.yaml, theories.yaml, ...)
+├── domains/           # Domain knowledge packs (ai-in-education)
+├── docs/              # Documentation
+├── evals/             # Benchmark queries + results
+├── arxiv_cache/       # arXiv response cache
+├── outputs/           # Temporary generated files
+├── opencode.json      # Runtime config (models, MCP, permissions)
+├── AGENTS.md          # Authoritative agent guidance
+└── README.md          # This file
+```
+
+---
+
+## Getting Started
 
 ```bash
-git clone https://github.com/yourusername/scholar-flow.git
-cd scholar-flow
-claude
+opencode  # in this directory
 ```
 
-Then in Claude Code:
-
+Then in the session:
 ```
-/init
-```
-
-The setup wizard will:
-1. Ask about your research field, topics, and academic level
-2. Configure knowledge management (Obsidian or local notes)
-3. Set up reference management (Zotero, optional)
-4. Configure API keys for paper search services
-5. Generate a personalized environment with domain-specific skills
-
-### After Setup
-
-```
-/daily                          # Start your daily research routine
-/search-papers transformer models in education   # Search for papers
-/summarize 10.1234/example.doi  # Summarize a specific paper
-/brainstorm AI assessment       # Generate research ideas  
-/lit-review self-regulated learning with AI      # Build a literature review
-/concept cognitive load theory  # Create a concept card
-/weekly-report                  # Generate weekly progress report
+/daily              # morning routine
+/phd-route AI literacy in K-12   # PhD-level positioning
 ```
 
-## How It Works
+---
 
-Scholar Flow uses three layers:
+## Memory & Learning
 
-1. **Domain Packs** (`domains/`) — Field-specific knowledge: theories, methods, journals, keywords
-2. **Skill Templates** (`templates/skills/`) — Research workflows parameterized for any domain
-3. **Generated Environment** — Your personalized CLAUDE.md, MCP servers, skills, and commands
+The system continuously writes to `.opencode/memory/`:
+- **decisions.md** — append on workflow completion
+- **failed-ideas.md** — append on novelty-checker reject
+- **patterns.md** — append after paper batch summarization
+- **phd-doctrine.md** — static, hand-edited only
 
-The `/init` wizard connects these layers based on your answers.
+Hooks load these files on `session-start` so prior context is always available.
 
-## Domain Packs
-
-Scholar Flow ships with an `education` domain pack. For other fields, `/init` generates a domain pack automatically using AI.
-
-Community-contributed domain packs are welcome! See [docs/creating-domains.md](docs/creating-domains.md).
-
-### Available Domains
-
-| Domain | Status |
-|--------|--------|
-| Education | Shipped (community-reviewed) |
-| Your field | Auto-generated by /init |
-
-## MCP Servers
-
-Scholar Flow configures these MCP (Model Context Protocol) servers:
-
-| Server | Purpose | API Key |
-|--------|---------|---------|
-| Semantic Scholar | Academic paper search | Optional (improves rate limits) |
-| arXiv | Preprint search | Not needed |
-| Paper Search | Multi-source aggregation | Not needed |
-| Zotero | Reference management | Not needed (local) |
-| Obsidian FS | Knowledge base access | Not needed |
-| Sequential Thinking | Complex reasoning | Not needed |
-| Brave Search | Gray literature | Required |
-
-## Knowledge Management
-
-Scholar Flow integrates with **Obsidian** for knowledge management. If you don't use Obsidian, notes are saved to a local `notes/` directory.
-
-All research outputs (paper notes, search results, ideation sessions, concept cards) are automatically saved with:
-- YAML frontmatter for metadata
-- Bidirectional `[[links]]` connecting related concepts
-- Consistent folder structure for easy navigation
-
-## Project Structure
-
-```
-scholar-flow/
-├── .claude/commands/init.md     # Setup wizard (the only pre-shipped command)
-├── templates/                   # Source templates for personalization
-│   ├── skills/                  # 5 research skill templates
-│   ├── commands/                # 7 command templates  
-│   ├── agents/                  # Agent templates
-│   └── obsidian/                # Note templates
-├── domains/                     # Domain knowledge packs
-│   ├── education/               # Shipped domain pack
-│   └── _template/               # Template for new domains
-├── docs/                        # Documentation
-└── .scholar-flow.example.yaml   # Example configuration
-```
-
-After running `/init`, additional files are generated:
-```
-CLAUDE.md                        # Your personalized project instructions
-.mcp.json                        # Configured MCP servers
-.scholar-flow.yaml               # Your configuration
-.claude/commands/*.md             # Generated slash commands
-.agents/skills/*/                 # Generated skills with domain data
-```
-
-## Documentation
-
-- [Quick Start Guide](docs/quickstart.md)
-- [Architecture Overview](docs/architecture.md)  
-- [Skills Guide](docs/skills-guide.md)
-- [Creating Domain Packs](docs/creating-domains.md)
-- [API Keys Guide](docs/api-keys.md)
-
-## Contributing
-
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-Ways to contribute:
-- **Domain packs** for your research field
-- **New skills** for research workflows
-- **Translations** for non-English researchers
-- **Bug reports** and feature requests
+---
 
 ## License
 

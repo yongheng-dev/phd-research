@@ -115,7 +115,7 @@ PhD-Research/
 │   ├── command/          ← OpenCode slash commands (/daily, /search-papers, etc.)
 │   └── agent/            ← OpenCode subagents (deep-dive, paper-summarizer, etc.)
 ├── .claude/              ← Legacy Claude Code assets (kept for parity, do not edit)
-├── .agents/skills/       ← Legacy Claude Code skills (kept for reference)
+├── references/       ← Legacy Claude Code skills (kept for reference)
 ├── domains/              ← Domain knowledge packs
 ├── templates/            ← Source templates (do not modify)
 ├── docs/                 ← Documentation

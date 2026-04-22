@@ -1,28 +1,15 @@
 ---
-description: >-
-  Explain academic concepts and create concept cards saved to Obsidian.
-  Use when the user asks 'what is X', 'explain X', 'define X', wants to
-  understand a theoretical framework, or needs to clarify a term. Trigger
-  phrases: explain, what is, define, concept, term, meaning, help me
-  understand, break down, clarify.
-mode: subagent
-model: github-copilot/claude-opus-4.7
-tools:
-  write: true
-  edit: true
-  bash: true
-  webfetch: true
+name: concept-explainer
+description: >
+  Explain academic concepts and create concept cards. Triggers on: explain,
+  what is, define, concept, term, meaning, theory explanation, help me
+  understand, what does X mean, tell me about, break down, clarify. Also
+  applies when the user encounters an unfamiliar term while reading a paper,
+  asks about the difference between two related concepts, or needs to
+  understand a theoretical framework before applying it. Even casual
+  questions like "what exactly is X?" should trigger this skill.
+generated: true
 ---
-
-## Resource References
-
-Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/concept-explainer/references/domain.yaml
-
-Load them with the Read tool when the workflow below references them.
-
----
-
 
 # Concept Explainer
 
@@ -56,12 +43,14 @@ Use available MCP tools to gather authoritative information:
 Generate the concept card using this template:
 
 ```markdown
+---
 title: "{Concept Name}"
 date: "{YYYY-MM-DD}"
 type: "concept-card"
 tags:
   - {auto-generated based on concept domain}
 source: "concept-explainer"
+---
 
 ## Definition
 
@@ -113,6 +102,7 @@ source: "concept-explainer"
 2. {Good overview/review — a review paper or handbook chapter — verified via search}
 3. {Recent application — a recent paper in AI in Education — verified via search}
 
+---
 Related notes:
 - [[{links to existing notes that mention this concept}]]
 

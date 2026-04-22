@@ -1,28 +1,16 @@
 ---
-description: >-
-  Deep summarization and analysis of an academic paper, producing structured
-  reading notes saved to Obsidian. Use when the user provides a paper title,
-  DOI, arXiv ID, URL, or PDF path and wants a thorough summary. Trigger phrases:
-  summarize paper, read paper, paper summary, analyze this article, paper notes,
-  help me read this.
-mode: subagent
-model: github-copilot/claude-opus-4.7
-tools:
-  write: true
-  edit: true
-  bash: true
-  webfetch: true
+name: paper-summarizer
+description: >
+  Deep summarization and analysis of academic papers, generating structured
+  reading notes and automatically saving to notes. Triggers on: summarize
+  paper, read paper, paper summary, what does this paper say, help me read
+  this, analyze this article, paper notes, summarize this paper. Also applies
+  when the user provides a paper title, DOI, arXiv ID, or PDF path and wants
+  a structured summary. When the user says "summarize that paper from Zotero"
+  or "read the one I highlighted" it also triggers. Even if the user just
+  casually says "how is this one" with a paper link, this skill should trigger.
+generated: true
 ---
-
-## Resource References
-
-Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/paper-summarizer/references/domain.yaml
-
-Load them with the Read tool when the workflow below references them.
-
----
-
 
 # Paper Summarizer
 
@@ -51,6 +39,7 @@ If multiple MCPs are available, combine them for best results — e.g., use Sema
 Use the following template to generate notes. Each section exists for a reason — "One-sentence summary" helps with future quick recall; "Connection to my research" is the most valuable part of the entire note because it transforms passive reading into active thinking.
 
 ```markdown
+---
 title: "{Paper English Title}"
 title_translated: "{Paper title translated to English}"
 authors: ["{First Author}", "{Second Author}"]
@@ -64,6 +53,7 @@ tags:
 citation_count: {citation count}
 rating: {paper quality score 1-5, based on methodological rigor, originality, argumentation}
 relevance: {relevance to AI in Education research direction, 1-5}
+---
 
 ## One-Sentence Summary
 
@@ -154,8 +144,8 @@ Pick 3-5 papers from this paper's reference list worth further reading:
 Before writing the note, verify accuracy against the source. This step prevents hallucinated findings from entering the knowledge base.
 
 **Re-fetch the abstract fresh** (do not rely on what was retrieved in Step 1 — fetch again now):
-- Use `semantic-scholar_paper_title_search` or `semantic-scholar_paper_details` with the DOI
-- Or use `arxiv_get_abstract` for arXiv papers
+- Use `mcp__semantic-scholar__paper_title_search` or `mcp__semantic-scholar__paper_details` with the DOI
+- Or use `mcp__arxiv__get_abstract` for arXiv papers
 
 **Cross-check each Key Finding against the abstract:**
 - Every finding stated must be traceable to the abstract or full text

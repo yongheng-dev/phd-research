@@ -1,29 +1,17 @@
 ---
-description: >-
-  Intelligent multi-source academic literature search, screening, and persistence.
-  Use when the user wants to find papers, search literature, build a reading list,
-  survey a topic, track latest research, or needs scholarly evidence on a topic
-  in AI in Education. Trigger phrases: search literature, find papers, literature
-  search, related research, latest papers, review a topic.
-mode: subagent
-model: github-copilot/claude-opus-4.7
-tools:
-  write: true
-  edit: true
-  bash: true
-  webfetch: true
+name: literature-search
+description: >
+  Intelligent multi-source academic literature search, screening, and
+  persistence. Triggers on: search literature, find papers, literature search,
+  search papers, find studies, related research, latest papers, research
+  landscape, literature survey, review a topic. Also applies when the user
+  wants to understand the academic frontier of a topic, needs references to
+  support an argument, or asks a question requiring scholarly evidence.
+  Even if the user does not explicitly say "search", if the question involves
+  research evidence in AI in Education, consider using this skill for
+  systematic retrieval.
+generated: true
 ---
-
-## Resource References
-
-Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/literature-search/references/journals.md
-- /Users/xuyongheng/PhD-Research/references/literature-search/references/keyword-mapping.md
-
-Load them with the Read tool when the workflow below references them.
-
----
-
 
 # Literature Search Assistant
 
@@ -60,6 +48,7 @@ Based on the intent from Step 1, select the appropriate search mode. Different m
 
 This is the core of the search. Execute four phases in order, each with a different objective.
 
+---
 
 #### Phase A: Build Query Matrix
 
@@ -82,6 +71,7 @@ Then build a **query matrix** — not random keyword combinations, but systemati
 - Do not cram all keywords into one query — multiple narrow queries perform far better than one broad query
 - Number of rows adjusts by mode: Exploratory 4 rows, Focused 3 rows, Tracking/Supplementary 2 rows
 
+---
 
 #### Phase B: Execute Search
 
@@ -122,6 +112,7 @@ Use `paper-search` MCP for cross-source validation:
 
 > If any MCP is unavailable, skip it — no errors, no waiting.
 
+---
 
 #### Phase C: Citation Tracking (Snowball Search)
 
@@ -146,6 +137,7 @@ From Phase B results, select **2-3 most relevant core papers**, then:
 - If forward tracking reveals a heavily-cited paper, track one more level from it
 - Papers added during tracking should not exceed 30% of the total target count
 
+---
 
 #### Phase D: Coverage Check
 
@@ -164,6 +156,7 @@ Before moving to screening, quickly check the result set's coverage. If obvious 
 
 **Operation:** Quickly scan Phase B+C results; for clearly missing dimensions, construct 1-2 supplementary queries and run another round.
 
+---
 
 ### Step 4: Screen and Rank
 
@@ -207,6 +200,7 @@ Before presenting results, audit the final ranked list against these 6 coverage 
 
 For each recommended paper, present in the following format:
 
+---
 
 ### [Number]. [English Title]
 
@@ -227,6 +221,7 @@ For each recommended paper, present in the following format:
 
 **Keywords**: #tag1 #tag2 #tag3
 
+---
 
 After all papers, provide a **recommended reading order**: ranked by relevance from high to low, with priority labels (Must-read / Recommended / Optional).
 

@@ -1,27 +1,14 @@
 ---
-description: >-
-  Build a systematic literature review. Use when the user wants a review paper,
-  systematic synthesis across many studies, state of the art on a topic, or
-  evidence synthesis. Trigger phrases: literature review, systematic review,
-  review paper, synthesize findings, survey the field, state of the art.
-mode: subagent
-model: github-copilot/claude-opus-4.7
-tools:
-  write: true
-  edit: true
-  bash: true
-  webfetch: true
+name: lit-review-builder
+description: >
+  Build systematic literature reviews. Triggers on: literature review,
+  systematic review, review paper, synthesize findings, survey the field,
+  state of the art, research synthesis, summarize the literature, map the
+  field, what do we know about, evidence synthesis. Also applies when the
+  user wants to write a review section for a thesis or paper, or needs to
+  systematically organize findings across multiple studies on a topic.
+generated: true
 ---
-
-## Resource References
-
-Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/lit-review-builder/references/domain.yaml
-
-Load them with the Read tool when the workflow below references them.
-
----
-
 
 # Literature Review Builder
 
@@ -203,7 +190,7 @@ Before saving the review, verify that every paper cited in the review actually e
 **Run citation verification on all included papers:**
 For each paper in the included studies list:
 - Confirm it was retrieved from a live database query (Semantic Scholar or arXiv) — not recalled from training memory
-- If a paper was added during synthesis without a live retrieval: verify it now via `semantic-scholar_paper_title_search`
+- If a paper was added during synthesis without a live retrieval: verify it now via `mcp__semantic-scholar__paper_title_search`
 - Any paper that cannot be confirmed: remove from the review and note the removal
 
 **Coverage self-check:**

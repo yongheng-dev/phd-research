@@ -1,0 +1,29 @@
+- name: "Self-Regulated Learning (SRL)"
+  description: "Explains how learners plan, monitor, and evaluate their learning processes; central for studying how AI tools support metacognition, motivation, and strategy use."
+
+- name: "Sociocultural Theory"
+  description: "Frames learning as socially mediated activity shaped by tools, language, and interaction; useful for analyzing how AI becomes a mediating artifact in classrooms."
+
+- name: "Constructivism"
+  description: "Views learning as active knowledge construction based on prior experience; relevant for designing AI-supported inquiry, feedback, and problem-solving environments."
+
+- name: "Technology Acceptance Model (TAM/UTAUT)"
+  description: "Explains adoption of new technologies through perceived usefulness, ease of use, social influence, and facilitating conditions; widely applied to AI tool uptake by teachers and students."
+
+- name: "TPACK Framework"
+  description: "Describes the integration of technological, pedagogical, and content knowledge; useful for studying teachers' capacity to incorporate AI into instruction."
+
+- name: "Community of Inquiry (CoI)"
+  description: "Highlights cognitive, social, and teaching presence in online and blended learning; relevant for AI-supported discussion, tutoring, and feedback environments."
+
+- name: "Human-AI Collaboration"
+  description: "Conceptualizes how humans and AI systems coordinate cognition, decision making, and task execution; valuable for examining teacher-AI and student-AI partnerships."
+
+- name: "Cognitive Load Theory"
+  description: "Examines how instructional designs affect working memory demands; helpful for evaluating whether AI tools reduce or increase extraneous cognitive load."
+
+- name: "Learning Analytics Frameworks"
+  description: "Provide conceptual structures for collecting, interpreting, and acting on learner data to improve outcomes; useful for AI-driven dashboards and intervention systems."
+
+- name: "AI Literacy Frameworks"
+  description: "Define the knowledge, skills, attitudes, and ethical awareness needed to understand and use AI critically and effectively in educational settings."

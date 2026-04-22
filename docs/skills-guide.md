@@ -60,7 +60,7 @@ Academic concept cards with:
 
 ## Creating Custom Skills
 
-1. Create a directory: `.agents/skills/{your-skill-name}/`
+1. Create a directory: `references/{your-skill-name}/`
 2. Write a `SKILL.md` file with this structure:
 
 ```markdown
@@ -87,7 +87,7 @@ Communicate in the user's preferred language.
 
 ## Modifying Built-in Skills
 
-The generated skills in `.agents/skills/` can be edited directly. However, re-running `/init` will overwrite them (they have `generated: true` in frontmatter).
+The generated skills in `references/` can be edited directly. However, re-running `/init` will overwrite them (they have `generated: true` in frontmatter).
 
 To make permanent changes:
 1. Edit the template in `templates/skills/{name}/SKILL.md.tmpl`

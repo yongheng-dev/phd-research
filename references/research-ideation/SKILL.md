@@ -1,31 +1,18 @@
 ---
-description: >-
-  Research ideation and creative direction generation via collision matrix.
-  Use when the user wants brainstorming, research direction generation, gap
-  analysis, or innovative angles in AI in Education. Trigger phrases:
-  ideation, brainstorm, research direction, research gap, what to research,
-  give me ideas.
-mode: subagent
-model: github-copilot/claude-opus-4.7
-tools:
-  write: true
-  edit: true
-  bash: true
-  webfetch: true
+name: research-ideation
+description: >
+  Research ideation and creative research direction generation via collision
+  matrix. Triggers on: ideation, brainstorm, research direction, topic
+  selection, research gap, gap, innovation, what to research, what can be
+  studied, give me some ideas, idea. Also applies when the user expresses
+  confusion (e.g., "I do not know what direction to take") or seeks a
+  research breakthrough. When the user finishes reading a batch of papers
+  and wants to find new directions, this should also trigger. Even if the
+  user does not explicitly say "ideation", if they are exploring research
+  possibilities, looking for innovative angles, or trying to connect ideas
+  from different domains, use this skill.
+generated: true
 ---
-
-## Resource References
-
-Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/theories.yaml
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/methods.yaml
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/topics.yaml
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/social-issues.yaml
-
-Load them with the Read tool when the workflow below references them.
-
----
-
 
 # Research Ideation Engine
 
@@ -85,6 +72,7 @@ Generate 3-5 research directions for the user. Each direction should be a genuin
 For each recommended research direction, output in the following format:
 
 ```
+---
 ### Direction [Number]: [Short Title]
 
 **Collision source**: [What from Dimension A] x [What from Dimension B] x [What from Dimension C]
@@ -113,6 +101,7 @@ For each recommended research direction, output in the following format:
 
 **Seed literature**:
 - {2-3 must-read papers in [[bidirectional link]] format}
+---
 ```
 
 **Generation principles:**
@@ -129,7 +118,7 @@ Before presenting directions to the user, verify that each direction is genuinel
 
 Run one targeted Semantic Scholar search to measure field saturation:
 - Query: core RQ translated into academic keywords
-- Use `semantic-scholar_paper_bulk_search` sorted by `citationCount:desc`, limit 10
+- Use `mcp__semantic-scholar__paper_bulk_search` sorted by `citationCount:desc`, limit 10
 - Count how many papers directly address the same RQ
 
 **Saturation scoring:**

@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "semantic-scholar": {
+      "command": "uvx",
+      "args": [
+        "semantic-scholar-fastmcp"
+      ]
+    },
+    "arxiv": {
+      "command": "uvx",
+      "args": [
+        "arxiv-mcp-server"
+      ]
+    },
+    "paper-search": {
+      "command": "uvx",
+      "args": [
+        "paper-search-mcp"
+      ]
+    },
+    "zotero": {
+      "command": "uvx",
+      "args": [
+        "zotero-mcp"
+      ],
+      "env": {
+        "ZOTERO_LOCAL": "true"
+      }
+    },
+    "obsidian-fs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/xuyongheng/Obsidian-Vault"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    }
+  }
+}
