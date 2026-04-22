@@ -12,6 +12,11 @@ tools:
   edit: true
   bash: true
   webfetch: true
+permission:
+  edit: allow
+  webfetch: allow
+  bash:
+    "*": allow
 ---
 
 ## Resource References

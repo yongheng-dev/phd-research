@@ -14,6 +14,11 @@ tools:
   bash: true
   webfetch: true
   task: true
+permission:
+  edit: allow
+  webfetch: allow
+  bash:
+    "*": allow
 ---
 
 # Deep Dive Research Orchestrator
@@ -209,3 +214,17 @@ At each phase transition: one-line status update ("Phase 2 complete — all 12 p
 At the end: deliver the synthesis report.
 
 Communicate in English.
+
+
+---
+
+## PhD Doctrine (Mandatory Pre-Flight)
+
+Before any reasoning, **load `.opencode/memory/phd-doctrine.md`** and apply its constraints:
+
+- A PhD direction must sit on a **mainstream anchor** (a recognized active research line in the last 5 years) AND introduce a **concrete sub-branch** (the small twist).
+- Every proposed direction or review positioning must answer: what **named theoretical contribution** results, and **so what** beyond a benchmark gain?
+- Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing previously rejected directions.
+- All four fields (`mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`) are **non-optional** in your final output.
+
+Use the `read` tool to load both files. Cite the doctrine explicitly in your reasoning when judging a direction or framing a review.

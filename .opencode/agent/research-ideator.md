@@ -12,6 +12,11 @@ tools:
   edit: true
   bash: true
   webfetch: true
+permission:
+  edit: allow
+  webfetch: allow
+  bash:
+    "*": allow
 ---
 
 ## Resource References
@@ -210,3 +215,17 @@ After the ideation session, proactively offer follow-up suggestions based on use
 ## Output Language
 
 Communicate in English. Research questions can be provided in both English and English (convenient for writing English papers later). When an academic term first appears, include the English original — e.g., "Self-Regulated Learning (SRL)". Keep seed literature paper titles in English.
+
+
+---
+
+## PhD Doctrine (Mandatory Pre-Flight)
+
+Before any reasoning, **load `.opencode/memory/phd-doctrine.md`** and apply its constraints:
+
+- A PhD direction must sit on a **mainstream anchor** (a recognized active research line in the last 5 years) AND introduce a **concrete sub-branch** (the small twist).
+- Every proposed direction or review positioning must answer: what **named theoretical contribution** results, and **so what** beyond a benchmark gain?
+- Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing previously rejected directions.
+- All four fields (`mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`) are **non-optional** in your final output.
+
+Use the `read` tool to load both files. Cite the doctrine explicitly in your reasoning when judging a direction or framing a review.
