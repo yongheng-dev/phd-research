@@ -129,11 +129,11 @@ PhD-Research/
 
 | Command | Purpose |
 |---------|---------|
-| `/daily` | Daily research routine |
-| `/search-papers {topic}` | Multi-source literature search |
-| `/summarize {paper}` | Deep paper summary and note generation |
-| `/brainstorm {topic}` | Research ideation via collision matrix |
-| `/lit-review {topic}` | Systematic literature review |
-| `/concept {term}` | Concept explanation and card creation |
-| `/weekly-report` | Weekly research activity summary |
-| `/deep-dive {topic}` | Full verified multi-stage research pipeline |
+| `/find {query}` | Find papers, concepts, or existing notes (auto-routes) |
+| `/read {paper}` | Read a paper deeply — auto-fetches PDF, summarizes, extracts |
+| `/think {topic}` | Ideation, concept cards, or theory maps (auto-routes) |
+| `/write {target}` | Long-form output — draft, review, section, response |
+| `/review [--cadence=day\|week\|month]` | Daily / weekly / monthly retrospective |
+| `/plan {topic}` | PhD 5-step doctoral path (S1→S5); `--mode=deep-dive` for full pipeline |
+| `/admin {subcommand}` | System maintenance — `meta-optimize`, `eval`, `health` |
+| `/init` | First-time project setup wizard (Scholar Flow) |
