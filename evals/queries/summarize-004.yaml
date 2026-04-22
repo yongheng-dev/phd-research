@@ -1,0 +1,11 @@
+id: summarize-004
+suite: summarize
+severity: P1
+description: Citation-verifier flags any fabricated Related Work reference in the summary.
+command: /summarize
+args: "10.1016/j.compedu.2023.104844 --effort=standard"
+expected_properties:
+  - kind: audit_verdict_present
+    audit_agent: citation-verifier
+  - kind: no_unverified_citations_in_body
+tags: [summarize, audit]

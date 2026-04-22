@@ -24,6 +24,9 @@ notes/
 # Eval results (large, regenerated)
 evals/results/*
 !evals/results/.gitkeep
+evals/reports/*
+!evals/reports/.gitkeep
+!evals/reports/README.md
 
 # Node
 .opencode/node_modules/

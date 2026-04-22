@@ -1,0 +1,13 @@
+id: integration-001
+suite: integration
+severity: P0
+description: End-to-end /phd-route run produces all 5 step trace lines + final summary.
+command: /phd-route
+args: "learning analytics for SRL --effort=standard"
+expected_properties:
+  - kind: trace_step_lines_present
+    path_glob: ".opencode/traces/*/phd-route.jsonl"
+    steps_required: [S1, S2, S3, S4, S5]
+  - kind: trace_has_field
+    field: proceed_count
+tags: [integration, e2e]

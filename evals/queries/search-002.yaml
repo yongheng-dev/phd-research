@@ -1,0 +1,13 @@
+id: search-002
+suite: search
+severity: P1
+description: Coverage-critic audit catches a deliberately narrow query.
+command: /search-papers
+args: "LLM tutor RCT 2024 --effort=standard"
+expected_properties:
+  - kind: trace_audit_verdict
+    trace_file_glob: ".opencode/traces/*/search.jsonl"
+    verdict_in: [ok, warn]
+  - kind: audit_produced_gap_report
+    audit_agent: coverage-critic
+tags: [search, audit]

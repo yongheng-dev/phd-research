@@ -1,0 +1,13 @@
+id: summarize-002
+suite: summarize
+severity: P0
+description: Summary-auditor catches a deliberately over-claimed summary and triggers revision.
+command: /summarize
+args: "2305.15334 --effort=deep"
+expected_properties:
+  - kind: trace_has_field
+    field: retry_count
+    min: 0
+  - kind: audit_verdict_present
+    audit_agent: summary-auditor
+tags: [summarize, audit]

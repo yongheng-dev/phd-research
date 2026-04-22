@@ -1,0 +1,13 @@
+id: search-004
+suite: search
+severity: P2
+description: Ambiguous acronym triggers clarification request or documented disambiguation.
+command: /search-papers
+args: "ITS in higher ed --effort=quick"
+expected_properties:
+  - kind: disambiguation_handled
+    acronyms: [ITS]
+  - kind: trace_audit_verdict
+    trace_file_glob: ".opencode/traces/*/search.jsonl"
+    verdict_in: [ok, warn]
+tags: [search, robustness]

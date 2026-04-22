@@ -3,7 +3,12 @@ description: Daily research routine — paper recommendations, review reminders,
 agent: build
 ---
 
-Run my daily research routine:
+Run my daily research routine: $ARGUMENTS
+
+**Parse flags**:
+- `--effort=quick|standard|deep` (quick: 3 papers + skip inspiration spark; standard: full routine; deep: full routine + deeper coverage-critic audit)
+- `--no-audit` → skip mini-audit (NOT recommended)
+Default: `--effort=standard`.
 
 1. **Paper Recommendations**: Search for 3-5 recent papers (last 7 days) related to my research topics: AI literacy, self-regulated learning, learning analytics, intelligent tutoring systems. Use Semantic Scholar (sort by recency) and arXiv. Focus on AI in Education.
 

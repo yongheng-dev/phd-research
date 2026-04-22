@@ -1,0 +1,11 @@
+id: audit-003
+suite: audit
+severity: P1
+description: Adversarial audit by gpt-5.4 actually runs (trace records auditor model).
+command: /search-papers
+args: "AI literacy framework --effort=standard"
+expected_properties:
+  - kind: trace_has_field
+    field: auditor_model
+    equals_any_of: ["github-copilot/gpt-5.4", "gpt-5.4"]
+tags: [audit, provider]

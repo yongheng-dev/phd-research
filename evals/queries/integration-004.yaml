@@ -1,0 +1,12 @@
+id: integration-004
+suite: integration
+severity: P2
+description: /weekly-report aggregates traces from last 7 days into a single report.
+command: /weekly-report
+args: ""
+expected_properties:
+  - kind: file_exists
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/**/weekly-report-*.md"
+  - kind: report_section_present
+    sections: [Commands run, Audit failure rate, Doctrine compliance]
+tags: [integration, aggregation]

@@ -12,6 +12,7 @@ This command operationalizes `.opencode/memory/phd-doctrine.md`. It is the **can
 ## Flags
 
 Parse from `$ARGUMENTS`:
+- `--effort=quick|standard|deep` (quick: S1+S5 only for fast gate; standard: all 5 steps; deep: all 5 + extra coverage-critic pass on S1 and S2) — default: `standard`
 - `--years=N`   window for S1 deep search (default: 5)
 - `--review-years=N`  window for S2 quick survey (default: 2)
 - `--gate=strict|lenient`  passed to S5 So-What Gate (default: strict)

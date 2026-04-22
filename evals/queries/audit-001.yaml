@@ -1,0 +1,12 @@
+id: audit-001
+suite: audit
+severity: P0
+description: Every research command emits a trace with audit verdict.
+command: /search-papers
+args: "multimodal learning analytics --effort=quick"
+expected_properties:
+  - kind: trace_file_exists
+    path_glob: ".opencode/traces/*/search.jsonl"
+  - kind: trace_has_field
+    field: audit_verdict
+tags: [audit, smoke]

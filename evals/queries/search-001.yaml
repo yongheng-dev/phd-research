@@ -1,0 +1,19 @@
+id: search-001
+suite: search
+severity: P0
+description: Basic keyword search returns results and saves to vault.
+command: /search-papers
+args: "self-regulated learning large language models --effort=quick"
+expected_properties:
+  - kind: file_exists
+    path_glob: "/Users/xuyongheng/Obsidian-Vault/Search Results/*-self-regulated*.md"
+  - kind: frontmatter_has
+    field: type
+    equals: search-results
+  - kind: min_count
+    what: papers_listed
+    min: 5
+  - kind: trace_audit_verdict
+    trace_file_glob: ".opencode/traces/*/search.jsonl"
+    verdict_in: [ok, warn]
+tags: [search, smoke]

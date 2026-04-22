@@ -26,7 +26,18 @@ Review the past 7 days of activity:
 
 7. **New entries in `.opencode/memory/`** this week (decisions / patterns / failed-ideas) — list briefly.
 
-8. **Summary**: Provide a brief narrative of the week's research progress, key insights, quality trends (improving or degrading?), and suggested focus areas for next week.
+8. **Assurance Dashboard** (from `evals/reports/`): Find the most recent eval report (`evals/reports/YYYY-MM-DD.md`). Extract and display:
+   - Pass / Warn / Fail count per suite (search, summarize, doctrine, audit, integration)
+   - P0 failures this week (any P0 FAIL = dashboard RED)
+   - Doctrine compliance rate across sampled runs
+   - Audit failure rate across sampled runs
+   - Trend vs previous eval report (Δ pass rate)
+   - If no eval report exists in the last 14 days: print "⚠ Assurance data stale — run `/eval` to refresh."
+   - Top 3 failing queries with the fix proposed by `meta-optimizer` (if a matching proposal exists in `.opencode/proposals/`).
+
+9. **Meta-optimization proposals**: List new files in `.opencode/proposals/` from this week (these are NOT applied automatically — user must review and apply).
+
+10. **Summary**: Provide a brief narrative of the week's research progress, key insights, quality trends (improving or degrading?), and suggested focus areas for next week.
 
 Save the report to `/Users/xuyongheng/Obsidian-Vault/Daily Notes/weekly-YYYY-MM-DD.md` with frontmatter (`type: "weekly-report"`).
 
