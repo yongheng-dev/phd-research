@@ -13,10 +13,13 @@ notes/
 # Traces & checkpoints (large, regenerated)
 .opencode/traces/*
 !.opencode/traces/.gitkeep
+!.opencode/traces/README.md
 .opencode/checkpoints/*
 !.opencode/checkpoints/.gitkeep
+!.opencode/checkpoints/README.md
 .opencode/proposals/*
 !.opencode/proposals/.gitkeep
+!.opencode/proposals/README.md
 
 # Eval results (large, regenerated)
 evals/results/*
