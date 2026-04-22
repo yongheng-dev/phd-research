@@ -6,7 +6,7 @@ set -u
 DIR="$(cd "$(dirname "$0")" && pwd)"
 FAIL=0
 
-for v in check-frontmatter.sh check-persistence.sh check-audit-contract.sh check-traces.sh check-memory.sh check-doctrine-references.sh; do
+for v in check-frontmatter.sh check-persistence.sh check-audit-contract.sh check-traces.sh check-memory.sh check-doctrine-references.sh check-plugin.sh; do
   echo "── Running $v ──"
   bash "$DIR/$v" || FAIL=$((FAIL+1))
   echo
@@ -14,7 +14,7 @@ done
 
 if [[ $FAIL -eq 0 ]]; then
   echo "════════════════════════════════════"
-  echo "✓ All 6 contracts PASS"
+  echo "✓ All 7 contracts PASS"
   echo "════════════════════════════════════"
   exit 0
 else

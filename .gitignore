@@ -24,6 +24,10 @@ evals/results/*
 
 # Node
 .opencode/node_modules/
+.opencode/package.json
+.opencode/package-lock.json
+.opencode/bun.lockb
+.opencode/bun.lock
 
 # OS files
 .DS_Store

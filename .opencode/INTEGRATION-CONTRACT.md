@@ -120,6 +120,25 @@ Non-research agents (paper-summarizer, concept-explainer, citation-verifier, etc
 
 ---
 
+## C7 — Plugin Contract (runtime event hooks)
+
+The file `.opencode/plugins/phd.ts` is the ONLY plugin and MUST:
+
+1. Be a single TypeScript file with zero npm dependencies (Node/Bun built-ins only).
+2. Export a default async plugin function (and/or `PhdPlugin` named export) returning an event-subscription object.
+3. Subscribe at minimum to: `session.created`, `session.idle`, `session.compacted`, `experimental.session.compacting`, `command.executed`, `tool.execute.before`, `tool.execute.after`.
+4. Write per-session traces to `.opencode/traces/session-<id>.jsonl` (append-only).
+5. Write `/deep-dive` stage checkpoints to `.opencode/checkpoints/<session>-deep-dive-<stage>-<ts>.json` — and NOT write checkpoints for any other command (locked decision).
+6. Never throw out of a hook (all fs ops wrapped in try/catch).
+7. Never mutate `.opencode/memory/*`.
+8. Inject a doctrine-preservation block into `experimental.session.compacting` so long research threads survive context compaction.
+
+If `.opencode/package.json` appears (OpenCode runtime auto-generates it), it MUST be gitignored. The source file `phd.ts` itself must import only `node:*` modules.
+
+**Verifier:** `.opencode/verifiers/check-plugin.sh`
+
+---
+
 ## Compliance & Drift
 
 The meta-optimizer (P5) runs all six verifiers weekly. Any contract violation:
