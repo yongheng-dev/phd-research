@@ -13,7 +13,13 @@ This command operationalizes `.opencode/memory/phd-doctrine.md`. It is the **can
 ## Modes
 
 - `--mode=sub-branch` (default) — the 5-step doctrine path for identifying a small sub-branch inside a mainstream line.
-- `--mode=deep-dive` — full verified pipeline with all 4 audit agents at every stage. Use when topic is locked and maximum assurance is required.
+- `--mode=deep-dive` — hand off immediately to the `deep-dive` agent, which is the runtime orchestrator for the full verified multi-agent pipeline. Use when topic is locked and maximum assurance is required.
+
+## Runtime routing
+
+- Default route: execute the 5-step doctrine workflow in this command.
+- `--mode=deep-dive`: do **not** inline the whole workflow in the main agent. Delegate the run to `deep-dive`, pass the topic, user constraints, and any explicit filters, and let that orchestrator spawn `research-planner`, `literature-searcher`, `coverage-critic`, `citation-verifier`, `paper-summarizer`, `summary-auditor`, `research-ideator`, and `novelty-checker` via the `task` tool.
+- If the user explicitly says "先不要开始" / "just plan first" / "only give me a checklist", stay in planning mode and do not launch the deep-dive runtime yet.
 
 ## Flags
 
@@ -31,6 +37,11 @@ Every step runs through a **mandatory full-pipeline audit chain**: S1 → covera
 In `--mode=deep-dive`, add summary-auditor to every paper-summarizer invocation in S3 and a final citation-verifier sweep across the whole pipeline output.
 
 ## Workflow — 5 steps (all MUST run unless `--skip`)
+
+This section defines the doctrine-preserving shape of the path.
+
+- In default mode, execute it directly.
+- In `--mode=deep-dive`, preserve the same evidence and audit intent, but let `deep-dive` own the actual subagent orchestration at runtime.
 
 ### S1 — Deep Search (last `--years` years)
 Delegate to `literature-searcher` with `--recency=<years>`. Output: hotspot list of **mainstream_anchor** candidates (min 3).
@@ -89,7 +100,7 @@ In `--mode=deep-dive`, after each stage write `.opencode/checkpoints/$(date +%Y-
 ## Evidence Chain
 
 - Source evidence: S1 search results, S2 review panoramas, S3 theory inventories, S4 candidate directions, and the doctrine constraints loaded from `.opencode/memory/phd-doctrine.md`.
-- Verification trail: the mandatory audit chain runs stepwise through `coverage-critic`, `citation-verifier`, `concept-auditor`, `novelty-checker`, and `summary-auditor` in deep-dive mode, with checkpoints preserving the last verified state.
+- Verification trail: the mandatory audit chain runs stepwise through `coverage-critic`, `citation-verifier`, `concept-auditor`, `novelty-checker`, and `summary-auditor`. In `--mode=deep-dive`, `deep-dive` is responsible for spawning the runtime subagents and preserving checkpoints between phases.
 - Persisted artifact: save the final plan note to `/Users/xuyongheng/Obsidian-Vault/Writing/` with the theory-map link, PROCEED/REJECT evidence, `Related notes`, and resume checkpoints under `.opencode/checkpoints/`.
 - Downstream handoff: the verified plan becomes the evidence-backed brief for `/write`, later `/read` expansion, and narrowed `/think` refinement.
 
