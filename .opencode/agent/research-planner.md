@@ -47,14 +47,23 @@ Before issuing a search brief, avoid duplicating work already done:
 1. Use `obsidian-fs_search_files` to check for existing notes on this topic:
    - Search in `/Users/xuyongheng/Obsidian-Vault/Inbox/`
    - Search in `/Users/xuyongheng/Obsidian-Vault/Notes/`
-   - Search in `/Users/xuyongheng/Obsidian-Vault/Notes/`
+   - Search in `/Users/xuyongheng/Obsidian-Vault/Writing/`
 
 2. If relevant existing notes found:
    - Report what was found and when it was created
    - Ask: does the user want to extend/update existing work, or start fresh?
    - If extending: include existing paper list in the search brief so the executor avoids duplicates
 
-3. Check `.scholar-flow/wisdom/search-patterns.md` for effective queries previously discovered on this topic.
+3. Check `.opencode/memory/research-log.md` and `.opencode/memory/decisions.md` for prior work or search guidance on this topic.
+
+### Step 2b: Multi-Step Reasoning (when needed)
+
+For complex or ambiguous requests where the path forward is unclear, use `sequential-thinking_sequentialthinking` to think through the problem before issuing a search brief. This is especially useful when:
+- The topic is highly interdisciplinary (e.g., AI literacy + SRL + learning analytics)
+- The user's request mixes multiple intent types
+- You need to reason about which search strategy will yield the most useful results
+
+Call `sequential-thinking_sequentialthinking` with `totalThoughts: 5-8` before proceeding to Step 3 in these cases.
 
 ### Step 3: Detect Ambiguity
 
@@ -125,4 +134,8 @@ After generating the brief, hand off to the appropriate workflow:
 
 ## Output Language
 
-English. Search queries in English academic register.
+Deep Chinese for the brief and user-facing explanation. Keep paper titles in their original language. Search queries, filters, and API parameters remain in English academic register.
+
+## PhD Doctrine
+
+Load `.opencode/memory/phd-doctrine.md` when shaping the brief. The brief should preserve enough structure for downstream `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, and `so_what` evaluation.

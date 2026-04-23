@@ -10,11 +10,12 @@ set -u
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 CMD_DIR="$ROOT/.opencode/command"
 FAIL=0
-# /init is the setup wizard; exempt from audit contract.
-EXEMPT=("init")
+# No command-level exemptions.
+EXEMPT=()
 
 is_exempt() {
   local name="$1"
+  [[ ${#EXEMPT[@]} -eq 0 ]] && return 1
   for e in "${EXEMPT[@]}"; do
     [[ "$name" == "$e" ]] && return 0
   done

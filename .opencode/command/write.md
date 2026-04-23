@@ -27,16 +27,22 @@ Every `/write` invocation runs:
 3. **Doctrine check** — if the piece makes claims about research direction / contribution, the 4 doctrine fields must be present somewhere (body or footer metadata). Missing fields abort save.
 4. **Summary-auditor** (GPT-5.4) for reviews only — spot-checks 5 random claims against their cited papers.
 
+Load `.opencode/memory/phd-doctrine.md` before drafting or auditing any contribution-facing output.
+
 `--audit=off` is **forbidden** on `/write`. This constitutes the **mandatory full-pipeline audit** for this command.
 
 ## Save location
 
 `/Users/xuyongheng/Obsidian-Vault/Writing/`, as `{DocumentTitle}.md` with YAML frontmatter including `type: "writing-draft"` or `type: "lit-review"`.
 
+## Output Language
+
+Default to deep Chinese for user-facing output and saved drafts. Keep paper titles in their original language. Search queries, citation metadata, flags, and API parameters remain in English academic register.
+
 ## Trace
 
 ```json
-{"ts":"<iso>","command":"/write","kind":"draft|review|section|response","effort":"...","citations_checked":<n>,"hallucinated":<n>,"coverage_verdict":"SUFFICIENT|PARTIAL|INSUFFICIENT"}
+{"ts":"<iso>","command":"/write","audit":"on","kind":"draft|review|section|response","effort":"...","citations_checked":<n>,"hallucinated":<n>,"coverage_verdict":"SUFFICIENT|PARTIAL|INSUFFICIENT"}
 ```
 
 ## Hard rules

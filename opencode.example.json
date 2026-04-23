@@ -1,0 +1,99 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "github-copilot/claude-sonnet-4.6",
+  "mcp": {
+    "semantic-scholar": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "semantic-scholar-fastmcp"
+      ],
+      "environment": {
+        "SEMANTIC_SCHOLAR_API_KEY": "xxxx"
+      },
+      "enabled": true
+    },
+    "arxiv": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "arxiv-mcp-server"
+      ],
+      "enabled": true
+    },
+    "paper-search": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from",
+        "paper-search-mcp",
+        "python",
+        "-m",
+        "paper_search_mcp.server"
+      ],
+      "environment": {
+        "PAPER_SEARCH_MCP_UNPAYWALL_EMAIL": "xxxx",
+        "PAPER_SEARCH_MCP_SEMANTIC_SCHOLAR_API_KEY": "xxxx",
+        "PAPER_SEARCH_MCP_CORE_API_KEY": "xxxx"
+      },
+      "enabled": true
+    },
+    "zotero": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "zotero-mcp"
+      ],
+      "environment": {
+        "ZOTERO_LOCAL": "true"
+      },
+      "enabled": true
+    },
+    "obsidian-fs": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/xuyongheng/Obsidian-Vault"
+      ],
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "enabled": true
+    },
+    "brave-search": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "environment": {
+        "BRAVE_API_KEY": "xxxx"
+      },
+      "enabled": true
+    },
+    "fetch": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-server-fetch"
+      ],
+      "enabled": true
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "webfetch": "allow",
+    "bash": {
+      "*": "allow"
+    }
+  }
+}

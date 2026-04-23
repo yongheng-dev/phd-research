@@ -1,8 +1,0 @@
-# Domain Pack Template
-# Copy this directory and fill in the values for your research field.
-# See docs/creating-domains.md for detailed instructions.
-
-name: ""                    # Display name (e.g., "Psychology", "Computer Science")
-description: ""             # One-line description of the field focus
-core_topics:                # 8-12 major research areas in this field
-  - ""

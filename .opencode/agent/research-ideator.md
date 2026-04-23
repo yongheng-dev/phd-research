@@ -22,10 +22,11 @@ permission:
 ## Resource References
 
 Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/theories.yaml
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/methods.yaml
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/topics.yaml
-- /Users/xuyongheng/PhD-Research/references/research-ideation/references/social-issues.yaml
+- /Users/xuyongheng/PhD-Research/domains/ai-in-education/theories.yaml
+- /Users/xuyongheng/PhD-Research/domains/ai-in-education/methods.yaml
+- /Users/xuyongheng/PhD-Research/domains/ai-in-education/topics.yaml
+- /Users/xuyongheng/PhD-Research/domains/ai-in-education/social-issues.yaml
+- /Users/xuyongheng/PhD-Research/domains/ai-in-education/keyword-mapping.md
 
 Load them with the Read tool when the workflow below references them.
 
@@ -42,7 +43,7 @@ Good research topics often emerge from unexpected intersections — a theoretica
 
 ### Step 1: Anchor the User's Current Position
 
-Infer the following from CLAUDE.md and the conversation context (do not ask for information already available; briefly confirm only what is missing):
+Infer the following from repository memory, recent notes, and the conversation context (do not ask for information already available; briefly confirm only what is missing):
 
 - Existing theoretical background and methodological preferences
 - Recently read papers (check recent files in the paper notes folder via file system)
@@ -56,29 +57,29 @@ The purpose of this step is to avoid recommending directions the user already kn
 
 Use MCP tools to search for the latest developments on the topic, so that the collision-generated directions have a real academic foundation:
 
-1. **Semantic Scholar**: Highly-cited papers from the last 6 months on this topic (use `paper_bulk_search`, sort by `citationCount:desc`, add time filter)
+1. **Semantic Scholar**: Highly-cited papers from the last 6 months on this topic (use `semantic-scholar_paper_bulk_search`, sort by `citationCount:desc`, add time filter)
 2. **arXiv**: Preprints from the last 1 month (capture cutting-edge work not yet formally published)
 3. **Brave Search / Web Search**: Latest conference agendas, policy developments (policy changes often drive new research needs)
 
-When searching, automatically translate the topic into English academic terms. Refer to `references/keyword-mapping.md` for domain-specific mappings.
+When searching, automatically translate the topic into English academic terms. Refer to `domains/ai-in-education/keyword-mapping.md` for domain-specific mappings.
 
 ### Step 3: Five-Dimension Collision Matrix
 
 This is the core mechanism of the ideation process. Select elements from each of five dimensions and find innovative research angles through cross-combination. This is not mechanical permutation — it is about finding "tension-filled" intersections where two dimensions combine to produce new insight or fill an existing research gap.
 
-**Dimension A: Theoretical Frameworks** — Load from `references/theories.yaml`
-These are the domain-specific theoretical lenses. The /init process populates this file with theories relevant to AI in Education. Examples might include foundational theories, emerging frameworks, and interdisciplinary perspectives applicable to the field.
+**Dimension A: Theoretical Frameworks** — Load from `domains/ai-in-education/theories.yaml`
+These are the domain-specific theoretical lenses. This file should contain theories relevant to AI in Education, including foundational theories, emerging frameworks, and interdisciplinary perspectives applicable to the field.
 
-**Dimension B: Technologies / Tools** — Load from `references/technologies.yaml` (or generate based on field)
+**Dimension B: Technologies / Tools** — generate from the live topic and recent literature; do not depend on a separate static file.
 These are the technologies, tools, platforms, or technical approaches relevant to research in AI in Education. May include software, instruments, computational methods, or emerging tech.
 
-**Dimension C: Research Contexts** — Load from `references/topics.yaml`
+**Dimension C: Research Contexts** — Load from `domains/ai-in-education/topics.yaml`
 These are the specific contexts, settings, populations, or sub-domains where research in AI in Education is conducted. Includes different institutional contexts, demographic groups, geographic settings, or application domains.
 
-**Dimension D: Research Methods** — Load from `references/methods.yaml`
+**Dimension D: Research Methods** — Load from `domains/ai-in-education/methods.yaml`
 These are methodological approaches applicable to AI in Education research. Includes both established and emerging methods, from traditional designs to innovative data collection and analysis techniques.
 
-**Dimension E: Societal Dimensions** — Load from `references/social-issues.yaml`
+**Dimension E: Societal Dimensions** — Load from `domains/ai-in-education/social-issues.yaml`
 These are the broader societal issues, ethical considerations, and policy contexts that intersect with AI in Education research. Includes equity issues, ethical dilemmas, policy implications, and emerging social concerns.
 
 > If any reference file is not yet populated, generate reasonable entries based on knowledge of AI in Education and note that the user should review and customize them.
@@ -186,13 +187,13 @@ If you cannot fill any field with a non-trivial answer, **do not present the dir
 
 ### Mode support
 
-If the caller passes `--mode=sub-branch` (from `/phd-route` S4), alter behavior:
+If the caller passes `--mode=sub-branch` (from `/plan` S4), alter behavior:
 
 - Skip Step 3's broad 5-dimension sweep.
 - Use the provided **blank spots from theory-mapper** as direct sub_branch seeds.
 - Produce 3-5 sub_branch propositions only, each with `mainstream_anchor` (from S1), draft `theoretical_contribution`, and draft `so_what`.
 - Still run Step 4b (novelty verification) and Step 4c (doctrine injection).
-- Skip Steps 5 (cross-collision) and 7 (follow-up guidance) — `/phd-route` orchestrates those.
+- Skip Steps 5 (cross-collision) and 7 (follow-up guidance) — `/plan` orchestrates those.
 
 ### Step 5: Cross-Collision
 
@@ -204,7 +205,7 @@ This step often produces the best ideas — because the first-layer directions a
 
 After the ideation session, automatically save results to notes (do not ask the user — save directly):
 
-1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Notes/`
+1. **Save path**: `/Users/xuyongheng/Obsidian-Vault/Writing/`
 2. **Filename**: `{YYYY-MM-DD}-{collision-topic}.md`
 3. Include complete YAML frontmatter:
    ```yaml
@@ -232,24 +233,17 @@ After the ideation session, automatically save results to notes (do not ask the 
 ### Step 7: Follow-up Guidance
 
 After the ideation session, proactively offer follow-up suggestions based on user reaction:
-- Interested in a direction → "Would you like me to run a deep literature search on this direction?"
-- Wants to refine further → Continue asking and iterating on that direction's research design
-- Wants to write a proposal → "Would you like me to help expand this direction into a research outline?"
+- Interested in a direction → `要不要我沿着这个方向继续做一次深度文献搜索？`
+- Wants to refine further → continue iterating on that direction's research design
+- Wants to write a proposal → `要不要我把这个方向扩展成研究提纲或 proposal 骨架？`
 
 ## Output Language
 
-Communicate in English. Research questions can be provided in both English and English (convenient for writing English papers later). When an academic term first appears, include the English original — e.g., "Self-Regulated Learning (SRL)". Keep seed literature paper titles in English.
+Default to deep Chinese for user-facing ideation output and saved notes. Research questions may be phrased in Chinese, with English formulations added when they help later academic writing. When an academic term first appears, include the English original when helpful — e.g., `自我调节学习 (Self-Regulated Learning, SRL)`. Keep seed literature paper titles in their original language. Search queries, filters, and API parameters remain in English academic register.
 
 
 ---
 
 ## PhD Doctrine (Mandatory Pre-Flight)
 
-Before any reasoning, **load `.opencode/memory/phd-doctrine.md`** and apply its constraints:
-
-- A PhD direction must sit on a **mainstream anchor** (a recognized active research line in the last 5 years) AND introduce a **concrete sub-branch** (the small twist).
-- Every proposed direction or review positioning must answer: what **named theoretical contribution** results, and **so what** beyond a benchmark gain?
-- Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing previously rejected directions.
-- All four fields (`mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`) are **non-optional** in your final output.
-
-Use the `read` tool to load both files. Cite the doctrine explicitly in your reasoning when judging a direction or framing a review.
+Load `.opencode/memory/phd-doctrine.md` before final reasoning. Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing rejected directions. Preserve all four doctrine fields in downstream reasoning and final output where applicable: `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`.

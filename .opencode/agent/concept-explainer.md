@@ -22,7 +22,7 @@ permission:
 ## Resource References
 
 Reference files for this agent live at:
-- /Users/xuyongheng/PhD-Research/references/concept-explainer/references/domain.yaml
+- /Users/xuyongheng/PhD-Research/domains/ai-in-education/domain.yaml
 
 Load them with the Read tool when the workflow below references them.
 
@@ -144,4 +144,8 @@ Save the concept card to notes automatically (do not ask the user):
 
 ## Output Language
 
-Communicate in English. Academic terms include English originals on first mention — e.g., "Self-Regulated Learning (SRL)". The concept card itself is written in English with English terms preserved where standard in the field.
+Default to deep Chinese for both the explanation and the saved concept card. Keep paper titles and concept names in their original language where that preserves precision. Academic terms include English originals on first mention when helpful — e.g., `自我调节学习 (Self-Regulated Learning, SRL)`. Search queries, filters, citation metadata, and API parameters remain in English academic register where required.
+
+## PhD Doctrine
+
+Load `.opencode/memory/phd-doctrine.md` before finalizing the card. When the concept is theory-bearing, explain how it can support downstream `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, and `so_what` framing.

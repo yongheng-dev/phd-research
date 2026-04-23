@@ -1,5 +1,5 @@
 ---
-description: Admin — system maintenance (meta-optimize, eval, init). Hidden from main help.
+description: Admin — system maintenance (meta-optimize, health). Hidden from main help.
 agent: build
 audit: off
 ---
@@ -21,22 +21,9 @@ Run `meta-optimizer` on recent traces and memory to PROPOSE (not apply) improvem
 
 Audit: none (meta-optimizer output is itself a proposal; the proposal review IS the audit step).
 
-### `eval` [--suite=search|summarize|doctrine|audit|integration|all]
-
-Run the eval harness against queries in `evals/queries/`.
-
-- Default suite: `all`.
-- Dispatches `evals/bin/run.sh --suite=<suite>` (currently a scaffold; actual dispatch wiring pending user decision on subprocess vs SDK).
-- Writes report to `evals/reports/YYYY-MM-DD-<suite>.json` and a human-readable `.md` sibling.
-- On first real report appearance, `/review --cadence=week` auto-enables the Assurance Dashboard section.
-
-Audit: none (eval IS the audit).
-
 ### `health`
 
 Re-run project scaffolding checks (memory files exist, verifier scripts executable, plugin loads, MCP servers reachable). Read-only except for creating missing `.gitkeep` files.
-
-Note: the full interactive setup wizard is `/init` (kept as a standalone command for first-time project setup).
 
 Audit: none.
 
@@ -45,10 +32,14 @@ Audit: none.
 While individual subcommands skip audits (audit: off), `/admin` logs every invocation to `.opencode/traces/$(date +%Y-%m-%d)/admin.jsonl`:
 
 ```json
-{"ts":"<iso>","command":"/admin","subcommand":"meta-optimize|eval|health","args":"<raw>","result":"ok|fail"}
+{"ts":"<iso>","command":"/admin","audit":"off","subcommand":"meta-optimize|health","args":"<raw>","result":"ok|fail"}
 ```
 
 This trace entry IS the mandatory mini-audit record — every admin action leaves a forensic trail even when no audit agent fires.
+
+## Output Language
+
+Default to deep Chinese for user-facing output. File paths, subcommand names, flags, and API/runtime parameters remain in English.
 
 ## Hard rules
 
@@ -59,7 +50,6 @@ This trace entry IS the mandatory mini-audit record — every admin action leave
 If `$ARGUMENTS` is empty, print:
 ```
 /admin subcommands:
-  meta-optimize [--window=7d|14d|30d]
-  eval [--suite=search|summarize|doctrine|audit|integration|all]
-  health
+   meta-optimize [--window=7d|14d|30d]
+   health
 ```

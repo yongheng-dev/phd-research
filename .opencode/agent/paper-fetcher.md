@@ -35,10 +35,18 @@ You retrieve full paper content given a stable identifier. You do not search, ra
 ## Workflow
 
 1. Classify the identifier.
-2. Prefer `arxiv_download_paper` for arXiv papers (cached under `arxiv_cache/`).
-3. For non-arXiv: use `semantic-scholar_paper_details` to get `openAccessPdf`, then `webfetch` the PDF URL if available.
-4. For Zotero items: use `zotero_zotero_item_fulltext` by item key.
-5. Store the raw text under `arxiv_cache/<id>.md` for arXiv, or `outputs/fetched/<slug>.md` for others, with a header:
+2. **Check cache first**: if `arxiv_cache/<id>.md` or `outputs/fetched/<slug>.md` exists and is younger than 30 days, return cached path immediately.
+3. **arXiv papers**: use `arxiv_download_paper` (cached under `arxiv_cache/`). Stop here if successful.
+4. **Non-arXiv with DOI — cascading fallback chain** (try each step in order, stop at first success):
+   - **Step 4a — Semantic Scholar**: call `semantic-scholar_paper_details` with `fields=openAccessPdf,title,year`; if `openAccessPdf.url` is present, `webfetch` it.
+   - **Step 4b — Unpaywall**: `webfetch https://api.unpaywall.org/v2/{DOI}?email=researcher@phd.edu`; parse `best_oa_location.url_for_pdf`; fetch that URL if non-null. (Unpaywall covers ~50% of all DOIs and often finds links S2 misses.)
+   - **Step 4c — CrossRef**: `webfetch https://api.crossref.org/works/{DOI}?mailto=researcher@phd.edu`; check `link` array for items with `content-type=application/pdf`; fetch first available.
+   - **Step 4d — Open Access Button**: `webfetch https://api.openaccessbutton.org/find?id={DOI}`; parse `url` field.
+   - **Step 4e — HTML landing page**: fetch the DOI landing page as HTML; extract the main text content (abstract + body if available).
+5. **Zotero items**: use `zotero_zotero_item_fulltext` by item key — try this in parallel with Step 4 if a Zotero key is known.
+6. **Semantic Scholar ID (no DOI)**: use `semantic-scholar_paper_details` to resolve to DOI first, then run Step 4 chain.
+7. **Title + author (last resort)**: search Semantic Scholar for the title, get DOI, then run Step 4 chain.
+8. Store the raw text under `arxiv_cache/<id>.md` for arXiv, or `outputs/fetched/<slug>.md` for others, with a header:
 
 ```yaml
 ---
@@ -46,16 +54,18 @@ source: <arxiv|doi|ss|zotero|url>
 id: <id>
 title: "..."
 fetched_at: <iso>
+fetch_method: <arxiv|unpaywall|crossref|oab|ss_pdf|html|zotero>
 ---
 ```
 
-6. Return the local path AND the first 30 lines as a preview.
+9. Return the local path AND the first 30 lines as a preview.
 
 ## Failure handling
 
-If no open-access copy exists:
-- Report `NOT_OPEN_ACCESS` with the best-available metadata.
-- Suggest the user add the PDF to Zotero manually.
+If all fallback steps (4a–4e) fail:
+- Report `NOT_OPEN_ACCESS` with best-available metadata (title, authors, abstract from S2/CrossRef).
+- Log which steps were attempted in the trace.
+- Suggest the user add the PDF to Zotero manually or check institutional access.
 - Never fabricate content.
 
 ## Trace
@@ -63,7 +73,7 @@ If no open-access copy exists:
 Append to `.opencode/traces/YYYY-MM-DD/paper-fetcher.jsonl`:
 
 ```json
-{"ts":"<iso>","agent":"paper-fetcher","input_kind":"arxiv|doi|ss|zotero|url","id":"<id>","outcome":"ok|not_open_access|error","path":"<local path or null>"}
+{"ts":"<iso>","agent":"paper-fetcher","input_kind":"arxiv|doi|ss|zotero|url","id":"<id>","outcome":"ok|not_open_access|error","fetch_method":"<method>","steps_tried":["4a","4b"],"path":"<local path or null>"}
 ```
 
 ## Invariants

@@ -26,8 +26,8 @@ Parse `--cadence=day|week|month` from `$ARGUMENTS` (default: `day`).
 
 ### `--cadence=week`
 
-1. **Papers read** (Paper Notes / last 7 days) — brief per-note summary.
-2. **Searches conducted** (Search Results / Inbox) — list.
+1. **Papers read** (`Notes/` paper notes from last 7 days) — brief per-note summary.
+2. **Searches conducted** (`Inbox/` search-result notes from last 7 days) — list.
 3. **Ideas generated** — So-What Gate stats (PROCEED / REVISE / REJECTED counts).
 4. **Concepts learned** — new concept cards.
 5. **Writing progress** — draft updates.
@@ -36,22 +36,26 @@ Parse `--cadence=day|week|month` from `$ARGUMENTS` (default: `day`).
    - Audit verdicts (SUFFICIENT / PARTIAL / INSUFFICIENT)
    - Hallucination rate, summary pass rate, So-What pass rate
 7. **Memory deltas** — new entries this week in `decisions.md` / `patterns.md` / `failed-ideas.md`.
-8. **Assurance Dashboard guard** — if `evals/reports/*.json` has ≥ 1 file this week, render dashboard; otherwise print one-line notice:
-   > ⚠ Eval harness not wired. See `.opencode/proposals/` for proposals.
-9. **Meta-optimization proposals** — list new files in `.opencode/proposals/` this week (NOT applied automatically).
-10. **Narrative summary** — quality trend, focus suggestion.
-11. Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `weekly-YYYY-MM-DD.md` with `type: "weekly-report"`.
+8. **Meta-optimization proposals** — list new files in `.opencode/proposals/` this week (NOT applied automatically).
+9. **Narrative summary** — quality trend, focus suggestion.
+10. Save to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `weekly-YYYY-MM-DD.md` with `type: "weekly-report"`.
 
 This step constitutes the **mandatory post-audit** for weekly reviews: the quality-stats section IS the audit. If stats cannot be produced (missing traces), the command WARNS rather than failing silently.
 
 ### `--cadence=month`
 
-1. Delegate to `zotero-curator` for library curation pass.
+1. **Zotero curation** — delegate to `zotero-curator` for library curation pass: deduplication, tag standardization, metadata enrichment (DOI/abstract completion), and sync of selected items into the current Obsidian vault layout.
 2. Produce a summary of additions, deletions, retagging.
-3. Review `.opencode/memory/failed-ideas.md` — archive entries > 90 days per R3/Option C rotation policy.
-4. Save curation log to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `curation-YYYY-MM-DD.md` with `type: "curation-log"`.
+3. **Vault hygiene** — check for Inbox notes older than 30 days with no corresponding Notes entry; list them for promotion or archival.
+4. **Sequential-thinking synthesis** — call `sequential-thinking_sequentialthinking` (totalThoughts: 5) to reflect on the month's research trajectory: what themes emerged, what gaps persist, what should be prioritized next month.
+5. Review `.opencode/memory/failed-ideas.md` — archive entries > 90 days per R3/Option C rotation policy.
+6. Save curation log to `/Users/xuyongheng/Obsidian-Vault/Writing/` as `curation-YYYY-MM-DD.md` with `type: "curation-log"`.
 
 This step constitutes the **mandatory mini-audit** for monthly reviews: the curation diff + archival count IS the audit trail.
+
+## Output Language
+
+Default to deep Chinese for user-facing output and saved review notes. Keep paper titles in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
 
 ## Trace
 

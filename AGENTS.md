@@ -1,162 +1,103 @@
 # AGENTS.md
 
-This file provides guidance to OpenCode (and other AGENTS.md-aware agents) when working with this repository.
-
 ## Project
 
-AI in Education research assistant workspace (PhD level).
-Focus areas: AI literacy, self-regulated learning, learning analytics, intelligent tutoring systems.
+OpenCode-first AI in Education research workspace.
+
+Focus areas:
+
+- AI literacy
+- self-regulated learning
+- learning analytics
+- intelligent tutoring systems
+
+## Source Of Truth
+
+When docs drift, trust this order:
+
+1. `.opencode/command/*.md`
+2. `.opencode/agent/*.md`
+3. `opencode.json`
+4. `.opencode/verifiers/CONTRACT.md`
 
 ## Tool Ecosystem
 
-| Tool | Path | Role |
-|------|------|------|
-| OpenCode | This directory | Analysis engine and command center |
-| Obsidian | `/Users/xuyongheng/Obsidian-Vault` | Knowledge base |
-| Zotero | Zotero-managed | PDF storage and citation management |
+| Tool | Role |
+|---|---|
+| OpenCode | runtime and command surface |
+| Obsidian | note persistence |
+| Zotero | reference management |
 
-### MCP Strategy
+## MCP Strategy
 
-- **Search academic papers** → Prefer Semantic Scholar (`semantic-scholar` MCP)
-- **Search preprints** → Use arXiv (`arxiv` MCP)
-- **Manage references** → Use Zotero MCP (`zotero`)
-- **Read/write notes** → Use obsidian-fs MCP (`obsidian-fs`)
-- **Complex reasoning** → Use Sequential Thinking (`sequential-thinking`)
+- paper search: Semantic Scholar first
+- preprints: arXiv
+- references: Zotero
+- notes: obsidian-fs
+- multi-step reasoning: sequential-thinking
 
-In OpenCode, MCP tools are exposed as `<server>_<tool>` (e.g. `semantic-scholar_search_paper`). Prefer MCP tools over generic web search for academic content.
+## Active Commands
 
-## Subagent Routing
+| Command | Purpose |
+|---|---|
+| `/find` | search papers, concepts, or notes |
+| `/read` | fetch and read a paper deeply |
+| `/think` | ideation, concept cards, theory maps |
+| `/write` | draft long-form research output |
+| `/review` | day/week/month review |
+| `/plan` | PhD route and deep-dive planning |
+| `/admin` | system maintenance |
 
-Specialised subagents live under `.opencode/agent/` (18 total). The main agent should delegate via the `task` tool when a request matches:
+## Persistence
 
-### Execution agents (11)
+All research outputs should save into the 3-folder vault layout:
 
-| Subagent | Triggers when... |
-|----------|------------------|
-| `literature-searcher` | User wants to find/search papers, build a reading list, or survey a topic |
-| `paper-fetcher` | Need to download a paper PDF (arXiv / open access / Zotero) |
-| `paper-summarizer` | User provides a paper (title/DOI/arXiv ID/PDF) and wants a structured summary |
-| `data-extractor` | Need to pull structured data (samples, effect sizes, instruments) from a paper |
-| `lit-review-builder` | User wants a systematic literature review or synthesis across many studies |
-| `research-ideator` | User wants ideation, brainstorming, gap analysis, or new research directions |
-| `concept-explainer` | User asks "what is X", "explain X", or wants a concept card |
-| `theory-mapper` | User wants a theory map / framework comparison across multiple theories |
-| `research-planner` | Need to turn a vague topic into a structured search brief |
-| `writing-drafter` | User wants long-form prose — section, draft, response letter |
-| `zotero-curator` | Need to add/tag/organise items in the Zotero library |
+- `Inbox/`
+- `Notes/`
+- `Writing/`
 
-### Audit agents (6) — must declare `fallback_model` and emit `degraded_audit:true` when fallback fires
+## Output Language Policy
 
-| Subagent | Triggers when... |
-|----------|------------------|
-| `citation-verifier` | Need to verify a list of papers actually exists |
-| `coverage-critic` | Need to audit whether a search result set covers a topic well |
-| `summary-auditor` | Need to verify a paper summary against the real paper |
-| `novelty-checker` | Need to score the novelty of research directions |
-| `concept-auditor` | Need to verify a concept card's claims and citations |
-| `meta-optimizer` | Need to audit prompts/agents for drift (invoked by `/admin meta-optimize`) |
+Default output language is deep Chinese for both user-facing responses and persisted research notes.
 
-### Orchestration (1)
-
-| Subagent | Triggers when... |
-|----------|------------------|
-| `deep-dive` | User wants a full multi-stage verified research pipeline on a topic (`/plan --mode=deep-dive`) |
-
-## Persistence Rules
-
-Whenever a task produces content worth keeping, **automatically save** to Obsidian. Do not ask "should I save?" — just save.
-
-### Save Path Mapping
-
-| Output Type | Save Path | Filename Format |
-|------------|-----------|-----------------|
-| Daily paper picks | `/Users/xuyongheng/Obsidian-Vault/Inbox/` | `YYYY-MM-DD.md` |
-| Search results | `/Users/xuyongheng/Obsidian-Vault/Inbox/` | `YYYY-MM-DD-{keywords}.md` |
-| Paper reading notes | `/Users/xuyongheng/Obsidian-Vault/Notes/` | `{FirstAuthor}-{Year}-{ShortTitle}.md` |
-| Ideation sessions | `/Users/xuyongheng/Obsidian-Vault/Notes/` | `YYYY-MM-DD-{topic}.md` |
-| Literature reviews | `/Users/xuyongheng/Obsidian-Vault/Writing/` | `{TopicName}.md` |
-| Concept cards | `/Users/xuyongheng/Obsidian-Vault/Notes/` | `{ConceptName}.md` |
-| Writing drafts | `/Users/xuyongheng/Obsidian-Vault/Writing/` | `{DocumentTitle}.md` |
-
-### Note Format
-
-Every saved note must include YAML frontmatter:
-```yaml
----
-title: "{Title}"
-date: "{YYYY-MM-DD}"
-type: "{paper-note|ideation|lit-review|search-results|concept-card|daily-picks|weekly-report|deep-dive|documentation}"
-tags:
-  - {auto-generated tags}
-source: "{source info}"
----
-```
-
-End of each note:
-```
----
-Related notes:
-- [[{bidirectional links to existing notes}]]
-
-Saved: {full timestamp}
-```
-
-### Bidirectional Links
-
-When saving notes, scan the text and add `[[bidirectional links]]` for:
-- Theoretical frameworks in AI in Education
-- Research methods
-- Key scholar names
-- Core concepts
-
-## Language and Style
-
-Communicate in English. Academic terms need no special annotation.
+- Keep paper titles in their original language; do not translate them unless the user explicitly asks
+- Preserve necessary English technical terms; on first mention, write `中文术语 (English term)` when that improves clarity
+- Search queries, database filters, and API parameters should remain in English academic register unless a tool requires otherwise
+- Obsidian notes saved into `Inbox/`, `Notes/`, and `Writing/` must follow the same Chinese-first rule
+- If the user explicitly requests English output for a specific deliverable, follow that request for the deliverable only
 
 ## Domain Knowledge
 
-Research field: AI in Education
-Domain pack: See `domains/ai-in-education/` for field-specific theories, methods, journals, and keyword mappings.
+The active domain pack is:
 
-### Key Journals
+```text
+domains/ai-in-education/
+```
 
-See `domains/ai-in-education/journals.md` for the tiered journal list used in quality filtering.
+Use it for:
 
-### Keyword Mapping
-
-See `domains/ai-in-education/keyword-mapping.md` for search term synonyms and translations.
+- `keyword-mapping.md`
+- `journals.md`
+- `theories.yaml`
+- `methods.yaml`
+- `topics.yaml`
+- `social-issues.yaml`
+- `domain.yaml`
 
 ## Project Structure
 
-```
+```text
 PhD-Research/
 ├── .opencode/
-│   ├── command/          ← 8 OpenCode slash commands (find/read/think/write/review/plan/admin/init)
-│   ├── agent/            ← 18 OpenCode subagents (11 execution + 6 audit + 1 orchestration)
-│   ├── memory/           ← Tier-1 permanent + Tier-2 90-day rotating context
-│   ├── verifiers/        ← 7 contract verifiers (C1–C7) + run-all.sh + CONTRACT.md
-│   └── plugin/           ← Lifecycle hooks (rotation.due, audit.degraded, dashboard.update)
-├── references/           ← Legacy SKILL.md kept for reference (deprecated, see MANIFEST.md)
-├── domains/              ← Domain knowledge packs
-├── templates/            ← Source templates (do not modify)
-├── docs/                 ← Documentation
-├── scripts/              ← Migration / maintenance scripts (e.g. migrate-vault.sh)
-├── evals/                ← Eval harness (queries/ bin/ reports/ results/)
-├── arxiv_cache/          ← arXiv search cache
-├── outputs/              ← Generated temporary files
-├── opencode.json         ← OpenCode config (model + MCP + permissions)
-└── /Users/xuyongheng/Obsidian-Vault   ← External knowledge base (3 folders: Inbox/Notes/Writing)
+│   ├── command/
+│   ├── agent/
+│   ├── memory/
+│   ├── plugins/
+│   └── verifiers/
+├── domains/
+├── docs/
+├── scripts/
+├── opencode.json
+├── README.md
+└── 使用指南.md
 ```
-
-## Available Commands
-
-| Command | Purpose |
-|---------|---------|
-| `/find {query}` | Find papers, concepts, or existing notes (auto-routes) |
-| `/read {paper}` | Read a paper deeply — auto-fetches PDF, summarizes, extracts |
-| `/think {topic}` | Ideation, concept cards, or theory maps (auto-routes) |
-| `/write {target}` | Long-form output — draft, review, section, response |
-| `/review [--cadence=day\|week\|month]` | Daily / weekly / monthly retrospective |
-| `/plan {topic}` | PhD 5-step doctoral path (S1→S5); `--mode=deep-dive` for full pipeline |
-| `/admin {subcommand}` | System maintenance — `meta-optimize`, `eval`, `health` |
-| `/init` | First-time project setup wizard (Scholar Flow) |

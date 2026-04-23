@@ -1,7 +1,7 @@
 # PhD Research Doctrine — Hard Constraints
 
 > **System-level methodological constraints** auto-injected into all research-class agents
-> (research-ideator, novelty-checker, lit-review-builder, deep-dive, theory-mapper, phd-route).
+> (research-ideator, novelty-checker, lit-review-builder, deep-dive, theory-mapper, plan).
 >
 > Source: distilled from advisor/peer discussions on doctoral-level contribution.
 
@@ -27,14 +27,14 @@ within active mainstream topics is the proven path.
 | **S4 Sub-Branch Positioning** | Choose a small cut within mainstream hotspots | Inherit visibility, claim novelty |
 | **S5 So-What Argument** | State the **theoretical contribution** (not just a real-world fix) | Pass the doctoral bar |
 
-This sequence is operationalized by the `/phd-route {topic}` command and by
+This sequence is operationalized by the `/plan {topic}` command and by
 `deep-dive`'s 5-stage orchestration.
 
 ---
 
 ## Hard Rules (enforced by So-What Gate)
 
-Every research idea, brainstorm output, and `/phd-route` recommendation MUST carry
+Every research idea, brainstorm output, and `/plan` recommendation MUST carry
 all four fields. Missing fields → automatic reject by `novelty-checker`.
 
 | Field | Definition | Reject if |

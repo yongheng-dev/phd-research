@@ -10,14 +10,13 @@
  *   - session.idle              → write a session trace summary
  *   - session.compacted         → snapshot session state into checkpoints/
  *   - experimental.session.compacting → inject persistent research state into compaction prompt
- *   - command.executed          → if /deep-dive stage marker detected, write per-stage checkpoint
+ *   - command.executed          → if /plan deep-dive stage marker detected, write per-stage checkpoint
  *   - tool.execute.after        → light-weight tool-call trace (audit-class agents only)
  *                                 + emit `audit.degraded` if result carries `degraded_audit: true`
- *   - file.edited               → emit `dashboard.update` when evals/reports/* files change
  *
  * Design constraints (locked decisions):
  *   - Single file, zero npm dependencies. Uses only Node/Bun built-ins.
- *   - Checkpoints written ONLY for /deep-dive stages (S1..S5).
+ *   - Checkpoints written ONLY for /plan --mode=deep-dive stages (S1..S5).
  *   - All writes are append-only to .opencode/traces/ and atomic to .opencode/checkpoints/.
  *   - No network calls. No mutation of memory/ files (those are immutable at runtime).
  *
@@ -92,7 +91,7 @@ function readDoctrineSummary(root: string): string {
   }
 }
 
-// crude detector for /deep-dive stage markers in command output / messages
+// crude detector for /plan --mode=deep-dive stage markers in command output / messages
 const STAGE_RE = /\b(S[1-5])\b\s*[:\-—]\s*([A-Za-z][^\n]{0,80})/;
 
 function detectStage(text: string | undefined): { stage: string; label: string } | null {
@@ -247,7 +246,7 @@ export const PhdPlugin = async (ctx: any) => {
         "Preserve across compaction:\n" +
         "  - active research topic / mainstream_anchor / sub_branch\n" +
         "  - papers already audited (citation-verifier PASS list)\n" +
-        "  - current /deep-dive stage (S1..S5) if any\n" +
+        "  - current /plan deep-dive stage (S1..S5) if any\n" +
         "  - PROCEED-marked research directions and their so_what_score\n" +
         "  - any open So-What Gate REJECTs awaiting revision\n\n" +
         "Doctrine excerpt (do not drop):\n" +
@@ -286,8 +285,8 @@ export const PhdPlugin = async (ctx: any) => {
         command: name,
       });
 
-      // checkpoint ONLY for /deep-dive stages
-      if (name.endsWith("deep-dive") || name === "deep-dive" || name === "/deep-dive") {
+      // checkpoint ONLY for /plan deep-dive runs
+      if (name === "plan" || name === "/plan") {
         const stage = detectStage(typeof output === "string" ? output : output?.text);
         if (stage) {
           const file = join(
@@ -297,7 +296,7 @@ export const PhdPlugin = async (ctx: any) => {
           safeWriteJson(file, {
             ts: nowIso(),
             session_id: sid,
-            command: "/deep-dive",
+            command: "/plan --mode=deep-dive",
             stage: stage.stage,
             label: stage.label,
             kind: "deep-dive-stage-checkpoint",
@@ -309,7 +308,7 @@ export const PhdPlugin = async (ctx: any) => {
             stage: stage.stage,
             checkpoint: file,
           });
-          log("info", "deep-dive checkpoint written", { stage: stage.stage, file });
+          log("info", "plan deep-dive checkpoint written", { stage: stage.stage, file });
         }
       }
     },
@@ -362,27 +361,12 @@ export const PhdPlugin = async (ctx: any) => {
           event: "audit.degraded",
           agent: agentName,
           reason: "primary_unavailable_or_marked_by_agent",
-          fallback: "anthropic/claude-opus-4.7",
+          fallback: "github-copilot/claude-opus-4.7",
         });
         log("warn", "audit ran on fallback model", { agent: agentName });
       }
     },
 
-    // -------- file watcher: surface dashboard refresh need --------
-
-    "file.edited": async ({ session, file }: any) => {
-      const path: string = file?.path ?? file ?? "";
-      if (!path) return;
-      // Only care about evals dashboard outputs
-      if (!/evals\/reports\/.+\.(md|json)$/.test(path)) return;
-      const sid = session?.id ?? "unknown";
-      safeAppendJsonl(sessionTrace(sid), {
-        ts: nowIso(),
-        event: "dashboard.update",
-        path,
-        hint: "Run `/review --cadence=week` to refresh the Assurance Dashboard view.",
-      });
-    },
   };
 };
 

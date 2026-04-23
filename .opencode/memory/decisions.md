@@ -1,6 +1,6 @@
 # Decisions Log
 
-> Auto-appended by `/deep-dive` and `/phd-route` on completion.
+> Auto-appended by `/plan` and related deep-dive workflows on completion.
 > Loaded by `session-start` hook.
 
 <!-- New entries are appended below this line. Format:

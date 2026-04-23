@@ -1,150 +1,193 @@
-# Integration Contract — PhD-Research Workflow System
+# Integration Contract — PhD-Research
 
-**Status:** Authoritative. All agents and commands MUST satisfy these six contracts.
-**Owner:** Meta-optimizer (P5) audits compliance weekly.
-**Verification:** Automated checks live in this directory. Run `bash .opencode/verifiers/run-all.sh` to validate.
-**Location:** This file lives alongside the verifier scripts that enforce it (`.opencode/verifiers/CONTRACT.md`).
+**Status:** Authoritative.
+**Verification:** Run `bash .opencode/verifiers/run-all.sh`.
 
----
+## C1 — Frontmatter
 
-## C1 — Frontmatter Contract (every agent)
+Every file under `.opencode/agent/*.md` must declare:
 
-Every file under `.opencode/agent/*.md` MUST have YAML frontmatter with:
+- `description`
+- `mode`
+- `model`
+- `tools`
+- `permission`
 
-| Field | Required | Allowed values |
-|---|---|---|
-| `description` | yes | non-empty string |
-| `mode` | yes | `subagent` (for delegated agents) or `primary` (for orchestrators) |
-| `model` | yes | `github-copilot/claude-opus-4.7` (primary) OR `github-copilot/gpt-5.4` (audit agents only) |
-| `tools` | yes | object — audit agents must have `write: false, edit: false` |
-| `permission` | yes | object — audit agents must have `edit: deny` |
+Audit agents must:
 
-**Audit agents** (citation-verifier, coverage-critic, summary-auditor, novelty-checker) MUST be on `gpt-5.4` and MUST be read-only.
+- use `github-copilot/gpt-5.4`
+- declare `fallback_model`
 
-**Verifier:** `.opencode/verifiers/check-frontmatter.sh`
+Strict read-only audit agents must also set:
 
----
+- `tools.write: false`
+- `tools.edit: false`
 
-## C2 — Persistence Contract (every saved artifact)
+`meta-optimizer` is the single exception: it may write proposal files under `.opencode/proposals/`.
 
-Every note saved to `/Users/xuyongheng/Obsidian-Vault/` MUST contain:
+## C2 — Persistence
 
-1. YAML frontmatter with `title`, `date` (YYYY-MM-DD), `type`, `tags`, `source`
-2. Trailing block:
-   ```
-   ---
-   Related notes:
-   - [[link]] [[link]]
+Every note saved to `/Users/xuyongheng/Obsidian-Vault/` must include:
 
-   Saved: <full ISO timestamp>
-   ```
-3. Type ∈ { `paper-note`, `ideation`, `lit-review`, `search-results`, `concept-card`, `daily-picks`, `weekly-report`, `deep-dive` }
-4. Path matches the AGENTS.md "Save Path Mapping" table
+1. frontmatter with `title`, `date`, `type`, `tags`, `source`
+2. trailing `Related notes` block
+3. a valid save path under the current 3-folder vault layout
 
-**Verifier:** `.opencode/verifiers/check-persistence.sh` (samples last-7-day notes)
+## C3 — Audit Contract
 
----
+Every command in `.opencode/command/*.md` must declare an `audit:` policy.
 
-## C3 — Audit Contract (every research command)
+Research commands must document their mandatory audit behavior:
 
-Every command in `.opencode/command/*.md` (except `init`, `weekly-report`) MUST:
+- `/find` → auto audit depending on route
+- `/read` → summary and citation verification
+- `/think` → novelty / concept / citation audit depending on route
+- `/write` → citation and coverage audit
+- `/plan` → full doctrine-driven audit chain
+- `/review` → cadence-specific review/audit logic
 
-1. Document a `Mandatory post-audit` step in its workflow
-2. Either invoke an audit agent OR document `--no-audit` as the explicit user-controlled bypass
-3. Pass `--no-audit` is **forbidden** for `/deep-dive`
-4. The audit agent invoked must match the command:
-   - search-papers → coverage-critic
-   - summarize → summary-auditor + citation-verifier
-   - brainstorm → novelty-checker (So-What Gate) + citation-verifier
-   - lit-review → coverage-critic + citation-verifier
-   - deep-dive → all four
-   - concept → citation-verifier
-   - daily → citation-verifier (lightweight)
+Only `/admin` may use `audit: off`.
 
-**Verifier:** `.opencode/verifiers/check-audit-contract.sh`
+## C4 — Trace Contract
 
----
+Commands and audit agents must emit JSONL traces under `.opencode/traces/`.
 
-## C4 — Trace Contract (every command + every audit agent)
+The system may use either:
 
-Every command and every audit agent MUST emit a JSONL trace line per invocation to:
+- dated trace files under `.opencode/traces/YYYY-MM-DD/`
+- session trace files under `.opencode/traces/session-*.jsonl`
 
-```
-.opencode/traces/YYYY-MM-DD/<command-or-agent>.jsonl
-```
+Traces are append-only.
 
-Required fields per line:
-- `ts` (ISO-8601)
-- `agent` or `command` (string)
-- `model` (string, for agents)
-- Verdict / counts relevant to the agent (see each agent's adversarial protocol section)
+## C5 — Memory Contract
 
-Traces are append-only, never rewritten. The meta-optimizer (P5) reads these to compute weekly quality trends.
+Persistent project memory lives under `.opencode/memory/`.
 
-**Verifier:** `.opencode/verifiers/check-traces.sh` (validates JSONL parseability for the last 7 days)
+Core files:
 
----
+- `phd-doctrine.md`
+- `decisions.md`
+- `research-log.md`
+- `failed-ideas.md`
+- `patterns.md`
 
-## C5 — Memory Contract (failed ideas + decisions + patterns + doctrine)
+These are append-oriented project memory files and should not be casually repurposed.
 
-`.opencode/memory/` is the system's persistent wisdom layer.
+## C6 — Doctrine Contract
 
-| File | Write rule | Read rule |
-|---|---|---|
-| `phd-doctrine.md` | Manual edit only (this is the constitution) | Loaded by every research-class agent at session start |
-| `decisions.md` | Append-only — log each major method/scope decision | Read before any conflicting decision |
-| `failed-ideas.md` | Append-only — auto-written by novelty-checker on REJECTED | Loaded by research-ideator before brainstorming to prevent re-proposing dead-ends |
-| `patterns.md` | Append-only — extracted by deep-dive S6 + meta-optimizer | Read by research-class agents for pattern reuse |
+Research-class agents must load and respect `.opencode/memory/phd-doctrine.md`.
 
-No agent may overwrite or delete entries in `decisions.md`, `failed-ideas.md`, or `patterns.md`. Append-only.
+The four mandatory fields are:
 
-**Verifier:** `.opencode/verifiers/check-memory.sh` (validates append-only via git history)
+- `mainstream_anchor`
+- `sub_branch`
+- `theoretical_contribution`
+- `so_what`
 
----
+They must appear in downstream research direction framing where applicable.
 
-## C6 — Doctrine Contract (research-class agents only)
+## C7 — Plugin Contract
 
-The following agents MUST load `.opencode/memory/phd-doctrine.md` at session start and explicitly cite it in their reasoning:
+`.opencode/plugins/phd.ts` is the only runtime plugin and must:
 
-- `research-ideator`
-- `novelty-checker` (the So-What Gate enforcer)
-- `lit-review-builder`
+1. remain a single TypeScript file
+2. avoid unnecessary dependency sprawl
+3. never mutate `.opencode/memory/*`
+4. handle hook errors defensively
+5. support trace writing and deep-dive checkpointing for `/plan --mode=deep-dive`
+
+## C10 — Trace Schema Contract
+
+Trace files under `.opencode/traces/` must remain append-only JSONL.
+
+Minimum schema rules:
+
+1. command traces must include `ts`, `command`, `audit`
+2. agent traces must include `ts`, `agent`
+3. audit-agent traces must also include `model`
+4. fallback trace examples must include `event`, `agent`, `reason`, `fallback`
+5. session trace files under `.opencode/traces/session-*.jsonl` must include `ts`, `event`
+6. command and agent docs that declare `## Trace` must show a JSON example matching these minimum fields
+
+## C11 — Agent Taxonomy Contract
+
+Agent categories are explicit and enforceable.
+
+### Audit Agents
+
+Audit agents are:
+
+- `citation-verifier`
+- `coverage-critic`
+- `summary-auditor`
+- `novelty-checker`
+- `concept-auditor`
+- `meta-optimizer`
+
+Rules:
+
+1. must use `github-copilot/gpt-5.4`
+2. must declare `fallback_model`
+3. must declare trace examples with `model`
+4. only `meta-optimizer` may write, and only to `.opencode/proposals/`
+
+### Research-Class Agents
+
+Research-class agents are:
+
 - `deep-dive`
-- `theory-mapper` (P4)
-- and the `/phd-route` orchestrator (P4)
+- `theory-mapper`
+- `research-planner`
+- `literature-searcher`
+- `writing-drafter`
+- `research-ideator`
+- `paper-summarizer`
+- `concept-explainer`
+- `lit-review-builder`
 
-The doctrine's 4 mandatory fields (`mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`) MUST appear in every research direction proposed, every literature review's "positioning" section, and every deep-dive's final brief.
+Rules:
 
-Non-research agents (paper-summarizer, concept-explainer, citation-verifier, etc.) do NOT need to load the doctrine.
+1. must reference `.opencode/memory/phd-doctrine.md`
+2. must declare `## Output Language`
 
-**Verifier:** `.opencode/verifiers/check-doctrine-references.sh`
+### Vault-Persistence Agents
 
----
+Vault-persistence agents are:
 
-## C7 — Plugin Contract (runtime event hooks)
+- `theory-mapper`
+- `literature-searcher`
+- `writing-drafter`
+- `paper-summarizer`
+- `concept-explainer`
+- `lit-review-builder`
+- `research-ideator`
+- `deep-dive`
+- `zotero-curator`
+- `data-extractor`
 
-The file `.opencode/plugins/phd.ts` is the ONLY plugin and MUST:
+Rules:
 
-1. Be a single TypeScript file with zero npm dependencies (Node/Bun built-ins only).
-2. Export a default async plugin function (and/or `PhdPlugin` named export) returning an event-subscription object.
-3. Subscribe at minimum to: `session.created`, `session.idle`, `session.compacted`, `experimental.session.compacting`, `command.executed`, `tool.execute.before`, `tool.execute.after`.
-4. Write per-session traces to `.opencode/traces/session-<id>.jsonl` (append-only).
-5. Write `/deep-dive` stage checkpoints to `.opencode/checkpoints/<session>-deep-dive-<stage>-<ts>.json` — and NOT write checkpoints for any other command (locked decision).
-6. Never throw out of a hook (all fs ops wrapped in try/catch).
-7. Never mutate `.opencode/memory/*`.
-8. Inject a doctrine-preservation block into `experimental.session.compacting` so long research threads survive context compaction.
+1. may persist notes only under `/Users/xuyongheng/Obsidian-Vault/Inbox/`, `/Notes/`, or `/Writing/`
+2. must follow the Chinese-first output policy
 
-If `.opencode/package.json` appears (OpenCode runtime auto-generates it), it MUST be gitignored. The source file `phd.ts` itself must import only `node:*` modules.
+### Runtime Output Agents
 
-**Verifier:** `.opencode/verifiers/check-plugin.sh`
+Runtime-output agents are:
 
----
+- `paper-fetcher`
+- `data-extractor`
+- `meta-optimizer`
 
-## Compliance & Drift
+Rules:
 
-The meta-optimizer (P5) runs all six verifiers weekly. Any contract violation:
-1. Writes a `proposal-YYYY-MM-DD-<n>.md` under `.opencode/proposals/` describing the drift and a suggested patch.
-2. Surfaces the proposal in `/weekly-report`.
-3. **Never auto-applies** — human approval required before any contract or agent rewrite.
+1. non-vault outputs must stay under `arxiv_cache/`, `outputs/`, or `.opencode/proposals/`
 
-This is the integration backbone. Violating it silently breaks the assurance chain.
+### Orchestrator Agents
+
+Orchestrator agents are:
+
+- `deep-dive`
+
+Rules:
+
+1. `task: true` is only allowed here

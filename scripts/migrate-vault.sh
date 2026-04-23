@@ -5,9 +5,9 @@
 #   Daily Picks/                            Inbox/
 #   Search Results/                         Notes/
 #   Daily Notes/                            Writing/
-#   Paper Notes/                            Templates/         (unchanged)
-#   Concept Cards/                          Attachments/       (unchanged)
-#   Ideation Sessions/                      .obsidian/         (unchanged)
+#   Paper Notes/                            .obsidian/         (unchanged)
+#   Concept Cards/
+#   Ideation Sessions/
 #   Literature Reviews/
 #   Writing Drafts/
 #

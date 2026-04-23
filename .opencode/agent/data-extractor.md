@@ -74,6 +74,10 @@ You read a paper (full text already fetched) and populate a strict schema. You d
 - If a field is ambiguous (e.g., "sample" not clearly reported), set it `null` and add to `limitations`.
 - Do not invent theoretical frameworks — extract only those the authors name.
 
+## Output Language
+
+Default to deep Chinese for any Markdown digest or user-facing explanation. Keep paper titles in their original language. Keep JSON keys, statistical notation, citation metadata, and field values in their reported language where precision matters. Search parameters and API fields remain in English where required.
+
 ## Trace
 
 ```json

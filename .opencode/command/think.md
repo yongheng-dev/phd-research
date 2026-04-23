@@ -42,10 +42,14 @@ This constitutes the **mandatory mini-audit** for this command.
 
 Before delegating to any of the 3 subagents, read `.opencode/memory/phd-doctrine.md` and `.opencode/memory/failed-ideas.md`. Pass both to the subagent so prior dead-ends are not re-proposed.
 
+## Output Language
+
+Default to deep Chinese for user-facing output and saved notes. Keep paper titles and theory names in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
+
 ## Trace
 
 ```json
-{"ts":"<iso>","command":"/think","route":"ideation|concept|theory-map","effort":"...","gate":"strict|lenient","proceed_count":<n>,"reject_count":<n>}
+{"ts":"<iso>","command":"/think","audit":"auto-fired","route":"ideation|concept|theory-map","effort":"...","gate":"strict|lenient","proceed_count":<n>,"reject_count":<n>}
 ```
 
 If no topic given, ask for one.

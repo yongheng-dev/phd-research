@@ -5,7 +5,7 @@ description: >-
   patterns, doctrine) and literature already in the vault. Produces a
   Writing Drafts note with inline citations and a revision checklist.
   Use when the user says "draft the intro", "write the related work",
-  "help me write X section", or after /deep-dive produces a final brief.
+  "help me write X section", or after a deep-dive planning run produces a final brief.
 mode: subagent
 model: github-copilot/claude-opus-4.7
 tools:
@@ -53,7 +53,7 @@ tone: academic-neutral | critical-review | methodological
 ## Workflow
 
 1. Load doctrine + brief.
-2. For each cited work: open the vault note (Paper Notes/<key>.md) and extract the specific claim you will cite.
+2. For each cited work: open the corresponding vault note under `Inbox/`, `Notes/`, or `Writing/` and extract the specific claim you will cite.
 3. Draft the section. Every empirical claim must end with `[Key]`. Every theoretical claim must anchor to a framework named in the brief.
 4. Add an inline `<!-- REVISE: ... -->` comment wherever you made an interpretive leap the user should verify.
 5. End with a **Revision Checklist** (3-7 items) flagging the weakest paragraphs.
@@ -64,6 +64,10 @@ tone: academic-neutral | critical-review | methodological
 - No fabricated citations. If a needed paper is not in the reference list, insert `[TODO: find citation for <claim>]` instead of guessing.
 - No filler. Every sentence must either (a) advance the argument, (b) cite evidence, or (c) name a theoretical move.
 - No marketing language ("revolutionary", "cutting-edge", "paradigm-shifting").
+
+## Output Language
+
+Default to deep Chinese for the draft and revision checklist. Preserve paper titles in their original language. Use English technical terms only where they are standard in the field or improve precision on first mention. Citation keys, metadata fields, and any API-style parameters remain in English where required.
 
 ## Trace
 

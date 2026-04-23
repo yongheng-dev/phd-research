@@ -28,14 +28,19 @@ If input is already a local path or Zotero key with attachment → skip fetch st
 1. **Resolve source** (auto-fetch if needed).
 2. **Delegate to `paper-summarizer`** with the resolved source and mode. Save to `/Users/xuyongheng/Obsidian-Vault/Notes/` as `{FirstAuthor}-{Year}-{ShortTitle}.md`.
 3. **If `--mode=structured`**, additionally delegate to `data-extractor` and append the YAML block to the same note under `## Structured Extraction`.
-4. **Mandatory post-audit** (per `audit: auto`, always fires for saved notes):
-   - `summary-auditor` (GPT-5.4) against the actual paper content. `NEEDS_REVISION` → regenerate once.
-   - `citation-verifier` (GPT-5.4) on any Related Work / Builds-on references.
-   - Append audit summaries under `## Audit Trail`.
+4. **Mandatory post-audit — run in PARALLEL** (per `audit: auto`, always fires for saved notes):
+   - **`summary-auditor`** against the actual paper content. `NEEDS_REVISION` → regenerate once.
+   - **`citation-verifier`** on any Related Work / Builds-on references.
+   - Both agents receive the same paper source and draft note simultaneously; do not wait for one before starting the other.
+   - Append both audit summaries under `## Audit Trail` after both complete.
 
 ## Audit policy — `audit: auto`
 
 Always fires for `/read` because output is always saved to Obsidian. Explicit `--audit=off` is disallowed here (reading a paper without verifying the summary defeats the purpose).
+
+## Output Language
+
+Default to deep Chinese for user-facing output and saved notes. Keep paper titles in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
 
 ## Trace
 

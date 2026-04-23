@@ -8,7 +8,7 @@ Route a topic through the PhD-grade research path: $ARGUMENTS
 
 ## Context
 
-This command operationalizes `.opencode/memory/phd-doctrine.md`. It is the **canonical entry point** for doctoral-grade topic selection and validation. Replaces the legacy `/phd-route` and absorbs `/deep-dive` via `--mode=deep-dive`.
+This command operationalizes `.opencode/memory/phd-doctrine.md`. It is the **canonical entry point** for doctoral-grade topic selection and validation. It also absorbs deep-dive behavior via `--mode=deep-dive`.
 
 ## Modes
 
@@ -78,6 +78,10 @@ Related notes: [[...]]
 Saved: <ts>
 ```
 
+## Output Language
+
+Default to deep Chinese for user-facing output and saved plan notes. Keep paper titles and theory names in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
+
 ## Checkpoint hook
 
 In `--mode=deep-dive`, after each stage write `.opencode/checkpoints/$(date +%Y-%m-%d)/plan-<slug>-<stage>.json` with resume state (topic, stage, partial results, last audit verdict). Allows `/plan --resume=<slug>` to continue from last checkpoint.
@@ -87,7 +91,7 @@ In `--mode=deep-dive`, after each stage write `.opencode/checkpoints/$(date +%Y-
 One JSONL line per step to `.opencode/traces/$(date +%Y-%m-%d)/plan.jsonl`:
 
 ```json
-{"ts":"<iso>","command":"/plan","mode":"sub-branch|deep-dive","step":"S1|S2|S3|S4|S5","agent":"<delegated>","verdict":"ok|warn|fail","items":<n>}
+{"ts":"<iso>","command":"/plan","audit":"on","mode":"sub-branch|deep-dive","step":"S1|S2|S3|S4|S5","agent":"<delegated>","verdict":"ok|warn|fail","items":<n>}
 ```
 
 Plus a final summary line with `proceed_count`, `reject_count`, `top_so_what_score`.

@@ -49,6 +49,10 @@ Explicit `--audit=on` forces audit; `--audit=off` skips (trace marks `audit_skip
 
 Even under `audit: auto`, if the classifier routes to paper search AND any paper in the result list lacks a DOI or arXiv ID, `citation-verifier` MUST run (a mandatory mini-audit) regardless of audit flag.
 
+## Output Language
+
+Default to deep Chinese for user-facing output. Keep paper titles in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
+
 ## Trace
 
 One JSONL line to `.opencode/traces/$(date +%Y-%m-%d)/find.jsonl`:
