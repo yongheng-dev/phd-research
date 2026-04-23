@@ -283,3 +283,15 @@ Rules:
 3. when a `note.persisted` event exists, it must include at least `ts`, `event`, `command`, `note_path`, and `vault_type`
 4. every traced `note_path` must exist under `/Users/xuyongheng/Obsidian-Vault/Inbox/`, `/Notes/`, or `/Writing/`
 5. every traced note must keep frontmatter `source`, so runtime linkage and evidence provenance remain aligned
+
+## C18 — Checkpoint Closure Contract
+
+Deep-dive workflows must preserve a resumable closure from checkpoints to synthesized outputs and memory updates.
+
+Rules:
+
+1. checkpoint behavior for `/plan --mode=deep-dive` must remain documented in command, plugin, and checkpoint docs
+2. `.opencode/plugins/phd.ts` must preserve deep-dive stage checkpoint writes with `kind`, `stage`, and `/plan --mode=deep-dive` provenance
+3. `deep-dive` must document the post-synthesis handoff into `.opencode/memory/research-log.md` and `.opencode/memory/decisions.md`
+4. if recent checkpoint files exist, they must be valid JSON and include `ts`, `session_id`, and `kind`; deep-dive stage checkpoints must also include `stage`
+5. if recent deep-dive checkpoints exist together with recent deep-dive outputs, the verifier should ensure the closure docs still point from checkpointed work to synthesis notes and memory files

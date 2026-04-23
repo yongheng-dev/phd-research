@@ -66,6 +66,8 @@ for script in $SCRIPT_NAMES; do
       ;;
     check-trace-note-links.sh) section='## C17 '
       ;;
+    check-checkpoint-closure.sh) section='## C18 '
+      ;;
     *) section=''
       ;;
   esac
@@ -78,7 +80,7 @@ done
 
 for section in $(grep -E '^## C[0-9]+' "$CONTRACT" | awk '{print $2}'); do
   case "$section" in
-    C1|C2|C3|C4|C5|C6|C7|C8|C9|C10|C11|C12|C13|C14|C15|C16|C17) : ;;
+    C1|C2|C3|C4|C5|C6|C7|C8|C9|C10|C11|C12|C13|C14|C15|C16|C17|C18) : ;;
     *)
       echo "FAIL [C13] CONTRACT.md declares unknown section $section"
       FAIL=$((FAIL+1))

@@ -180,6 +180,8 @@ Save synthesis to `/Users/xuyongheng/Obsidian-Vault/Notes/YYYY-MM-DD-deep-dive-{
 
 After the full pipeline completes, extract the most useful learnings and append concise summaries to `.opencode/memory/research-log.md`. If a methodological or scope decision is locked for future work, append that decision separately to `.opencode/memory/decisions.md`.
 
+This is the closure step for deep-dive resumability: checkpoints keep the run restartable, but `research-log.md` and `decisions.md` are the persistent institutional memory once synthesis is complete.
+
 ---
 
 ## Failure Handling

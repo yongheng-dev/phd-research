@@ -14,6 +14,14 @@ This directory holds **persistent project memory** that survives across sessions
 
 See `ROTATION.md` for the full rotation policy (Option C hybrid).
 
+## Deep-Dive Closure
+
+Checkpoint files under `.opencode/checkpoints/` are resumability artifacts for `/plan --mode=deep-dive`, not substitutes for persistent memory.
+
+- Final synthesis or plan outputs belong in the vault under `Inbox/`, `Notes/`, or `Writing/`
+- Milestones and provisional learnings belong in `research-log.md`
+- Locked methodological or scope decisions belong in `decisions.md`
+
 ## Archive
 
 Old Tier-2 entries move to `.opencode/memory/archive/YYYY-MM/{file}.md` via `/admin meta-optimize --rotate`. Archives are git-tracked and **never deleted**. C5 verifier treats moves to `archive/` as legitimate.

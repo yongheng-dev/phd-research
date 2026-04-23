@@ -35,6 +35,8 @@ The trade-off is no TypeScript intellisense for the event payloads — we use `a
 - Deep-dive stage checkpoints: `.opencode/checkpoints/<session>-deep-dive-<stage>-<ts>.json`
 - Post-compaction snapshots: `.opencode/checkpoints/<session>-compacted-<ts>.json`
 
+Deep-dive checkpoints are resumability state only. The completed workflow must still terminate in a vault synthesis note plus any necessary appends to `.opencode/memory/research-log.md` and `.opencode/memory/decisions.md`.
+
 ## Safety invariants
 
 - Never throws out of a hook (all fs ops wrapped in try/catch).
