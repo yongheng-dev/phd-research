@@ -209,3 +209,10 @@ If the primary model is unavailable after retry, fall back to the declared `fall
    ```
 
 Never silently fall back.
+
+## Evidence Chain
+
+- Upstream evidence: proposed research directions, their seed literature, and doctrine fields from the ideation or planning stage.
+- Output artifact: a novelty and So-What gate report, rejected-direction entries in `.opencode/memory/failed-ideas.md`, and an append-only trace line in `.opencode/traces/`.
+- Verification note: every direction must clear the mainstream-anchor, sub-branch, and so-what gates on live literature evidence rather than aspiration alone.
+- Downstream handoff: either pass refined directions into `/think`, `/plan`, or `/write`, or block them from re-entering the pipeline unchanged.

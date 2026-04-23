@@ -180,3 +180,10 @@ If the primary model is unavailable after retry, fall back to the declared `fall
    ```
 
 Never silently fall back.
+
+## Evidence Chain
+
+- Upstream evidence: a search result set, the original query, and the search mode used.
+- Output artifact: a coverage audit report plus an append-only trace line in `.opencode/traces/`.
+- Verification note: this audit checks set-level blind spots rather than individual papers, so it must be judged against the raw result list, not the primary agent narrative.
+- Downstream handoff: either unblock the evidence set for downstream reading and synthesis, or force one supplementary search round before proceeding.

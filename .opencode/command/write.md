@@ -39,7 +39,16 @@ Load `.opencode/memory/phd-doctrine.md` before drafting or auditing any contribu
 
 Default to deep Chinese for user-facing output and saved drafts. Keep paper titles in their original language. Search queries, citation metadata, flags, and API parameters remain in English academic register.
 
+## Evidence Chain
+
+- Source evidence: verified vault notes from `/Users/xuyongheng/Obsidian-Vault/Inbox/`, `/Notes/`, and `/Writing/`, plus any explicit brief or `reference_list` provided by the caller.
+- Verification trail: `citation-verifier`, `coverage-critic`, the doctrine check, and `summary-auditor` for reviews must all pass before save.
+- Persisted artifact: save the draft or review to `/Users/xuyongheng/Obsidian-Vault/Writing/` with inline citations, frontmatter, and the downstream note context it builds on.
+- Downstream handoff: the saved writing draft can be reused by `/review`, later `/write` revisions, and manuscript assembly without losing its upstream evidence base.
+
 ## Trace
+
+One JSONL line to `.opencode/traces/$(date +%Y-%m-%d)/write.jsonl`:
 
 ```json
 {"ts":"<iso>","command":"/write","audit":"on","kind":"draft|review|section|response","effort":"...","citations_checked":<n>,"hallucinated":<n>,"coverage_verdict":"SUFFICIENT|PARTIAL|INSUFFICIENT"}

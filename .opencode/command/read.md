@@ -42,7 +42,16 @@ Always fires for `/read` because output is always saved to Obsidian. Explicit `-
 
 Default to deep Chinese for user-facing output and saved notes. Keep paper titles in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
 
+## Evidence Chain
+
+- Source evidence: DOI/arXiv/URL/path/Zotero input plus the fetched full text or abstract resolved for this paper.
+- Verification trail: `paper-fetcher` resolves the source, `paper-summarizer` and `data-extractor` transform it, and `summary-auditor` plus `citation-verifier` append `## Audit Trail` before the note is considered trustworthy.
+- Persisted artifact: save the paper note to `/Users/xuyongheng/Obsidian-Vault/Notes/` with `## Structured Extraction` when requested and `## References Worth Tracking` for follow-up reading.
+- Downstream handoff: the verified note can feed `/think`, `/plan`, and `/write` as reusable evidence instead of forcing the next step to re-read the paper from scratch.
+
 ## Trace
+
+One JSONL line to `.opencode/traces/$(date +%Y-%m-%d)/read.jsonl`:
 
 ```json
 {"ts":"<iso>","command":"/read","mode":"quick|deep|structured","source":"doi|arxiv|url|path|zotero","fetched":true|false,"downgraded":true|false,"audit":"auto-fired"}

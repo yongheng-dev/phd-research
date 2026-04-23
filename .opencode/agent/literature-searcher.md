@@ -318,3 +318,10 @@ Default to deep Chinese for user-facing output and saved notes. Keep paper title
 ## PhD Doctrine
 
 Load `.opencode/memory/phd-doctrine.md` before final ranking. Ensure the final list is capable of supporting downstream `mainstream_anchor` identification and does not miss the recognized active line of work on the topic.
+
+## Evidence Chain
+
+- Upstream evidence: the topic/query, live database results, domain keyword mappings, and existing Zotero or vault state.
+- Output artifact: an Inbox search-results note with ranked papers, query coverage, `[[Paper Title]]` wikilinks, and reading order.
+- Verification note: the saved set is designed for `coverage-critic` review and `citation-verifier` escalation when identifiers or metadata remain unstable.
+- Downstream handoff: feed `paper-summarizer`, `theory-mapper`, `research-ideator`, `lit-review-builder`, and command-level `/read`, `/think`, `/plan`, or `/write`.

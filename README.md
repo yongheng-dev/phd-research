@@ -63,10 +63,27 @@ PhD-Research/
 └── 使用指南.md
 ```
 
+## Setup (First-time / New User)
+
+Clone the repo, then run the init script to replace hardcoded paths with your own `$HOME`:
+
+```bash
+git clone <repo-url> PhD-Research
+cd PhD-Research
+
+# Preview what will be replaced
+bash scripts/init.sh
+
+# Apply the replacement
+bash scripts/init.sh --apply
+```
+
+The script auto-detects the original author's path and substitutes it with your `$HOME` across all `.md`, `.json`, `.yaml`, and `.yml` files. Safe to re-run — skips if paths already match.
+
 ## Start
 
 ```bash
-cd /Users/xuyongheng/PhD-Research
+cd ~/PhD-Research
 opencode
 ```
 

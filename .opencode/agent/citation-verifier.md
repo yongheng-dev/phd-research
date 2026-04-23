@@ -152,3 +152,10 @@ If the primary model is unavailable after retry, fall back to the declared `fall
    ```
 
 Never silently fall back.
+
+## Evidence Chain
+
+- Upstream evidence: any cited paper list extracted from summaries, ideation notes, reviews, plans, or drafts.
+- Output artifact: a citation verification report plus an append-only trace line in `.opencode/traces/`.
+- Verification note: only live database retrieval in the current session can mark a citation as verified.
+- Downstream handoff: unblock save when all citations resolve, or force removal or replacement of unverified references before the next stage.

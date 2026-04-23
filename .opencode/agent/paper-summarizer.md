@@ -227,3 +227,10 @@ Load `.opencode/memory/phd-doctrine.md` before finalizing the note. Where releva
 - **Theoretical papers**: "Methods" becomes "Argumentation logic"; focus on the theoretical framework exposition
 - **Conference papers / short papers**: Length can be shortened, but key structure remains
 - **Abstract only (no full text)**: State this clearly; summarize based on the abstract and note that information is limited
+
+## Evidence Chain
+
+- Upstream evidence: fetched full text or abstract, plus metadata retrieved from Semantic Scholar, arXiv, Zotero, or a local PDF.
+- Output artifact: a paper note in `/Users/xuyongheng/Obsidian-Vault/Notes/` with findings, limitations, `Connection to My Research`, and `References Worth Tracking`.
+- Verification note: run the built-in accuracy check first, then let `summary-auditor` and `citation-verifier` audit the draft before it becomes a stable note.
+- Downstream handoff: feed `/read`, `writing-drafter`, `research-ideator`, `theory-mapper`, and `/write`.

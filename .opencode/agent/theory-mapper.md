@@ -108,3 +108,10 @@ Default to deep Chinese for the theory map and user-facing explanation. Keep the
 ```json
 {"ts":"<iso>","agent":"theory-mapper","topic":"...","papers_in":<n>,"theories_found":<n>,"blank_spots":<n>,"path":"..."}
 ```
+
+## Evidence Chain
+
+- Upstream evidence: verified paper lists, extracted theoretical frameworks, and S1 or S2 outputs from the broader research pipeline.
+- Output artifact: a Notes theory map with frequency counts, co-occurrence patterns, blank spots, and doctrine-ready fields.
+- Verification note: only author-named theories count, and downstream citation or summary audits can re-check any theory card evidence used in later stages.
+- Downstream handoff: feed `/think`, `/plan` S3 or S4, `research-ideator`, and `writing-drafter`.

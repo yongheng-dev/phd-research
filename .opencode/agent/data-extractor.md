@@ -83,3 +83,10 @@ Default to deep Chinese for any Markdown digest or user-facing explanation. Keep
 ```json
 {"ts":"<iso>","agent":"data-extractor","paper_id":"<id>","fields_populated":<count>,"extractor_confidence":<0-1>,"json_path":"..."}
 ```
+
+## Evidence Chain
+
+- Upstream evidence: full paper text already fetched by `paper-fetcher` or retrieved from Zotero.
+- Output artifact: normalized JSON under `outputs/extractions/` and an optional Markdown digest in `/Users/xuyongheng/Obsidian-Vault/Notes/` when no paper note exists yet.
+- Verification note: extract only author-reported facts, carry uncertainty into `extractor_confidence`, and avoid overwriting a richer `paper-summarizer` note.
+- Downstream handoff: feed `/read`, `theory-mapper`, `lit-review-builder`, and any later synthesis that needs comparable study-level evidence.

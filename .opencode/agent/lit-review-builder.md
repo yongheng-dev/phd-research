@@ -301,3 +301,10 @@ Default to deep Chinese for the review, user-facing explanation, and saved notes
 ## PhD Doctrine (Mandatory Pre-Flight)
 
 Load `.opencode/memory/phd-doctrine.md` before final reasoning. Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing rejected directions. Preserve all four doctrine fields in downstream reasoning and final output where applicable: `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`.
+
+## Evidence Chain
+
+- Upstream evidence: verified search sets, inclusion and exclusion decisions, extracted study data, and prior vault notes on the topic.
+- Output artifact: a Writing review or quick-survey note with panorama tables, PRISMA-style accounting where applicable, and links back to included studies.
+- Verification note: `citation-verifier` is mandatory before save, while command-level `coverage-critic` and `summary-auditor` add extra checks when the workflow requires them.
+- Downstream handoff: feed `/plan` S2, `/write`, `writing-drafter`, and `research-ideator`.

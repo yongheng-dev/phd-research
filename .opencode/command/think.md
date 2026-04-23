@@ -46,7 +46,16 @@ Before delegating to any of the 3 subagents, read `.opencode/memory/phd-doctrine
 
 Default to deep Chinese for user-facing output and saved notes. Keep paper titles and theory names in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
 
+## Evidence Chain
+
+- Source evidence: `.opencode/memory/phd-doctrine.md`, `.opencode/memory/failed-ideas.md`, verified seed literature, and any relevant notes already saved under `Inbox/`, `Notes/`, or `Writing/`.
+- Verification trail: `novelty-checker`, `concept-auditor`, or `citation-verifier` runs according to route so that ideation, concept cards, and theory maps only proceed on verified ground.
+- Persisted artifact: save the resulting ideation note, concept card, or theory map into the appropriate vault folder with Doctrine fields or source-linked theory evidence intact.
+- Downstream handoff: the persisted output can feed `/plan`, `/write`, and targeted follow-up `/find` or `/read` runs.
+
 ## Trace
+
+One JSONL line to `.opencode/traces/$(date +%Y-%m-%d)/think.jsonl`:
 
 ```json
 {"ts":"<iso>","command":"/think","audit":"auto-fired","route":"ideation|concept|theory-map","effort":"...","gate":"strict|lenient","proceed_count":<n>,"reject_count":<n>}

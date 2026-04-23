@@ -74,3 +74,10 @@ Default to deep Chinese for the draft and revision checklist. Preserve paper tit
 ```json
 {"ts":"<iso>","agent":"writing-drafter","section":"<name>","words":<n>,"citations":<n>,"todos":<n>,"path":"..."}
 ```
+
+## Evidence Chain
+
+- Upstream evidence: the caller's brief, `.opencode/memory/phd-doctrine.md`, and cited vault notes from `/Users/xuyongheng/Obsidian-Vault/Inbox/`, `/Notes/`, or `/Writing/`.
+- Output artifact: a Writing draft note with inline citations, revision comments, and a revision checklist.
+- Verification note: every claim must trace to a cited note or a visible TODO, and command-level `/write` runs `citation-verifier`, `coverage-critic`, and doctrine checks before final save.
+- Downstream handoff: feed later `/write` revisions, `/review`, and manuscript assembly.

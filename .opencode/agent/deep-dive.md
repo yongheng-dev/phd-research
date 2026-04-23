@@ -205,3 +205,10 @@ Default to deep Chinese for user-facing output and saved synthesis notes. Keep p
 ## PhD Doctrine (Mandatory Pre-Flight)
 
 Load `.opencode/memory/phd-doctrine.md` before final reasoning. Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing rejected directions. Preserve all four doctrine fields in downstream reasoning and final output where applicable: `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`.
+
+## Evidence Chain
+
+- Upstream evidence: the research brief, verified search sets, audited summaries, doctrine constraints, and project memory.
+- Output artifact: a synthesis note in `/Users/xuyongheng/Obsidian-Vault/Notes/` plus concise memory updates in `.opencode/memory/`.
+- Verification note: nothing persists until the phase-specific gates pass, and Phase 5 cross-checks that downstream directions cite papers already verified in earlier phases.
+- Downstream handoff: feed `/plan --mode=deep-dive`, `writing-drafter`, and future vault work built on the synthesis.

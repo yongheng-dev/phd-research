@@ -1,0 +1,51 @@
+{
+  "scenarios": [
+    {
+      "id": "find-paper-search",
+      "command": "find",
+      "route_hint": "paper search",
+      "agents": ["literature-searcher"],
+      "audits": ["coverage-critic", "citation-verifier"],
+      "persistence": "/Users/xuyongheng/Obsidian-Vault/Inbox/",
+      "trace": "find.jsonl"
+    },
+    {
+      "id": "read-structured-paper",
+      "command": "read",
+      "route_hint": "structured",
+      "agents": ["paper-fetcher", "paper-summarizer", "data-extractor"],
+      "audits": ["summary-auditor", "citation-verifier"],
+      "persistence": "/Users/xuyongheng/Obsidian-Vault/Notes/",
+      "trace": "read.jsonl"
+    },
+    {
+      "id": "think-ideation",
+      "command": "think",
+      "route_hint": "ideation",
+      "agents": ["research-ideator"],
+      "audits": ["novelty-checker"],
+      "persistence": "/Users/xuyongheng/Obsidian-Vault/Writing/",
+      "trace": "think.jsonl"
+    },
+    {
+      "id": "plan-deep-dive",
+      "command": "plan",
+      "route_hint": "deep-dive",
+      "agents": ["literature-searcher", "lit-review-builder", "theory-mapper", "research-ideator", "novelty-checker"],
+      "audits": ["coverage-critic", "citation-verifier", "summary-auditor", "novelty-checker", "concept-auditor"],
+      "persistence": "/Users/xuyongheng/Obsidian-Vault/Writing/",
+      "trace": "plan.jsonl",
+      "checkpoints": true
+    },
+    {
+      "id": "write-review",
+      "command": "write",
+      "route_hint": "review",
+      "agents": ["lit-review-builder"],
+      "audits": ["citation-verifier", "coverage-critic", "summary-auditor"],
+      "audit_hint": "for reviews only",
+      "persistence": "/Users/xuyongheng/Obsidian-Vault/Writing/",
+      "trace": "write.jsonl"
+    }
+  ]
+}

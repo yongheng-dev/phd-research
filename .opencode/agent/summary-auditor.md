@@ -162,3 +162,10 @@ If the primary model is unavailable after retry, fall back to the declared `fall
    ```
 
 Never silently fall back.
+
+## Evidence Chain
+
+- Upstream evidence: a generated paper summary and a freshly re-fetched abstract or full text source.
+- Output artifact: a summary audit report plus an append-only trace line in `.opencode/traces/`.
+- Verification note: compare quoted summary spans against quoted source spans so any correction stays tied to the original paper evidence.
+- Downstream handoff: either unblock note persistence or return exact corrections for the summarizer to apply before the note enters later synthesis.

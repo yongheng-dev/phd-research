@@ -1,0 +1,80 @@
+{
+  "evidence_agents": [
+    "research-planner",
+    "literature-searcher",
+    "paper-fetcher",
+    "paper-summarizer",
+    "data-extractor",
+    "research-ideator",
+    "lit-review-builder",
+    "writing-drafter",
+    "theory-mapper",
+    "deep-dive",
+    "coverage-critic",
+    "citation-verifier",
+    "summary-auditor",
+    "novelty-checker"
+  ],
+  "chains": [
+    {
+      "id": "find-paper-search",
+      "command": "find",
+      "agents": ["literature-searcher"],
+      "verification_agents": ["coverage-critic", "citation-verifier"],
+      "persisted_path": "/Users/xuyongheng/Obsidian-Vault/Inbox/",
+      "artifact_type": "search-results",
+      "artifact_markers": ["source:"],
+      "artifact_any_of": ["相关笔记：", "覆盖", "coverage", "核查", "verification", "审计"],
+      "handoff_commands": ["read", "think", "plan", "write"],
+      "required_terms": ["[[Paper Title]]", "reading order"]
+    },
+    {
+      "id": "read-structured-paper",
+      "command": "read",
+      "agents": ["paper-fetcher", "paper-summarizer", "data-extractor"],
+      "verification_agents": ["summary-auditor", "citation-verifier"],
+      "persisted_path": "/Users/xuyongheng/Obsidian-Vault/Notes/",
+      "artifact_type": "paper-note",
+      "artifact_markers": ["source:"],
+      "artifact_any_of": ["相关笔记：", "## 相关笔记", "值得追踪的参考文献", "References Worth Tracking", "审计", "核验清单"],
+      "handoff_commands": ["think", "plan", "write"],
+      "required_terms": ["## Audit Trail", "## Structured Extraction", "## References Worth Tracking"]
+    },
+    {
+      "id": "think-ideation",
+      "command": "think",
+      "agents": ["research-ideator"],
+      "verification_agents": ["novelty-checker"],
+      "persisted_path": "/Users/xuyongheng/Obsidian-Vault/Writing/",
+      "artifact_type": "ideation",
+      "artifact_markers": ["source:"],
+      "artifact_any_of": ["相关笔记：", "主流锚点", "mainstream_anchor", "种子文献", "新颖性"],
+      "handoff_commands": ["find", "read", "plan", "write"],
+      "required_terms": ["Doctrine fields", "seed literature"]
+    },
+    {
+      "id": "plan-deep-dive",
+      "command": "plan",
+      "agents": ["literature-searcher", "lit-review-builder", "theory-mapper", "research-ideator", "novelty-checker"],
+      "verification_agents": ["coverage-critic", "citation-verifier", "concept-auditor", "summary-auditor", "novelty-checker"],
+      "persisted_path": "/Users/xuyongheng/Obsidian-Vault/Writing/",
+      "artifact_type": "deep-dive",
+      "artifact_markers": ["source:"],
+      "artifact_any_of": ["相关笔记：", "主流锚点", "mainstream_anchor", "新颖性", "审计"],
+      "handoff_commands": ["read", "think", "write"],
+      "required_terms": ["Related notes", "checkpoints/"]
+    },
+    {
+      "id": "write-review",
+      "command": "write",
+      "agents": ["writing-drafter", "lit-review-builder"],
+      "verification_agents": ["citation-verifier", "coverage-critic", "summary-auditor"],
+      "persisted_path": "/Users/xuyongheng/Obsidian-Vault/Writing/",
+      "artifact_type": "lit-review",
+      "artifact_markers": ["source:"],
+      "artifact_any_of": ["相关笔记：", "## 相关笔记", "主流锚点", "mainstream_anchor", "审计标注", "参考文献", "## 跨主题链接", "## 锚点笔记"],
+      "handoff_commands": ["review", "write"],
+      "required_terms": ["inline citations", "reference_list"]
+    }
+  ]
+}

@@ -139,3 +139,10 @@ Deep Chinese for the brief and user-facing explanation. Keep paper titles in the
 ## PhD Doctrine
 
 Load `.opencode/memory/phd-doctrine.md` when shaping the brief. The brief should preserve enough structure for downstream `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, and `so_what` evaluation.
+
+## Evidence Chain
+
+- Upstream evidence: the user request, related vault notes, `.opencode/memory/research-log.md`, `.opencode/memory/decisions.md`, and `.opencode/memory/phd-doctrine.md`.
+- Output artifact: a structured search brief with assumptions, scope, quality gates, and executor directives.
+- Verification note: explicit assumptions let later `coverage-critic`, `citation-verifier`, and `novelty-checker` audit against the original framing instead of a moving target.
+- Downstream handoff: hand the brief to `literature-searcher`, `research-ideator`, or `deep-dive`.

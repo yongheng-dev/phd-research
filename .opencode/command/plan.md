@@ -86,6 +86,13 @@ Default to deep Chinese for user-facing output and saved plan notes. Keep paper 
 
 In `--mode=deep-dive`, after each stage write `.opencode/checkpoints/$(date +%Y-%m-%d)/plan-<slug>-<stage>.json` with resume state (topic, stage, partial results, last audit verdict). Allows `/plan --resume=<slug>` to continue from last checkpoint.
 
+## Evidence Chain
+
+- Source evidence: S1 search results, S2 review panoramas, S3 theory inventories, S4 candidate directions, and the doctrine constraints loaded from `.opencode/memory/phd-doctrine.md`.
+- Verification trail: the mandatory audit chain runs stepwise through `coverage-critic`, `citation-verifier`, `concept-auditor`, `novelty-checker`, and `summary-auditor` in deep-dive mode, with checkpoints preserving the last verified state.
+- Persisted artifact: save the final plan note to `/Users/xuyongheng/Obsidian-Vault/Writing/` with the theory-map link, PROCEED/REJECT evidence, `Related notes`, and resume checkpoints under `.opencode/checkpoints/`.
+- Downstream handoff: the verified plan becomes the evidence-backed brief for `/write`, later `/read` expansion, and narrowed `/think` refinement.
+
 ## Trace
 
 One JSONL line per step to `.opencode/traces/$(date +%Y-%m-%d)/plan.jsonl`:

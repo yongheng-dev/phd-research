@@ -81,3 +81,10 @@ Append to `.opencode/traces/YYYY-MM-DD/paper-fetcher.jsonl`:
 - Never modify existing cache files (write-only, no edit).
 - Never follow redirects to executable downloads; PDFs and HTML only.
 - If a paper is already cached and younger than 30 days, return the cached path without re-fetching.
+
+## Evidence Chain
+
+- Upstream evidence: a stable paper identifier, URL, or cached reference from an earlier search note.
+- Output artifact: fetched source text under `arxiv_cache/` or `outputs/fetched/` with source metadata in the header.
+- Verification note: preserve `fetch_method`, `steps_tried`, and trace output so downstream summarization and audit know the exact provenance.
+- Downstream handoff: feed `paper-summarizer`, `data-extractor`, and `/read`.

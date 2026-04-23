@@ -28,7 +28,7 @@
  *     checkpoints/              ← per-session per-stage JSON
  */
 
-import { mkdirSync, appendFileSync, writeFileSync, existsSync, readFileSync } from "node:fs";
+import { mkdirSync, appendFileSync, writeFileSync, existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 
 // ---------- helpers ----------
@@ -89,6 +89,83 @@ function readDoctrineSummary(root: string): string {
   } catch {
     return "";
   }
+}
+
+const VAULT_ROOT = "/Users/xuyongheng/Obsidian-Vault";
+const VAULT_DIRS = ["Inbox", "Notes", "Writing"] as const;
+const NOTE_PRODUCING_COMMANDS = new Set(["find", "/find", "read", "/read", "think", "/think", "plan", "/plan", "write", "/write"]);
+
+function extractVaultPath(text: string | undefined): string | null {
+  if (!text) return null;
+  const m = text.match(/\/Users\/xuyongheng\/Obsidian-Vault\/(Inbox|Notes|Writing)\/[^\s)]+?\.md\b/);
+  return m ? m[0] : null;
+}
+
+function readFrontmatterField(file: string, field: string): string | null {
+  if (!existsSync(file)) return null;
+  try {
+    const text = readFileSync(file, "utf8");
+    if (!text.startsWith("---\n")) return null;
+    const end = text.indexOf("\n---\n", 4);
+    if (end === -1) return null;
+    const fm = text.slice(4, end);
+    for (const line of fm.split("\n")) {
+      if (line.startsWith(field + ":")) {
+        return line.slice(field.length + 1).trim().replace(/^"|"$/g, "");
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function newestRecentVaultNote(maxAgeMs = 180_000): string | null {
+  if (!existsSync(VAULT_ROOT)) return null;
+  const now = Date.now();
+  let bestPath: string | null = null;
+  let bestMtime = 0;
+
+  const walk = (dir: string) => {
+    let entries: string[] = [];
+    try {
+      entries = readdirSync(dir);
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const path = join(dir, entry);
+      let st;
+      try {
+        st = statSync(path);
+      } catch {
+        continue;
+      }
+      if (st.isDirectory()) {
+        walk(path);
+        continue;
+      }
+      if (!st.isFile() || !path.endsWith(".md")) continue;
+      if (now - st.mtimeMs > maxAgeMs) continue;
+      if (st.mtimeMs > bestMtime) {
+        bestMtime = st.mtimeMs;
+        bestPath = path;
+      }
+    }
+  };
+
+  for (const dir of VAULT_DIRS) {
+    walk(join(VAULT_ROOT, dir));
+  }
+  return bestPath;
+}
+
+function classifyVaultType(path: string): string {
+  for (const dir of VAULT_DIRS) {
+    const prefix = `${VAULT_ROOT}/${dir}/`;
+    if (path.startsWith(prefix)) return dir;
+  }
+  return "unknown";
 }
 
 // crude detector for /plan --mode=deep-dive stage markers in command output / messages
@@ -167,6 +244,7 @@ export const PhdPlugin = async (ctx: any) => {
 
   const sessionTrace = (sessionId: string) =>
     join(tracesDir, `session-${sessionId || "unknown"}.jsonl`);
+  const lastPersistedBySession = new Map<string, string>();
 
   const log = (level: string, message: string, extra?: Record<string, unknown>) => {
     // best-effort structured log via OpenCode client if available
@@ -284,6 +362,35 @@ export const PhdPlugin = async (ctx: any) => {
         session_id: sid,
         command: name,
       });
+
+      if (NOTE_PRODUCING_COMMANDS.has(name)) {
+        let outputText = "";
+        try {
+          outputText =
+            typeof output === "string"
+              ? output
+              : JSON.stringify(output ?? "", null, 0);
+        } catch {
+          outputText = "";
+        }
+        const notePath = extractVaultPath(outputText) ?? newestRecentVaultNote();
+        if (notePath && existsSync(notePath)) {
+          const dedupeKey = `${name}:${notePath}`;
+          if (lastPersistedBySession.get(sid) !== dedupeKey) {
+            lastPersistedBySession.set(sid, dedupeKey);
+            safeAppendJsonl(sessionTrace(sid), {
+              ts: nowIso(),
+              event: "note.persisted",
+              session_id: sid,
+              command: name,
+              note_path: notePath,
+              vault_type: classifyVaultType(notePath),
+              note_type: readFrontmatterField(notePath, "type"),
+              source_present: readFrontmatterField(notePath, "source") != null,
+            });
+          }
+        }
+      }
 
       // checkpoint ONLY for /plan deep-dive runs
       if (name === "plan" || name === "/plan") {

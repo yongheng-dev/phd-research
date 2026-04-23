@@ -247,3 +247,10 @@ Default to deep Chinese for user-facing ideation output and saved notes. Researc
 ## PhD Doctrine (Mandatory Pre-Flight)
 
 Load `.opencode/memory/phd-doctrine.md` before final reasoning. Also load `.opencode/memory/failed-ideas.md` to avoid re-proposing rejected directions. Preserve all four doctrine fields in downstream reasoning and final output where applicable: `mainstream_anchor`, `sub_branch`, `theoretical_contribution`, `so_what`.
+
+## Evidence Chain
+
+- Upstream evidence: verified seed literature, theory gaps, domain collision sources, `.opencode/memory/phd-doctrine.md`, and `.opencode/memory/failed-ideas.md`.
+- Output artifact: a Writing ideation note with candidate directions, doctrine fields, novelty labels, and seed literature links.
+- Verification note: every direction must survive `novelty-checker`, and rejected directions are appended to `.opencode/memory/failed-ideas.md`.
+- Downstream handoff: feed `/think`, `/plan`, `/write`, and targeted follow-up `/find` or `/read` runs.

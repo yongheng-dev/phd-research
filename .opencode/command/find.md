@@ -53,6 +53,13 @@ Even under `audit: auto`, if the classifier routes to paper search AND any paper
 
 Default to deep Chinese for user-facing output. Keep paper titles in their original language. Search queries, filters, flags, and API parameters remain in English academic register.
 
+## Evidence Chain
+
+- Source evidence: live database search results, stable paper identifiers (DOI/arXiv), and coverage dimensions inferred from the query.
+- Verification trail: `coverage-critic` audits the ranked set, and `citation-verifier` runs whenever any paper lacks a DOI or arXiv ID.
+- Persisted artifact: save the ranked search note to `/Users/xuyongheng/Obsidian-Vault/Inbox/` with `[[Paper Title]]` wikilinks and a recommended reading order.
+- Downstream handoff: the saved search note becomes admissible input for `/read`, `/think`, `/plan`, and `/write`.
+
 ## Trace
 
 One JSONL line to `.opencode/traces/$(date +%Y-%m-%d)/find.jsonl`:
